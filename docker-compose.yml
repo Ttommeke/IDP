@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+    account_service:
+        build:
+            context: ./accountservice
+            dockerfile: ./Dockerfile
+    proxy_service:
+        build:
+            context: ./
+            dockerfile: ./Dockerfile
+        ports:
+            - "5000:5000"
+        links:
+            - account_service:account_service
