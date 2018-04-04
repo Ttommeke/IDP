@@ -4,9 +4,9 @@ const path = require("path");
 
 let port = process.env.PORT || 5000;
 
-let addToProxy = function(appObject, proxyPath, name, port, serviceUrl) {
+let addToProxy = function(appObject, proxyPath, name, serviceUrl) {
     appObject.use(proxyPath, proxy({
-            target: "http://" + serviceUrl + ":" + port,
+            target: "http://" + serviceUrl,
             pathRewrite: {
                 ['^' + proxyPath] : '/',     // rewrite path
             },
@@ -24,4 +24,4 @@ app.listen(port, function() {
     console.log("proxy server running at http://localhost:" + port + "/");
 });
 
-addToProxy(app, "/api/accountservice/", "accountservice", 80, "account_service");
+addToProxy(app, "/api/accountservice/", "accountservice", "account_service");
