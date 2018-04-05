@@ -1,15 +1,38 @@
 version: '2'
 
 services:
+    db:
+        image: postgres
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD=TheseHaveToBeTheSame
+            - POSTGRES_USER=docker
+        ports:
+            - "5432:5432"
+        volumes:
+            - /var/lib/postgresql/data
     account_service:
         build:
             context: ./accountservice
             dockerfile: ./Dockerfile
+        restart: always
+        environment:
+            - JWTSecret=TomGeefInsEenSecret!
+            - POSTGRES_PASSWORD=TheseHaveToBeTheSame
+            - POSTGRES_USER=docker
+            - PORT=80
+        depends_on:
+            - db
+        links:
+            - db:db
     proxy_service:
         build:
             context: ./proxy
             dockerfile: ./Dockerfile
+        restart: always
+        environment:
+            - PORT=80
         ports:
-            - "5000:5000"
+            - "80:80"
         links:
             - account_service:account_service

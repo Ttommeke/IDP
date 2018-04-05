@@ -1,13 +1,8 @@
-const express = require('express');
+const routes = require("./Routes");
+const models = require("./models/index");
 
-let port = 80;
+models.User.sync({forced: false});
 
-const app = express();
-
-app.get("/", function(req, res) {
-    res.send("yeezazh");
-});
-
-app.listen(port, function() {
-    console.log("proxy server running at http://localhost:" + port + "/");
+routes.listen(process.env.PORT, function () {
+    console.log("Account server running at: http://localhost:" + process.env.PORT + "/");
 });
