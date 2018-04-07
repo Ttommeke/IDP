@@ -25,3 +25,4 @@ app.listen(port, function() {
 });
 
 addToProxy(app, "/api/accountservice/", "accountservice", "account_service");
+addToProxy(app, "/api/savegameservice/", "savegameservice", "savegame_service");

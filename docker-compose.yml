@@ -1,6 +1,23 @@
 version: '2'
 
 services:
+    mongodb:
+        image: mongo
+        restart: always
+        volumes:
+            - /data/db
+    savegame_service:
+        build:
+            context: ./savegameservice
+            dockerfile: ./Dockerfile
+        restart: always
+        environment:
+            - MONGODB_DATABASE=mydatabase
+            - PORT=80
+        depends_on:
+            - mongodb
+        links:
+            - mongodb:mongodb
     db:
         image: postgres
         restart: always
@@ -36,3 +53,4 @@ services:
             - "80:80"
         links:
             - account_service:account_service
+            - savegame_service:savegame_service
