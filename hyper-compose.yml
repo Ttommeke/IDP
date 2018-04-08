@@ -7,9 +7,7 @@ services:
         volumes:
             - /data/db
     savegame_service:
-        build:
-            context: ./savegameservice
-            dockerfile: ./Dockerfile
+        image: ttommeke/idp_savegame_service
         restart: always
         environment:
             - MONGODB_DATABASE=mydatabase
@@ -29,9 +27,18 @@ services:
         volumes:
             - /var/lib/postgresql/data
     account_service:
-        build:
-            context: ./accountservice
-            dockerfile: ./Dockerfile
+        image: ttommeke/idp_account_service
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD=TheseHaveToBeTheSame
+            - POSTGRES_USER=docker
+            - PORT=80
+        depends_on:
+            - db
+        links:
+            - db:db
+    question_service:
+        image: ttommeke/idp_question_service
         restart: always
         environment:
             - JWTSecret=TomGeefInsEenSecret!
@@ -42,23 +49,8 @@ services:
             - db
         links:
             - db:db
-    question_service:
-        build:
-            context: ./questionservice
-            dockerfile: ./Dockerfile
-        restart: always
-        environment:
-            - POSTGRES_PASSWORD=TheseHaveToBeTheSame
-            - POSTGRES_USER=docker
-            - PORT=80
-        depends_on:
-            - db
-        links:
-            - db:db
     proxy_service:
-        build:
-            context: ./proxy
-            dockerfile: ./Dockerfile
+        image: ttommeke/idp_proxy
         restart: always
         environment:
             - PORT=80
@@ -66,4 +58,5 @@ services:
             - "80:80"
         links:
             - account_service:account_service
+            - question_service:question_service
             - savegame_service:savegame_service
