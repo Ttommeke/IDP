@@ -4,7 +4,7 @@
             "id": "11e121bb-46b6-4f8f-acec-5280c4f1e4ac",
             "questionType": "MULTIPLECHOICE",
             "question": "whoop whoop!",
-            "PossibleAnswerOnQuestions": [
+            "PossibleAnswersOnQuestion": [
                 {
                     "id": "d873b204-3a06-48b6-9fd6-f8afa3427806",
                     "answer": "1"

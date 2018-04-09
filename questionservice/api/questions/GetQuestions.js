@@ -2,7 +2,7 @@ const models = require("../../models/index");
 
 let getQuestions = function (req, res) {
 
-    models.Question.findAll({ include: [ models.PossibleAnswerOnQuestion ] }).then((questions) => {
+    models.Question.findAll({ include: [{ model: models.PossibleAnswerOnQuestion, as: 'PossibleAnswersOnQuestion' }] }).then((questions) => {
         res.send(questions);
     }).catch(function(e) {
         console.log(e);

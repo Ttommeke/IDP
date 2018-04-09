@@ -20,8 +20,7 @@ module.exports = function(sequelize, DataTypes) {
     };
 
     Answer.associate = function(models) {
-        Answer.belongsTo(models.Question);
-        Answer.belongsTo(models.PossibleAnswerOnQuestion);
+        Answer.PossibleAnswerOnQuestion = Answer.belongsTo(models.PossibleAnswerOnQuestion);
     };
 
     return Answer;

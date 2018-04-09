@@ -1,24 +1,28 @@
 const routes = require("./Routes");
 const models = require("./models/index");
 
-const forced = true;
+const forced = false;
 
-models.Question.sync({forced: forced});
-models.PossibleAnswerOnQuestion.sync({forced: forced});
-models.Answer.sync({forced: forced});
+models.Question.sync({forced: forced}).then(function() {
+    return models.PossibleAnswerOnQuestion.sync({forced: forced});
+}).then(function() {
+    return models.Answer.sync({forced: forced});
+}).then(function() {
+    if (forced) {
+        const fs = require("fs");
 
-if (forced) {
-    const fs = require("fs");
+        fs.readFile("./seedQuestions.json", function(err, data) {
+            arrayOfQuestions = JSON.parse(data).questions;
 
-    fs.readFile("./seedQuestions.json", function(err, data) {
-        arrayOfQuestions = JSON.parse(data).questions;
-
-        for (var i = 0; i < arrayOfQuestions.length; i++) {
-            models.Question.create(arrayOfQuestions[i]);
-        }
-    });
-}
+            for (var i = 0; i < arrayOfQuestions.length; i++) {
+                models.Question.create(arrayOfQuestions[i], { include: [{ model: models.PossibleAnswerOnQuestion, as: 'PossibleAnswersOnQuestion' }] }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+        });
+    }
+});
 
 routes.listen(process.env.PORT, function () {
-    console.log("Account server running at: http://localhost:" + process.env.PORT + "/");
+    console.log("Question server running at: http://localhost:" + process.env.PORT + "/");
 });

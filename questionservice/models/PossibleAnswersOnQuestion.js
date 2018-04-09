@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
     };
 
     PossibleAnswerOnQuestion.associate = function(models) {
-
+        PossibleAnswerOnQuestion.belongsTo(models.Question, { foreignKey: 'questionId' });
     };
 
     return PossibleAnswerOnQuestion;

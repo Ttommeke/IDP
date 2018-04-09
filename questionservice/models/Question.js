@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     };
 
     Question.associate = function(models) {
-        Question.hasMany(models.PossibleAnswerOnQuestion, {foreignKey: 'questionId'});
+        Question.PossibleAnswersOnQuestion = Question.hasMany(models.PossibleAnswerOnQuestion, { foreignKey: 'questionId', as: 'PossibleAnswersOnQuestion' });
     };
 
     return Question;
