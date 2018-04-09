@@ -6,19 +6,7 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
-        questionId: {
-            type: DataTypes.UUID,
-            validate: {
-                notEmpty: true
-            }
-        },
         accountId: {
-            type: DataTypes.UUID,
-            validate: {
-                notEmpty: true
-            }
-        },
-        answerId: {
             type: DataTypes.UUID,
             validate: {
                 notEmpty: true
@@ -29,6 +17,11 @@ module.exports = function(sequelize, DataTypes) {
     Answer.prototype.toJSON = function() {
         let values = Object.assign({}, this.get());
         return values;
+    };
+
+    Answer.associate = function(models) {
+        Answer.belongsTo(models.Question);
+        Answer.belongsTo(models.PossibleAnswerOnQuestion);
     };
 
     return Answer;

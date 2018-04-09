@@ -25,5 +25,9 @@ module.exports = function(sequelize, DataTypes) {
         return values;
     };
 
+    Question.associate = function(models) {
+        Question.hasMany(models.PossibleAnswerOnQuestion, {foreignKey: 'questionId'});
+    };
+
     return Question;
 };

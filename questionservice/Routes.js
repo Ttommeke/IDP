@@ -10,4 +10,5 @@ app.use(bodyparser.urlencoded(
 app.use(bodyparser.json());
 app.use("/", securityFunctions.appendTokenToRequest);
 
+require("./api/questions/Route").attachRoutes(app);
 module.exports = app;

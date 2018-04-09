@@ -6,12 +6,6 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
-        questionId: {
-            type: DataTypes.UUID,
-            validate: {
-                notEmpty: true
-            }
-        },
         answer: {
             type: DataTypes.STRING,
             validate: {
@@ -23,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
     PossibleAnswerOnQuestion.prototype.toJSON = function() {
         let values = Object.assign({}, this.get());
         return values;
+    };
+
+    PossibleAnswerOnQuestion.associate = function(models) {
+
     };
 
     return PossibleAnswerOnQuestion;
