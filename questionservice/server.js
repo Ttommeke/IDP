@@ -8,7 +8,9 @@ models.Question.sync({forced: forced}).then(function() {
 }).then(function() {
     return models.Answer.sync({forced: forced});
 }).then(function() {
-    if (forced) {
+    return models.Question.findAll();
+}).then(function(questions) {
+    if (questions.length == 0) {
         const fs = require("fs");
 
         fs.readFile("./seedQuestions.json", function(err, data) {

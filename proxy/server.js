@@ -27,3 +27,4 @@ app.listen(port, function() {
 addToProxy(app, "/api/accountservice/", "accountservice", "account_service");
 addToProxy(app, "/api/savegameservice/", "savegameservice", "savegame_service");
 addToProxy(app, "/api/questionservice/", "questionservice", "question_service");
+addToProxy(app, "/api/fitnessservice/", "fitnessservice", "fitness_service");

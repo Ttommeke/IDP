@@ -55,6 +55,19 @@ services:
             - db
         links:
             - db:db
+    fitness_service:
+        build:
+            context: ./fitnessservice
+            dockerfile: ./Dockerfile
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD=TheseHaveToBeTheSame
+            - POSTGRES_USER=docker
+            - PORT=80
+        depends_on:
+            - db
+        links:
+            - db:db
     proxy_service:
         build:
             context: ./proxy
@@ -68,3 +81,4 @@ services:
             - question_service:question_service
             - account_service:account_service
             - savegame_service:savegame_service
+            - fitness_service:fitness_service
