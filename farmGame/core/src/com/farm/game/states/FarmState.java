@@ -1,22 +1,25 @@
 package com.farm.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.Assets;
+import com.farm.game.FarmLandscape;
 import com.farm.game.FarmGameMain;
-import com.farm.game.sprites.FarmLand;
 
-import java.util.ArrayList;
-
-public class FarmState extends State {
-    private ArrayList<FarmLand> $fields;
+public class FarmState extends State implements InputProcessor{
+    private FarmLandscape $landscape;
     private Rectangle $inventoryButtonBounds;
 
     public FarmState(GameStateManager gsm) {
         super(gsm);
-        $fields = new ArrayList<FarmLand>();
-        $camera.setToOrtho(false, FarmGameMain.WIDTH, FarmGameMain.HEIGHT);
+        Gdx.input.setInputProcessor(this);
+        $landscape = new FarmLandscape();
+        $landscape.loadFromJSON();
+        $landscape.saveToJSON();
+        $camera.setToOrtho(true, FarmGameMain.WIDTH, FarmGameMain.HEIGHT);
+
         $inventoryButtonBounds = new Rectangle(FarmGameMain.WIDTH - 133, 0, 128, 128);
     }
 
@@ -31,13 +34,17 @@ public class FarmState extends State {
     }
 
     @Override
-    public void update(float dt) {}
+    public void update(float dt) {
+        $camera.update();
+
+    }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
         Gdx.gl.glClearColor(0, 125/255f, 0, 1);
-        // Objects
+        // Grid + Objects on grid
+        $landscape.drawObjects(sb);
 
         // Menus
         sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 133, FarmGameMain.HEIGHT - 133, 128, 128);
@@ -47,4 +54,54 @@ public class FarmState extends State {
 
     @Override
     public void dispose() {}
+
+
+    /**
+     * Section
+     * InputProcessor functions
+     */
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        float x = Gdx.input.getDeltaX();
+        float y = Gdx.input.getDeltaY();
+
+        //System.out.println("x: " + x + "\ny: " + y);
+        $camera.translate(-x*5,y*5);
+        return true;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 }

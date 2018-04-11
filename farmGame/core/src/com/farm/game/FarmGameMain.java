@@ -12,8 +12,8 @@ import com.farm.game.states.GameStateManager;
 import com.farm.game.states.LoginState;
 
 public class FarmGameMain extends ApplicationAdapter {
-	public static int WIDTH = 480;
-	public static int HEIGHT = 800;
+	public static int WIDTH = 1500;
+	public static int HEIGHT = 1000;
 
 	public static BitmapFont font;
 	public static BitmapFont fnt;

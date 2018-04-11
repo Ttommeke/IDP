@@ -34,7 +34,7 @@ public class LoginState extends State {
         table.defaults().pad(10);
 
         Label username = new Label("Username : ", skin);
-        username.setFontScale(5);
+        username.setFontScale(6);
         final TextField usernameField = new TextField("", skin);
 
         Label password = new Label("Password : ", skin);
