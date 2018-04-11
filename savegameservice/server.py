@@ -26,7 +26,7 @@ def get_owner_savegames(ownerid):
     else:
         savegame_id = savegames.insert({'ownerId': ownerid, 'savegame': {}})
         new_savegame = savegames.find_one({'_id': savegame_id})
-        output = {'ownerId': new_savegame['ownerId'], 'savegames': new_savegame['savegame']}
+        output = {'ownerId': new_savegame['ownerId'], 'savegame': new_savegame['savegame']}
 
     return jsonify({'result': output})
 
