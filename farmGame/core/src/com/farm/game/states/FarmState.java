@@ -9,15 +9,11 @@ import com.farm.game.FarmLandscape;
 import com.farm.game.FarmGameMain;
 
 public class FarmState extends State implements InputProcessor{
-    private FarmLandscape $landscape;
     private Rectangle $inventoryButtonBounds;
 
     public FarmState(GameStateManager gsm) {
         super(gsm);
         Gdx.input.setInputProcessor(this);
-        $landscape = new FarmLandscape();
-        $landscape.loadFromJSON();
-        $landscape.saveToJSON();
         $camera.setToOrtho(true, FarmGameMain.WIDTH, FarmGameMain.HEIGHT);
 
         $inventoryButtonBounds = new Rectangle(FarmGameMain.WIDTH - 133, 0, 128, 128);
@@ -30,6 +26,8 @@ public class FarmState extends State implements InputProcessor{
                 System.out.println("inventory");
                 //$gsm.push(inventoryState);
             }
+
+            FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY());
         }
     }
 
@@ -44,7 +42,7 @@ public class FarmState extends State implements InputProcessor{
         sb.begin();
         Gdx.gl.glClearColor(0, 125/255f, 0, 1);
         // Grid + Objects on grid
-        $landscape.drawObjects(sb);
+        FarmGameMain.landscape.drawObjects(sb);
 
         // Menus
         sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 133, FarmGameMain.HEIGHT - 133, 128, 128);

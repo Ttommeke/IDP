@@ -1,9 +1,6 @@
 package com.farm.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
-import javax.xml.soap.Text;
 
 public class Assets {
     public static Texture backgroundTexture;
@@ -13,7 +10,7 @@ public class Assets {
     public static Texture invisibleTexture;
 
     // Playing textures
-    public static Texture farmFieldUnplantedTexture;
+    public static Texture farmLandUnplantedTexture;
     public static Texture farmFieldAdultChickensTexture;
     public static Texture farmFieldUninhabitedTexture;
     public static Texture farmBuildingTexture;
@@ -30,10 +27,10 @@ public class Assets {
 
         // Playing textures
         // FarmLandTexture
-        farmFieldUnplantedTexture = new Texture("farmFieldUnplanted.png");
-        farmFieldAdultChickensTexture = new Texture("farmFieldAdultChickens.png");
+        farmLandUnplantedTexture = new Texture("farmLandUnplanted.png");
         // FarmFieldTextures
         farmFieldUninhabitedTexture = new Texture("farmFieldUninhabited.png");
+        farmFieldAdultChickensTexture = new Texture("farmFieldAdultChickens.png");
         // Other
         farmBuildingTexture = new Texture("farmBuilding.png");
 
@@ -49,9 +46,12 @@ public class Assets {
         invisibleTexture.dispose();
 
         // Playing textures
-        farmFieldUnplantedTexture.dispose();
-        farmFieldAdultChickensTexture.dispose();
+        // FarmLandTexture
+        farmLandUnplantedTexture.dispose();
+        // FarmFieldTextures
         farmFieldUninhabitedTexture.dispose();
+        farmFieldAdultChickensTexture.dispose();
+        // Other
         farmBuildingTexture.dispose();
 
         // Button textures

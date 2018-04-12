@@ -28,6 +28,11 @@ public class FarmField extends FarmObject {
         changeTexture();
     }
 
+    @Override
+    public void handleTouch() {
+        System.out.println("farmField");
+    }
+
     /**
      * Change the texture according to the status & type
      * (Change textures if created)

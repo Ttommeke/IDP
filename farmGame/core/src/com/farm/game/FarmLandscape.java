@@ -25,6 +25,14 @@ public class FarmLandscape {
         $grid.drawObjects(sb);
     }
 
+    public void handleTouch(float x, float y) {
+        $grid.handleTouch(x, y);
+    }
+
+    public void gridIndexesTouched(int rowIndex, int columnIndex) {
+        $grid.gridIndexesTouched(rowIndex, columnIndex);
+    }
+
     public void loadFromJSON() {
         try {
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
@@ -62,17 +70,17 @@ public class FarmLandscape {
     private void defaultGrid() {
         System.out.println("defaultGrid");
 
+        $grid.insertIntoPosition(new FarmLand(), 3, 2);
+        $grid.insertIntoPosition(new FarmLand(), 3, 3);
         $grid.insertIntoPosition(new FarmLand(), 3, 4);
-        $grid.insertIntoPosition(new FarmLand(), 3, 5);
-        $grid.insertIntoPosition(new FarmLand(), 3, 6);
+        $grid.insertIntoPosition(new FarmLand(), 4, 2);
+        $grid.insertIntoPosition(new FarmLand(), 4, 3);
         $grid.insertIntoPosition(new FarmLand(), 4, 4);
-        $grid.insertIntoPosition(new FarmLand(), 4, 5);
-        $grid.insertIntoPosition(new FarmLand(), 4, 6);
+        $grid.insertIntoPosition(new FarmLand(), 5, 2);
+        $grid.insertIntoPosition(new FarmLand(), 5, 3);
         $grid.insertIntoPosition(new FarmLand(), 5, 4);
-        $grid.insertIntoPosition(new FarmLand(), 5, 5);
-        $grid.insertIntoPosition(new FarmLand(), 5, 6);
-        $grid.insertIntoPosition(new FarmBuilding(), 8, 4);
-        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken), 8, 2);
+        $grid.insertIntoPosition(new FarmBuilding(), 4, 8);
+        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken), 2, 8);
 
         saveToJSON();
     }

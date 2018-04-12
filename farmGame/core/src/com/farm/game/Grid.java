@@ -1,6 +1,7 @@
 package com.farm.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.GridSquare;
 import com.farm.game.sprites.InvisibleChildSquare;
@@ -8,13 +9,17 @@ import com.farm.game.sprites.InvisibleGridSquare;
 
 public class Grid {
     private FarmObject[][] $grid;
+    private Rectangle[][] $gridRectangle;
     private final int $cellSize = 128;
 
     public Grid() {
-        $grid = new FarmObject[13][8];
+        $grid = new FarmObject[8][13];
+        $gridRectangle = new Rectangle[8][13];
+
         for(int i=0; i<$grid.length; i++) {
             for(int j=0; j<$grid[i].length; j++) {
                 $grid[i][j] = new GridSquare();
+                $gridRectangle[i][j] = new Rectangle(128*j, (FarmGameMain.HEIGHT-128) - 128*i , 128, 128);
             }
         }
     }
@@ -32,9 +37,23 @@ public class Grid {
     public void drawObjects(SpriteBatch sb) {
         for(int i=0; i<$grid.length; i++) {
             for(int j=0; j<$grid[i].length; j++) {
-                sb.draw($grid[i][j].getTexture(), i*$cellSize, j*$cellSize,
+                sb.draw($grid[i][j].getTexture(), j*$cellSize, i*$cellSize,
                         $grid[i][j].getAmountOfCells() * $cellSize, $grid[i][j].getAmountOfCells() * $cellSize);
             }
         }
+    }
+
+    public void handleTouch(float x, float y) {
+        for(int i=0; i<$gridRectangle.length; i++) {
+            for(int j=0; j<$gridRectangle[i].length; j++) {
+                if($gridRectangle[i][j].contains(x, y)) {
+                    $grid[i][j].handleTouch();
+                }
+            }
+        }
+    }
+
+    public void gridIndexesTouched(int rowIndex, int columnIndex) {
+        $grid[rowIndex][columnIndex].handleTouch();
     }
 }

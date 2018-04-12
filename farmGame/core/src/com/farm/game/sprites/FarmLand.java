@@ -13,19 +13,24 @@ public class FarmLand extends FarmObject{
     private FarmLandTypeEnum $type;
 
     public FarmLand(){
-        super( 1, Assets.farmFieldUnplantedTexture);
+        super( 1, Assets.farmLandUnplantedTexture);
 
         $status = FarmLandStatusEnum.Unplanted;
         $type = FarmLandTypeEnum.Unplanted;
     }
 
     public FarmLand(FarmLandStatusEnum status, FarmLandTypeEnum type){
-        super( 1, Assets.farmFieldUnplantedTexture);
+        super( 1, Assets.farmLandUnplantedTexture);
 
         $status = status;
         $type = type;
 
         changeTexture();
+    }
+
+    @Override
+    public void handleTouch() {
+        System.out.println("farmLand");
     }
 
     /**
@@ -35,48 +40,48 @@ public class FarmLand extends FarmObject{
     private void changeTexture() {
         switch ($status) {
             case Unplanted:
-                $texture = Assets.farmFieldUnplantedTexture;
+                $texture = Assets.farmLandUnplantedTexture;
                 break;
             case Growing:
                 switch ($type){
                     case Grain:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Carrot:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Potato:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Eggplant:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Strawberry:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                 }
                 break;
             case FullyGrown:
                 switch ($type){
                     case Grain:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Carrot:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Potato:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Eggplant:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                     case Strawberry:
-                        $texture = Assets.farmFieldUnplantedTexture;
+                        $texture = Assets.farmLandUnplantedTexture;
                         break;
                 }
                 break;
             case Rotten:
-                $texture = Assets.farmFieldUnplantedTexture;
+                $texture = Assets.farmLandUnplantedTexture;
                 break;
         }
     }

@@ -22,13 +22,11 @@ public class FarmObject implements Json.Serializable{
         return $texture;
     }
 
-    @Override
-    public void write(Json json) {
-
-    }
+    public void handleTouch() { }
 
     @Override
-    public void read(Json json, JsonValue jsonData) {
+    public void write(Json json) { }
 
-    }
+    @Override
+    public void read(Json json, JsonValue jsonData) { }
 }

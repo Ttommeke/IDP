@@ -15,6 +15,8 @@ public class FarmGameMain extends ApplicationAdapter {
 	public static int WIDTH = 1500;
 	public static int HEIGHT = 1000;
 
+    public static FarmLandscape landscape;
+
 	public static BitmapFont font;
 	public static BitmapFont fnt;
 
@@ -39,6 +41,9 @@ public class FarmGameMain extends ApplicationAdapter {
         HEIGHT = Gdx.graphics.getHeight();
         Assets.load();
         Settings.load();
+
+        landscape = new FarmLandscape();
+        landscape.loadFromJSON();
 
         $batch = new SpriteBatch();
         $gsm = new GameStateManager();
