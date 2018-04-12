@@ -1,5 +1,8 @@
-package com.farm.game.DataClasses;
+package com.farm.game;
 
+/**
+ * This class contains the inventory of the player.
+ */
 public class Inventory {
     private int coins;
 
@@ -30,6 +33,15 @@ public class Inventory {
 
     private int amountOfFertilizer;
     private int amountOfSuperGrain;
+
+    public void defaultInventory() {
+        System.out.println("defaultInventory");
+
+        coins = 10;
+        amountOfGrainSeeds = 3;
+
+        FarmGameMain.settings.saveToJSON();
+    }
 
     public int getCoins() {
         return coins;

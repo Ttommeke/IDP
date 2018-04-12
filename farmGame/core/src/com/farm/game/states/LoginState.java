@@ -48,7 +48,7 @@ public class LoginState extends State {
                 $userName = usernameField.getText();
                 $password = passwordField.getText();
                 System.out.println("username:" + $userName + "\npassword:" + $password);
-                if(Settings.login($userName, $password)) {
+                if(FarmGameMain.settings.login($userName, $password)) {
                     $gsm.set(new FarmState($gsm));
                 } else {
                     passwordField.setText("Verkeerd wachtwoord");

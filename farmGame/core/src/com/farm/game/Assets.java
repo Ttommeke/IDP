@@ -6,14 +6,20 @@ public class Assets {
     public static Texture backgroundTexture;
     public static Texture buttonTexture;
     public static Texture titleTexture;
-    public static Texture gridSquareTexture;
-    public static Texture invisibleTexture;
+    public static Texture plateTexture;
 
-    // Playing textures
+    //Icons
+    public static Texture coinsTexture;
+    public static Texture grainSeedsTexture;
+    public static Texture grainSackTexture;
+
+    // Grid textures
     public static Texture farmLandUnplantedTexture;
     public static Texture farmFieldAdultChickensTexture;
     public static Texture farmFieldUninhabitedTexture;
     public static Texture farmBuildingTexture;
+    public static Texture gridSquareTexture;
+    public static Texture invisibleTexture;
 
     // Button textures
     public static Texture inventoryTexture;
@@ -22,10 +28,14 @@ public class Assets {
         backgroundTexture = new Texture("background.jpg");
         buttonTexture = new Texture("button.png");
         titleTexture = new Texture("title.png");
-        gridSquareTexture = new Texture("gridSquare.png");
-        invisibleTexture = new Texture("invisibleGridSquare.png");
+        plateTexture = new Texture("plate.png");
 
-        // Playing textures
+        // Icons
+        coinsTexture = new Texture("coins.png");
+        grainSeedsTexture = new Texture("grain.png");
+        grainSackTexture = new Texture("grainSack.png");
+
+        // Grid textures
         // FarmLandTexture
         farmLandUnplantedTexture = new Texture("farmLandUnplanted.png");
         // FarmFieldTextures
@@ -33,6 +43,8 @@ public class Assets {
         farmFieldAdultChickensTexture = new Texture("farmFieldAdultChickens.png");
         // Other
         farmBuildingTexture = new Texture("farmBuilding.png");
+        gridSquareTexture = new Texture("gridSquare.png");
+        invisibleTexture = new Texture("invisibleGridSquare.png");
 
         // Button textures
         inventoryTexture = new Texture("inventory.png");
@@ -42,10 +54,14 @@ public class Assets {
         backgroundTexture.dispose();
         buttonTexture.dispose();
         titleTexture.dispose();
-        gridSquareTexture.dispose();
-        invisibleTexture.dispose();
+        plateTexture.dispose();
 
-        // Playing textures
+        // Icons
+        coinsTexture.dispose();
+        grainSeedsTexture.dispose();
+        grainSackTexture.dispose();
+
+        // Grid textures
         // FarmLandTexture
         farmLandUnplantedTexture.dispose();
         // FarmFieldTextures
@@ -53,6 +69,8 @@ public class Assets {
         farmFieldAdultChickensTexture.dispose();
         // Other
         farmBuildingTexture.dispose();
+        gridSquareTexture.dispose();
+        invisibleTexture.dispose();
 
         // Button textures
         inventoryTexture.dispose();
