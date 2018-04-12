@@ -1,5 +1,7 @@
 package com.farm.game.sprites;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.farm.game.Assets;
 
 /**
@@ -77,5 +79,18 @@ public class FarmLand extends FarmObject{
                 $texture = Assets.farmFieldUnplantedTexture;
                 break;
         }
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("status", $status);
+        json.writeValue("type", $type);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        $status = FarmLandStatusEnum.valueOf(jsonData.getString("status"));
+        $type = FarmLandTypeEnum.valueOf(jsonData.getString("type"));
+        changeTexture();
     }
 }

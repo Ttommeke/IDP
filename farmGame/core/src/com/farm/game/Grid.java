@@ -1,9 +1,10 @@
 package com.farm.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.farm.game.sprites.InvisibleGridSquare;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.GridSquare;
+import com.farm.game.sprites.InvisibleChildSquare;
+import com.farm.game.sprites.InvisibleGridSquare;
 
 public class Grid {
     private FarmObject[][] $grid;
@@ -18,14 +19,14 @@ public class Grid {
         }
     }
 
-    public void insertIntoPosition(FarmObject farmObject, int column, int row) {
+    public void insertIntoPosition(FarmObject farmObject, int row, int column) {
         int amountOfCells = farmObject.getAmountOfCells();
         for(int i=0; i<amountOfCells; i++){
             for (int j=0; j<amountOfCells; j++) {
-                $grid[column+i][row+j] = new InvisibleGridSquare();
+                $grid[row+i][column+j] = new InvisibleChildSquare(row, column);
             }
         }
-        $grid[column][row] = farmObject;
+        $grid[row][column] = farmObject;
     }
 
     public void drawObjects(SpriteBatch sb) {
