@@ -1,8 +1,5 @@
 package com.farm.game.sprites;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.farm.game.Assets;
 
 /**
@@ -11,25 +8,74 @@ import com.farm.game.Assets;
 public class FarmLand extends FarmObject{
     // status will change over time (with the use of a Timer or initialPlantTime or something like that)
     private FarmLandStatusEnum $status;
+    private FarmLandTypeEnum $type;
 
-    public FarmLand(FarmLandStatusEnum status){
-        super( 1, Assets.unplantedFieldTexture);
+    public FarmLand(){
+        super( 1, Assets.farmFieldUnplantedTexture);
 
-        // Change accordingly
-        if($status == FarmLandStatusEnum.Unplanted) {
-            $texture = Assets.unplantedFieldTexture;
-        } else if ($status == FarmLandStatusEnum.Growing) {
-            $texture = Assets.unplantedFieldTexture;
-        } else if ($status == FarmLandStatusEnum.FullyGrown) {
-            $texture = Assets.unplantedFieldTexture;
-        } else if ($status == FarmLandStatusEnum.Rotten) {
-            $texture = Assets.unplantedFieldTexture;
-        }
-        $status = status;
+        $status = FarmLandStatusEnum.Unplanted;
+        $type = FarmLandTypeEnum.Unplanted;
     }
 
-    @Override
-    public Texture getTexture() {
-        return $texture;
+    public FarmLand(FarmLandStatusEnum status, FarmLandTypeEnum type){
+        super( 1, Assets.farmFieldUnplantedTexture);
+
+        $status = status;
+        $type = type;
+
+        changeTexture();
+    }
+
+    /**
+     * Change the texture according to the status & type
+     * (Change textures if created)
+     */
+    private void changeTexture() {
+        switch ($status) {
+            case Unplanted:
+                $texture = Assets.farmFieldUnplantedTexture;
+                break;
+            case Growing:
+                switch ($type){
+                    case Grain:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Carrot:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Potato:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Eggplant:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Strawberry:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                }
+                break;
+            case FullyGrown:
+                switch ($type){
+                    case Grain:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Carrot:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Potato:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Eggplant:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                    case Strawberry:
+                        $texture = Assets.farmFieldUnplantedTexture;
+                        break;
+                }
+                break;
+            case Rotten:
+                $texture = Assets.farmFieldUnplantedTexture;
+                break;
+        }
     }
 }

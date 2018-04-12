@@ -5,10 +5,6 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
 import com.farm.game.DataClasses.User;
 
-/**
- * Created by bjorn on 6-5-2017.
- */
-
 public class Settings {
     private static boolean $soundEnabled = true;
     private static RestService $restService;

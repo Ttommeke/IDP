@@ -13,7 +13,9 @@ public class Assets {
     public static Texture invisibleTexture;
 
     // Playing textures
-    public static Texture unplantedFieldTexture;
+    public static Texture farmFieldUnplantedTexture;
+    public static Texture farmFieldAdultChickensTexture;
+    public static Texture farmFieldUninhabitedTexture;
     public static Texture farmBuildingTexture;
 
     // Button textures
@@ -24,14 +26,19 @@ public class Assets {
         buttonTexture = new Texture("button.png");
         titleTexture = new Texture("title.png");
         gridSquareTexture = new Texture("gridSquare.png");
-        invisibleTexture = new Texture("invisibleSquare.png");
+        invisibleTexture = new Texture("invisibleGridSquare.png");
 
         // Playing textures
-        unplantedFieldTexture = new Texture("fieldUnplanted.png");
-        farmBuildingTexture = new Texture("farm-topview.png");
+        // FarmLandTexture
+        farmFieldUnplantedTexture = new Texture("farmFieldUnplanted.png");
+        farmFieldAdultChickensTexture = new Texture("farmFieldAdultChickens.png");
+        // FarmFieldTextures
+        farmFieldUninhabitedTexture = new Texture("farmFieldUninhabited.png");
+        // Other
+        farmBuildingTexture = new Texture("farmBuilding.png");
 
         // Button textures
-        inventoryTexture = new Texture("warehouse.png");
+        inventoryTexture = new Texture("inventory.png");
     }
 
     public static void dispose() {
@@ -42,7 +49,9 @@ public class Assets {
         invisibleTexture.dispose();
 
         // Playing textures
-        unplantedFieldTexture.dispose();
+        farmFieldUnplantedTexture.dispose();
+        farmFieldAdultChickensTexture.dispose();
+        farmFieldUninhabitedTexture.dispose();
         farmBuildingTexture.dispose();
 
         // Button textures

@@ -1,24 +1,22 @@
 package com.farm.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.farm.game.Grid;
+import com.badlogic.gdx.utils.Json;
 import com.farm.game.sprites.FarmBuilding;
-import com.farm.game.sprites.FarmLandStatusEnum;
+import com.farm.game.sprites.FarmField;
+import com.farm.game.sprites.FarmFieldStatusEnum;
+import com.farm.game.sprites.FarmFieldTypeEnum;
 import com.farm.game.sprites.FarmLand;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 /**
  * This class contains all objects on the landscape of the farm.
  */
 public class FarmLandscape {
-    private FarmBuilding farmBuilding;
-    private ArrayList<FarmLand> farmLands;
     private Grid $grid;
 
     public FarmLandscape() {
-        farmLands = new ArrayList<FarmLand>();
         $grid = new Grid();
     }
 
@@ -27,23 +25,29 @@ public class FarmLandscape {
     }
 
     public void loadFromJSON() {
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 3, 4);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 3, 5);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 3, 6);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 4, 4);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 4, 5);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 4, 6);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 5, 4);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 5, 5);
-        $grid.insertIntoPosition(new FarmLand(FarmLandStatusEnum.Unplanted), 5, 6);
+        $grid.insertIntoPosition(new FarmLand(), 3, 4);
+        $grid.insertIntoPosition(new FarmLand(), 3, 5);
+        $grid.insertIntoPosition(new FarmLand(), 3, 6);
+        $grid.insertIntoPosition(new FarmLand(), 4, 4);
+        $grid.insertIntoPosition(new FarmLand(), 4, 5);
+        $grid.insertIntoPosition(new FarmLand(), 4, 6);
+        $grid.insertIntoPosition(new FarmLand(), 5, 4);
+        $grid.insertIntoPosition(new FarmLand(), 5, 5);
+        $grid.insertIntoPosition(new FarmLand(), 5, 6);
         $grid.insertIntoPosition(new FarmBuilding(), 8, 4);
+        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken), 8, 2);
     }
 
     public void saveToJSON() {
-        Gson gson = new Gson();
-        StringBuilder sb = new StringBuilder();
-        for(FarmLand farmland: farmLands) {
-            sb.append(gson.toJson(farmland));
+        try {
+            Preferences prefs = Gdx.app.getPreferences("My Preferences");
+
+            Json json = new Json();
+            //System.out.println(json.prettyPrint($grid));
+
+            prefs.flush();
+        } catch (Throwable e) {
+            Gdx.app.log("error saving file", e.getMessage());
         }
     }
 }
