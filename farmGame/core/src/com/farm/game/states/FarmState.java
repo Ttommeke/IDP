@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.Assets;
-import com.farm.game.FarmLandscape;
 import com.farm.game.FarmGameMain;
 
 public class FarmState extends State implements InputProcessor{
@@ -23,17 +22,16 @@ public class FarmState extends State implements InputProcessor{
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             if ($inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                $gsm.push(new InventoryState($gsm));
+                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Inventory"));
             }
 
-            FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY());
+            FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY(), $gsm);
         }
     }
 
     @Override
     public void update(float dt) {
         $camera.update();
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.farm.game.sprites;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.farm.game.Assets;
+import com.farm.game.states.GameStateManager;
 
 /**
  * The class representing a farmLand/acre (for planting seeds)
@@ -29,7 +30,7 @@ public class FarmLand extends FarmObject{
     }
 
     @Override
-    public void handleTouch() {
+    public void handleTouch(GameStateManager gsm) {
         System.out.println("farmLand");
     }
 

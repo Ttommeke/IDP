@@ -1,8 +1,16 @@
 package com.farm.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.Scaling;
 import com.farm.game.Assets;
+import com.farm.game.states.GameStateManager;
+import com.farm.game.states.MenuState;
 
 /**
  * The class representing a farmField(weide, For growing animals)
@@ -11,26 +19,24 @@ public class FarmField extends FarmObject {
     // status & type will change over time (with the use of a Timer or initialPlantTime or something like that)
     private FarmFieldStatusEnum $status;
     private FarmFieldTypeEnum $type;
+    private int $amountOfAnimals;
 
     public FarmField(){
         super( 2, Assets.farmFieldUninhabitedTexture);
 
         $status = FarmFieldStatusEnum.Uninhabited;
         $type = FarmFieldTypeEnum.Uninhabited;
+        $amountOfAnimals = 0;
     }
 
-    public FarmField(FarmFieldStatusEnum status, FarmFieldTypeEnum type){
+    public FarmField(FarmFieldStatusEnum status, FarmFieldTypeEnum type, int amountOfAnimals){
         super( 2, Assets.farmFieldUninhabitedTexture);
 
         $status = status;
         $type = type;
+        $amountOfAnimals = amountOfAnimals;
 
         changeTexture();
-    }
-
-    @Override
-    public void handleTouch() {
-        System.out.println("farmField");
     }
 
     /**
@@ -72,15 +78,87 @@ public class FarmField extends FarmObject {
     }
 
     @Override
+    public void handleTouch(GameStateManager gsm) {
+        gsm.push(new MenuState(gsm, getTable(), "Field"));
+    }
+
+    /**
+     * Add table functions and apply them to the right choice
+     */
+    private Table getTable() {
+        Table scrollTable = new Table();
+        switch ($status) {
+            case Uninhabited:
+                scrollTable = getAdultChickenTable();
+                break;
+            case Children:
+                switch ($type) {
+                    case Chicken:
+                        scrollTable = getAdultChickenTable();
+                        break;
+                    case Pig:
+                        scrollTable = getAdultChickenTable();
+                        break;
+                    case Cow:
+                        scrollTable = getAdultChickenTable();
+                        break;
+                }
+                break;
+            case Adults:
+                switch ($type) {
+                    case Chicken:
+                        scrollTable = getAdultChickenTable();
+                        break;
+                    case Pig:
+                        scrollTable = getAdultChickenTable();
+                        break;
+                    case Cow:
+                        scrollTable = getAdultChickenTable();
+                        break;
+                }
+                break;
+        }
+
+        return scrollTable;
+    }
+
+    private Table getAdultChickenTable() {
+        Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+
+        Image chickenImage = new Image(Assets.chickenTexture);
+        chickenImage.setScaling(Scaling.fit);
+        Label animalAmount = new Label(String.valueOf($amountOfAnimals), skin);
+        animalAmount.setFontScale(5);
+
+        Table scrollTable = new Table();
+        scrollTable.defaults().pad(10).width(128).height(128);
+
+        scrollTable.add(chickenImage);
+        scrollTable.add(animalAmount).center();
+
+        return scrollTable;
+    }
+
+    public void addAnimal() {
+        $amountOfAnimals++;
+    }
+
+    public void removeOneAnimal() {
+        $amountOfAnimals--;
+    }
+
+    @Override
     public void write(Json json) {
         json.writeValue("status", $status);
         json.writeValue("type", $type);
+        json.writeValue("amountOfAnimals", $amountOfAnimals);
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
         $status = FarmFieldStatusEnum.valueOf(jsonData.getString("status"));
         $type = FarmFieldTypeEnum.valueOf(jsonData.getString("type"));
+        $amountOfAnimals = jsonData.getInt("amountOfAnimals");
         changeTexture();
     }
 }

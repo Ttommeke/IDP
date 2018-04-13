@@ -12,6 +12,7 @@ public class Assets {
     public static Texture coinsTexture;
     public static Texture grainSeedsTexture;
     public static Texture grainSackTexture;
+    public static Texture chickenTexture;
 
     // Grid textures
     public static Texture farmLandUnplantedTexture;
@@ -34,6 +35,7 @@ public class Assets {
         coinsTexture = new Texture("coins.png");
         grainSeedsTexture = new Texture("grain.png");
         grainSackTexture = new Texture("grainSack.png");
+        chickenTexture = new Texture("chicken.png");
 
         // Grid textures
         // FarmLandTexture
@@ -60,6 +62,7 @@ public class Assets {
         coinsTexture.dispose();
         grainSeedsTexture.dispose();
         grainSackTexture.dispose();
+        chickenTexture.dispose();
 
         // Grid textures
         // FarmLandTexture

@@ -6,6 +6,7 @@ import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.GridSquare;
 import com.farm.game.sprites.InvisibleChildSquare;
 import com.farm.game.sprites.InvisibleGridSquare;
+import com.farm.game.states.GameStateManager;
 
 public class Grid {
     private FarmObject[][] $grid;
@@ -43,17 +44,17 @@ public class Grid {
         }
     }
 
-    public void handleTouch(float x, float y) {
+    public void handleTouch(float x, float y, GameStateManager gsm) {
         for(int i=0; i<$gridRectangle.length; i++) {
             for(int j=0; j<$gridRectangle[i].length; j++) {
                 if($gridRectangle[i][j].contains(x, y)) {
-                    $grid[i][j].handleTouch();
+                    $grid[i][j].handleTouch(gsm);
                 }
             }
         }
     }
 
-    public void gridIndexesTouched(int rowIndex, int columnIndex) {
-        $grid[rowIndex][columnIndex].handleTouch();
+    public void gridIndexesTouched(int rowIndex, int columnIndex, GameStateManager gsm) {
+        $grid[rowIndex][columnIndex].handleTouch(gsm);
     }
 }

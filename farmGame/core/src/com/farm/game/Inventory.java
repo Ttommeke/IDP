@@ -1,5 +1,16 @@
 package com.farm.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Scaling;
+import com.farm.game.sprites.FarmObject;
+
 /**
  * This class contains the inventory of the player.
  */
@@ -39,8 +50,80 @@ public class Inventory {
 
         coins = 10;
         amountOfGrainSeeds = 3;
+        amountOfChickens = 2;
 
-        FarmGameMain.settings.saveToJSON();
+        saveInventoryOnlyToJSON();
+    }
+
+    private void saveInventoryOnlyToJSON() {
+        try {
+            Preferences prefs = Gdx.app.getPreferences("My Preferences");
+            Json json = new Json();
+
+            String jsonInventoryString = json.prettyPrint(this);
+            prefs.putString("inventory", jsonInventoryString );
+
+            prefs.flush();
+        } catch (Throwable e) {
+            Gdx.app.log("error saving file", e.getMessage());
+        }
+    }
+
+    public Table getScrollTable() {
+        Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+
+        Image coinsImage = new Image(Assets.coinsTexture);
+        coinsImage.setScaling(Scaling.fit);
+        Label coinLabel = new Label(String.valueOf(coins), skin);
+        coinLabel.setFontScale(5);
+
+        Image GrainSeedsImage = new Image(Assets.grainSeedsTexture);
+        GrainSeedsImage.setScaling(Scaling.fit);
+        Label GrainSeeds = new Label(String.valueOf(amountOfGrainSeeds), skin);
+        GrainSeeds.setFontScale(5);
+        Image GrainSackImage = new Image(Assets.grainSackTexture);
+        GrainSackImage.setScaling(Scaling.fit);
+        Label GrainSacks = new Label(String.valueOf(amountOfGrainSacks), skin);
+        GrainSacks.setFontScale(5);
+        Image GrainSeedsImage2 = new Image(Assets.grainSeedsTexture);
+        GrainSeedsImage.setScaling(Scaling.fit);
+        Label GrainSeeds2 = new Label(String.valueOf(amountOfGrainSeeds), skin);
+        GrainSeeds2.setFontScale(5);
+        Image GrainSackImage2 = new Image(Assets.grainSackTexture);
+        GrainSackImage.setScaling(Scaling.fit);
+        Label GrainSacks2 = new Label(String.valueOf(amountOfGrainSacks), skin);
+        GrainSacks2.setFontScale(5);
+        Image GrainSeedsImage3 = new Image(Assets.grainSeedsTexture);
+        GrainSeedsImage.setScaling(Scaling.fit);
+        Label GrainSeeds3 = new Label(String.valueOf(amountOfGrainSeeds), skin);
+        GrainSeeds3.setFontScale(5);
+        Image GrainSackImage3 = new Image(Assets.grainSackTexture);
+        GrainSackImage.setScaling(Scaling.fit);
+        Label GrainSacks3 = new Label(String.valueOf(amountOfGrainSacks), skin);
+        GrainSacks3.setFontScale(5);
+
+        Table scrollTable = new Table();
+        scrollTable.defaults().pad(10).width(128).height(128);
+
+        scrollTable.add(coinsImage);
+        scrollTable.add(coinLabel).center();
+        scrollTable.row();
+        scrollTable.add(GrainSeedsImage);
+        scrollTable.add(GrainSeeds).center();
+        scrollTable.add(GrainSackImage);
+        scrollTable.add(GrainSacks).center();
+        scrollTable.row();
+        scrollTable.add(GrainSeedsImage2);
+        scrollTable.add(GrainSeeds2).center();
+        scrollTable.add(GrainSackImage2);
+        scrollTable.add(GrainSacks2).center();
+        scrollTable.row();
+        scrollTable.add(GrainSeedsImage3);
+        scrollTable.add(GrainSeeds3).center();
+        scrollTable.add(GrainSackImage3);
+        scrollTable.add(GrainSacks3).center();
+
+        return scrollTable;
     }
 
     public int getCoins() {
