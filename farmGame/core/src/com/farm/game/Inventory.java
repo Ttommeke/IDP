@@ -2,14 +2,15 @@ package com.farm.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Scaling;
-import com.farm.game.sprites.FarmObject;
 
 /**
  * This class contains the inventory of the player.
@@ -17,29 +18,16 @@ import com.farm.game.sprites.FarmObject;
 public class Inventory {
     private int coins;
 
-    private int amountOfGrainSeeds;
-    private int amountOfGrainSacks;
-    private int amountOfCarrotSeeds;
-    private int amountOfCarrotSacks;
-    private int amountOfPotatoSeeds;
-    private int amountOfPotatoSacks;
-    private int amountOfStrawberrySeeds;
-    private int amountOfStrawberrySacks;
-    private int amountOfEggplantSeeds;
-    private int amountOfEggplantSacks;
+    private int amountOfGrain;
+    private int amountOfCarrot;
+    private int amountOfPotato;
+    private int amountOfStrawberry;
+    private int amountOfEggplant;
 
-    private int amountOfCalves;
-    private int amountOfCows;
     private int amountOfMilk;
-    private int amountOfPiglets;
-    private int amountOfPigs;
-    private int amountOfChicks;
-    private int amountOfChickens;
     private int amountOfEggs;
 
-    private int amountOfAppleSeeds;
     private int amountOfApples;
-    private int amountOfBlueberrySeeds;
     private int amountOfBlueberries;
 
     private int amountOfFertilizer;
@@ -49,8 +37,7 @@ public class Inventory {
         System.out.println("defaultInventory");
 
         coins = 10;
-        amountOfGrainSeeds = 3;
-        amountOfChickens = 2;
+        amountOfGrain = 3;
 
         saveInventoryOnlyToJSON();
     }
@@ -74,33 +61,41 @@ public class Inventory {
 
         Image coinsImage = new Image(Assets.coinsTexture);
         coinsImage.setScaling(Scaling.fit);
-        Label coinLabel = new Label(String.valueOf(coins), skin);
+        final Label coinLabel = new Label(String.valueOf(coins), skin);
         coinLabel.setFontScale(5);
 
-        Image GrainSeedsImage = new Image(Assets.grainSeedsTexture);
-        GrainSeedsImage.setScaling(Scaling.fit);
-        Label GrainSeeds = new Label(String.valueOf(amountOfGrainSeeds), skin);
-        GrainSeeds.setFontScale(5);
-        Image GrainSackImage = new Image(Assets.grainSackTexture);
-        GrainSackImage.setScaling(Scaling.fit);
-        Label GrainSacks = new Label(String.valueOf(amountOfGrainSacks), skin);
-        GrainSacks.setFontScale(5);
-        Image GrainSeedsImage2 = new Image(Assets.grainSeedsTexture);
-        GrainSeedsImage.setScaling(Scaling.fit);
-        Label GrainSeeds2 = new Label(String.valueOf(amountOfGrainSeeds), skin);
-        GrainSeeds2.setFontScale(5);
-        Image GrainSackImage2 = new Image(Assets.grainSackTexture);
-        GrainSackImage.setScaling(Scaling.fit);
-        Label GrainSacks2 = new Label(String.valueOf(amountOfGrainSacks), skin);
-        GrainSacks2.setFontScale(5);
-        Image GrainSeedsImage3 = new Image(Assets.grainSeedsTexture);
-        GrainSeedsImage.setScaling(Scaling.fit);
-        Label GrainSeeds3 = new Label(String.valueOf(amountOfGrainSeeds), skin);
-        GrainSeeds3.setFontScale(5);
-        Image GrainSackImage3 = new Image(Assets.grainSackTexture);
-        GrainSackImage.setScaling(Scaling.fit);
-        Label GrainSacks3 = new Label(String.valueOf(amountOfGrainSacks), skin);
-        GrainSacks3.setFontScale(5);
+        Image GrainImage = new Image(Assets.grainTexture);
+        GrainImage.setScaling(Scaling.fit);
+        final Label Grain = new Label(String.valueOf(amountOfGrain), skin);
+        Grain.setFontScale(5);
+        Image buyImage = new Image(Assets.farmBuildingTexture);
+        buyImage.setScaling(Scaling.fit);
+        buyImage.setTouchable(Touchable.enabled);
+        buyImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyGrain();
+                Grain.setText(String.valueOf(amountOfGrain));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle();//the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellImage = new Image(Assets.farmLandUnplantedTexture);
+        sellImage.setScaling(Scaling.fit);
+        sellImage.setTouchable(Touchable.enabled);
+        sellImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellGrain();
+                Grain.setText(String.valueOf(amountOfGrain));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle();//the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
 
         Table scrollTable = new Table();
         scrollTable.defaults().pad(10).width(128).height(128);
@@ -108,20 +103,11 @@ public class Inventory {
         scrollTable.add(coinsImage);
         scrollTable.add(coinLabel).center();
         scrollTable.row();
-        scrollTable.add(GrainSeedsImage);
-        scrollTable.add(GrainSeeds).center();
-        scrollTable.add(GrainSackImage);
-        scrollTable.add(GrainSacks).center();
+        scrollTable.add(GrainImage);
+        scrollTable.add(Grain).center();
+        scrollTable.add(buyImage);
+        scrollTable.add(sellImage);
         scrollTable.row();
-        scrollTable.add(GrainSeedsImage2);
-        scrollTable.add(GrainSeeds2).center();
-        scrollTable.add(GrainSackImage2);
-        scrollTable.add(GrainSacks2).center();
-        scrollTable.row();
-        scrollTable.add(GrainSeedsImage3);
-        scrollTable.add(GrainSeeds3).center();
-        scrollTable.add(GrainSackImage3);
-        scrollTable.add(GrainSacks3).center();
 
         return scrollTable;
     }
@@ -138,254 +124,237 @@ public class Inventory {
         this.coins -= coinAmount;
     }
 
-    public int getAmountOfGrainSeeds() {
-        return amountOfGrainSeeds;
+    public int getAmountOfGrain() {
+        return amountOfGrain;
     }
 
-    public void useGrainSeed() {
-        this.amountOfGrainSeeds--;
+    public void buyGrain() {
+        if(this.coins >= 3) {
+            this.amountOfGrain++;
+            this.coins -= 3;
+        }
     }
 
-    public void addGrainSeeds(int amount) {
-        this.amountOfGrainSeeds += amount;
+    public void sellGrain() {
+        if(this.amountOfGrain >= 1) {
+            this.amountOfGrain--;
+            this.coins += 2;
+        }
     }
 
-    public int getAmountOfGrainSacks() {
-        return amountOfGrainSacks;
+    public void addGrain(int amount) {
+        this.amountOfGrain += amount;
     }
 
-    public void useGrainSack() {
-        this.amountOfGrainSacks--;
+    public int getAmountOfCarrot() {
+        return amountOfCarrot;
     }
 
-    public void sellGrainSacks(int amount) {
-        this.amountOfGrainSacks -= amount;
+    public void buyCarrot() {
+        if(this.coins >= 2) {
+            this.amountOfCarrot++;
+            this.coins -= 2;
+        }
     }
 
-    public int getAmountOfCarrotSeeds() {
-        return amountOfCarrotSeeds;
+    public void sellCarrot() {
+        if(this.amountOfCarrot >= 1) {
+            this.amountOfCarrot--;
+            this.coins += 1;
+        }
     }
 
-    public void useCarrotSeed() {
-        this.amountOfCarrotSeeds--;
+    public void addCarrot(int amount) {
+        this.amountOfCarrot += amount;
     }
 
-    public void addCarrotSeeds(int amount) {
-        this.amountOfCarrotSeeds += amount;
+    public int getAmountOfPotato() {
+        return amountOfPotato;
     }
 
-    public int getAmountOfCarrotSacks() {
-        return amountOfCarrotSacks;
+    public void buyPatato() {
+        if(this.coins >= 3) {
+            this.amountOfPotato++;
+            this.coins -= 3;
+        }
     }
 
-    public void useCarrotSack() {
-        this.amountOfCarrotSeeds--;
+    public void sellPatato() {
+        if(this.amountOfPotato >= 1) {
+            this.amountOfPotato--;
+            this.coins += 2;
+        }
     }
 
-    public void sellCarrotSacks(int amount) {
-        this.amountOfCarrotSacks -= amount;
+    public void addPotato(int amount) {
+        this.amountOfPotato += amount;
     }
 
-    public int getAmountOfPotatoSeeds() {
-        return amountOfPotatoSeeds;
+    public int getAmountOfStrawberry() {
+        return amountOfStrawberry;
     }
 
-    public void usePatatoSeed() {
-        this.amountOfPotatoSeeds--;
+    public void buyStrawberry() {
+        if(this.coins >= 20) {
+            this.amountOfStrawberry++;
+            this.coins -= 20;
+        }
     }
 
-    public void addPotatoSeeds(int amount) {
-        this.amountOfPotatoSeeds += amount;
+    public void sellStrawberry() {
+        if(this.amountOfStrawberry >= 1) {
+            this.amountOfStrawberry--;
+            this.coins += 13;
+        }
     }
 
-    public int getAmountOfPotatoSacks() {
-        return amountOfPotatoSacks;
+    public void addStrawberry(int amount) {
+        this.amountOfStrawberry += amount;
     }
 
-    public void usePatatoSack() {
-        this.amountOfPotatoSacks--;
+    public int getAmountOfEggplant() {
+        return amountOfEggplant;
     }
 
-    public void sellPotatoSacks(int amount) {
-        this.amountOfPotatoSacks -= amount;
+    public void buyEggplant() {
+        if(this.coins >= 24) {
+            this.amountOfEggplant++;
+            this.coins -= 24;
+        }
     }
 
-    public int getAmountOfStrawberrySeeds() {
-        return amountOfStrawberrySeeds;
+    public void sellEggplant() {
+        if(this.amountOfEggplant >= 1) {
+            this.amountOfEggplant--;
+            this.coins += 16;
+        }
     }
 
-    public void useStrawberrySeed() {
-        this.amountOfStrawberrySeeds--;
-    }
-
-    public void addStrawberrySeeds(int amount) {
-        this.amountOfStrawberrySeeds += amount;
-    }
-
-    public int getAmountOfStrawberrySacks() {
-        return amountOfStrawberrySacks;
-    }
-
-    public void useStrawberrySack() {
-        this.amountOfStrawberrySacks--;
-    }
-
-    public void sellStrawberrySacks(int amount) {
-        this.amountOfStrawberrySacks -= amount;
-    }
-
-    public int getAmountOfEggplantSeeds() {
-        return amountOfEggplantSeeds;
-    }
-
-    public void useEggplantSeed() {
-        this.amountOfEggplantSeeds--;
-    }
-
-    public void addAmountOfEggplantSeeds(int amount) {
-        this.amountOfEggplantSeeds += amount;
-    }
-
-    public int getAmountOfEggplantSacks() {
-        return amountOfEggplantSacks;
-    }
-
-    public void useEggplantSack() {
-        this.amountOfEggplantSacks--;
-    }
-
-    public void sellAmountOfEggplantSacks(int amount) {
-        this.amountOfEggplantSacks -= amount;
-    }
-
-    public int getAmountOfCalves() {
-        return amountOfCalves;
-    }
-
-    public void buyCalves(int amount) {
-        this.amountOfCalves += amount;
-    }
-
-    public void growCalveUp() {
-        this.amountOfCalves--;
-        this.amountOfCows++;
-    }
-
-    public int getAmountOfCows() {
-        return amountOfCows;
+    public void addAmountOfEggplant(int amount) {
+        this.amountOfEggplant += amount;
     }
 
     public int getAmountOfMilk() {
         return amountOfMilk;
     }
 
-    public void collectMilk() {
-        this.amountOfMilk++;
+    public void addMilk(int amount) {
+        this.amountOfMilk += amount;
     }
 
-    public void sellMilk(int amount) {
-        this.amountOfMilk -= amount;
+    public void buyMilk() {
+        if(this.coins >= 9) {
+            this.amountOfMilk++;
+            this.coins -= 9;
+        }
     }
 
-    public int getAmountOfPiglets() {
-        return amountOfPiglets;
-    }
-
-    public void buyPiglets(int amount) {
-        this.amountOfPiglets += amount;
-    }
-
-    public void growPigletUp() {
-        this.amountOfPiglets--;
-        this.amountOfPigs++;
-    }
-
-    public int getAmountOfPigs() {
-        return amountOfPigs;
-    }
-
-    public int getAmountOfChicks() {
-        return amountOfChicks;
-    }
-
-    public void buyChicks(int amount) {
-        this.amountOfChicks += amount;
-    }
-
-    public void growChickUp() {
-        this.amountOfChicks--;
-        this.amountOfChickens++;
-    }
-
-    public int getAmountOfChickens() {
-        return amountOfChickens;
+    public void sellMilk() {
+        if(this.amountOfMilk >= 1) {
+            this.amountOfMilk--;
+            this.coins += 6;
+        }
     }
 
     public int getAmountOfEggs() {
         return amountOfEggs;
     }
 
-    public void collectEgg() {
-        this.amountOfEggs++;
+    public void addEgg(int amount) {
+        this.amountOfEggs += amount;
+    }
+
+    public void buyEgg() {
+        if(this.coins >= 8) {
+            this.amountOfEggs++;
+            this.coins -= 8;
+        }
     }
 
     public void sellEggs(int amount) {
-        this.amountOfEggs -= amount;
-    }
-
-    public int getAmountOfAppleSeeds() {
-        return amountOfAppleSeeds;
-    }
-
-    public void buyAppleSeeds(int amount) {
-        this.amountOfAppleSeeds += amount;
-    }
-
-    public void useAppleSeed() {
-        this.amountOfAppleSeeds--;
+        if(this.amountOfEggs >= 1) {
+            this.amountOfEggs -= amount;
+            this.coins += 5;
+        }
     }
 
     public int getAmountOfApples() {
         return amountOfApples;
     }
 
-    public void sellApples(int amount) {
-        this.amountOfApples -= amountOfApples;
+    public void addApples(int amount) {
+        this.amountOfApples += amount;
     }
 
-    public int getAmountOfBlueberrySeeds() {
-        return amountOfBlueberrySeeds;
+    public void buyApple() {
+        if(this.coins >= 5) {
+            this.amountOfApples++;
+            this.coins -= 5;
+        }
     }
 
-    public void sellBlueberrySeeds(int amount) {
-        this.amountOfBlueberrySeeds -= amount;
-    }
-
-    public void useBlueberrySeed() {
-        this.amountOfBlueberrySeeds--;
+    public void sellApple() {
+        if(this.amountOfApples >= 1) {
+            this.amountOfApples --;
+            this.coins += 3;
+        }
     }
 
     public int getAmountOfBlueberries() {
         return amountOfBlueberries;
     }
 
-    public void sellBlueberries(int amount) {
-        this.amountOfBlueberries -= amount;
+    public void addBlueberries(int amount) {
+        this.amountOfBlueberries += amount;
+    }
+
+    public void buyBlueberry() {
+        if(this.coins >= 14) {
+            this.amountOfBlueberries++;
+            this.coins -= 14;
+        }
+    }
+
+    public void sellBlueberry() {
+        if(this.amountOfBlueberries >= 1) {
+            this.amountOfBlueberries --;
+            this.coins += 9;
+        }
     }
 
     public int getAmountOfFertilizer() {
         return amountOfFertilizer;
     }
 
-    public void findABagOfFertilizer() {
+    public void findFertilizer() {
         this.amountOfFertilizer++;
+    }
+
+    public boolean useFertilizer() {
+        this.amountOfFertilizer--;
+        if(this.amountOfFertilizer >= 0) {
+            return true;
+        } else {
+            this.amountOfFertilizer = 0;
+            return false;
+        }
     }
 
     public int getAmountOfSuperGrain() {
         return amountOfSuperGrain;
     }
 
-    public void findABagOfSuperGrain() {
+    public void findSuperGrain() {
         this.amountOfSuperGrain++;
+    }
+
+    public boolean useSuperGrain() {
+        this.amountOfSuperGrain--;
+        if(this.amountOfSuperGrain >= 0) {
+            return true;
+        } else {
+            this.amountOfSuperGrain = 0;
+            return false;
+        }
     }
 }

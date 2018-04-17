@@ -3,7 +3,6 @@ package com.farm.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
-import com.farm.game.DataClasses.User;
 import com.farm.game.sprites.FarmObject;
 
 public class Settings {
