@@ -64,7 +64,7 @@ public class FarmField extends FarmObject {
             case Adults:
                 switch ($type) {
                     case Chicken:
-                        $texture = Assets.farmFieldAdultChickensTexture;
+                        $texture = Assets.farmFieldChickenTexture;
                         break;
                     case Pig:
                         $texture = Assets.farmFieldUninhabitedTexture;

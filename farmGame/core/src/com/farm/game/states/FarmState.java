@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Scaling;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 
@@ -44,12 +47,15 @@ public class FarmState extends State implements InputProcessor{
         // Menus
         sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 133, FarmGameMain.HEIGHT - 133, 128, 128);
 
+        // Inventory info on screen
+        sb.draw(Assets.coinsTexture, 0, FarmGameMain.HEIGHT - 69, 64, 64);
+        FarmGameMain.font.draw(sb, String.valueOf(FarmGameMain.inventory.getCoins()), 69, FarmGameMain.HEIGHT - 5);
+
         sb.end();
     }
 
     @Override
     public void dispose() {}
-
 
     /**
      * Section

@@ -28,7 +28,7 @@ public class Inventory {
     private int amountOfEggs;
 
     private int amountOfApples;
-    private int amountOfBlueberries;
+    private int amountOfRaspberries;
 
     private int amountOfFertilizer;
     private int amountOfSuperGrain;
@@ -64,14 +64,21 @@ public class Inventory {
         final Label coinLabel = new Label(String.valueOf(coins), skin);
         coinLabel.setFontScale(5);
 
+        Table scrollTable = new Table();
+        scrollTable.defaults().pad(10).width(128).height(128);
+
+        scrollTable.add(coinsImage);
+        scrollTable.add(coinLabel).center();
+        scrollTable.row();
+
+        // Grain
         Image GrainImage = new Image(Assets.grainTexture);
         GrainImage.setScaling(Scaling.fit);
         final Label Grain = new Label(String.valueOf(amountOfGrain), skin);
         Grain.setFontScale(5);
-        Image buyImage = new Image(Assets.farmBuildingTexture);
-        buyImage.setScaling(Scaling.fit);
-        buyImage.setTouchable(Touchable.enabled);
-        buyImage.addListener(new ClickListener() {
+        Image buyGrainImage = new Image(Assets.buyTexture);
+        buyGrainImage.setScaling(Scaling.fit);
+        buyGrainImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 buyGrain();
@@ -82,10 +89,9 @@ public class Inventory {
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
-        Image sellImage = new Image(Assets.farmLandUnplantedTexture);
-        sellImage.setScaling(Scaling.fit);
-        sellImage.setTouchable(Touchable.enabled);
-        sellImage.addListener(new ClickListener() {
+        Image sellGrainImage = new Image(Assets.sellTexture);
+        sellGrainImage.setScaling(Scaling.fit);
+        sellGrainImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 sellGrain();
@@ -97,16 +103,10 @@ public class Inventory {
             }
         });
 
-        Table scrollTable = new Table();
-        scrollTable.defaults().pad(10).width(128).height(128);
-
-        scrollTable.add(coinsImage);
-        scrollTable.add(coinLabel).center();
-        scrollTable.row();
         scrollTable.add(GrainImage);
         scrollTable.add(Grain).center();
-        scrollTable.add(buyImage);
-        scrollTable.add(sellImage);
+        scrollTable.add(buyGrainImage);
+        scrollTable.add(sellGrainImage);
         scrollTable.row();
 
         return scrollTable;
@@ -300,24 +300,24 @@ public class Inventory {
         }
     }
 
-    public int getAmountOfBlueberries() {
-        return amountOfBlueberries;
+    public int getAmountOfRaspberries() {
+        return amountOfRaspberries;
     }
 
-    public void addBlueberries(int amount) {
-        this.amountOfBlueberries += amount;
+    public void addRaspberries(int amount) {
+        this.amountOfRaspberries += amount;
     }
 
-    public void buyBlueberry() {
+    public void buyRaspberry() {
         if(this.coins >= 14) {
-            this.amountOfBlueberries++;
+            this.amountOfRaspberries++;
             this.coins -= 14;
         }
     }
 
-    public void sellBlueberry() {
-        if(this.amountOfBlueberries >= 1) {
-            this.amountOfBlueberries --;
+    public void sellRaspberry() {
+        if(this.amountOfRaspberries >= 1) {
+            this.amountOfRaspberries--;
             this.coins += 9;
         }
     }

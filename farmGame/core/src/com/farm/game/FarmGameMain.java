@@ -20,7 +20,6 @@ public class FarmGameMain extends ApplicationAdapter {
     public static Settings settings;
 
 	public static BitmapFont font;
-	public static BitmapFont fnt;
 
 	private GameStateManager $gsm;
 	private SpriteBatch $batch;
@@ -30,13 +29,10 @@ public class FarmGameMain extends ApplicationAdapter {
         $batch = new SpriteBatch();
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("Xpressive Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 100;
+        param.size = 75;
         param.borderWidth = 2;
         param.borderColor = Color.BLACK;
         font = gen.generateFont(param);
-
-        param.size = 50;
-        fnt = gen.generateFont(param);
         gen.dispose();
 
         WIDTH = Gdx.graphics.getWidth();
@@ -67,13 +63,4 @@ public class FarmGameMain extends ApplicationAdapter {
         Assets.dispose();
         $batch.dispose();
 	}
-
-    public static void drawButton(SpriteBatch sb, String text, float x, float y, float width, float height) {
-        GlyphLayout gl = new GlyphLayout();
-        gl.setText(font, text);
-        float textWidth = width / 2 - gl.width / 2;
-        float textHeight = height / 2 + gl.height / 2;
-        sb.draw(Assets.buttonTexture, x, y, width, height);
-        font.draw(sb, text, x + textWidth, y + textHeight);
-    }
 }
