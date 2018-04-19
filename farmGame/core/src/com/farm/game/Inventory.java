@@ -548,7 +548,7 @@ public class Inventory {
         }
     }
 
-    public void addAmountOfEggplant(int amount) {
+    public void addEggplant(int amount) {
         this.amountOfEggplant += amount;
     }
 

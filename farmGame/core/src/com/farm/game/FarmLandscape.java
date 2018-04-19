@@ -42,6 +42,10 @@ public class FarmLandscape {
         return $grid;
     }
 
+    public void updateGrid() {
+        $grid.updateGrid();
+    }
+
     public void defaultGrid() {
         System.out.println("defaultGrid");
 

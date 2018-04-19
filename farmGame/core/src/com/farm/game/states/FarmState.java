@@ -35,6 +35,7 @@ public class FarmState extends State implements InputProcessor{
     @Override
     public void update(float dt) {
         $camera.update();
+        FarmGameMain.landscape.updateGrid();
     }
 
     @Override

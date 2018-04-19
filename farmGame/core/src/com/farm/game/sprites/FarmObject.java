@@ -23,6 +23,8 @@ public class FarmObject implements Json.Serializable{
         return $texture;
     }
 
+    public void updateTexture() {}
+
     public void handleTouch(GameStateManager gsm) { }
 
     @Override

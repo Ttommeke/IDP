@@ -35,6 +35,14 @@ public class Grid {
         $grid[row][column] = farmObject;
     }
 
+    public void updateGrid() {
+        for(int i=0; i<$grid.length; i++) {
+            for(int j=0; j<$grid[i].length; j++) {
+                $grid[i][j].updateTexture();
+            }
+        }
+    }
+
     public void drawObjects(SpriteBatch sb) {
         for(int i=0; i<$grid.length; i++) {
             for(int j=0; j<$grid[i].length; j++) {
