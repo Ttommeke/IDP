@@ -33,11 +33,11 @@ public class LoginState extends State {
         table.setPosition(0, -300);
         table.defaults().pad(10);
 
-        Label username = new Label("Username : ", skin);
+        Label username = new Label("Gebruikersnaam : ", skin);
         username.setFontScale(6);
         final TextField usernameField = new TextField("", skin);
 
-        Label password = new Label("Password : ", skin);
+        Label password = new Label("Wachtwoord : ", skin);
         password.setFontScale(6);
         final TextField passwordField = new TextField("", skin);
 

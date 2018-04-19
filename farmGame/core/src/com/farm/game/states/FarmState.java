@@ -25,7 +25,7 @@ public class FarmState extends State implements InputProcessor{
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             if ($inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Inventory"));
+                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
             }
 
             FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY(), $gsm);

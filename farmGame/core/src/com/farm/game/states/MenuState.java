@@ -1,6 +1,7 @@
 package com.farm.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,7 +15,7 @@ import com.farm.game.FarmGameMain;
 
 public class MenuState extends State {
     private Stage $stage;
-    private Rectangle $menuBounds;
+    private Rectangle $menuBounds, $exitBounds;
 
     public MenuState(GameStateManager gsm, Table scrollTable, String title) {
         super(gsm);
@@ -32,17 +33,19 @@ public class MenuState extends State {
         table.defaults().pad(10);
         table.add(titleLabel).center().height(100);
         table.row();
-        table.add(scroller).height(450).width(1000);
+        table.add(scroller).height(576).width(1152);
 
         $stage.addActor(table);
         Gdx.input.setInputProcessor($stage);
-        $menuBounds = new Rectangle(256, FarmGameMain.HEIGHT - 896, 1280, 640);
+        $menuBounds = new Rectangle(192, FarmGameMain.HEIGHT - 960, 1408, 768);
+        $exitBounds = new Rectangle(1408+192-143, FarmGameMain.HEIGHT - 960, 143, 143);
     }
 
     @Override
     public void handleInput() {
         if (Gdx.input.justTouched()) {
-            if (!$menuBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+            if (!$menuBounds.contains(Gdx.input.getX(), Gdx.input.getY())
+                    || $exitBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
             }
         }
@@ -56,7 +59,8 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(Assets.plateTexture, 256, 256, 1280, 640);
+        sb.draw(Assets.plateTexture, 192, 192, 1408, 768);
+        sb.draw(Assets.cancelTexture, 1408+192-143, 768+192-143, 128, 128);
         sb.end();
 
         $stage.draw();

@@ -36,7 +36,7 @@ public class Inventory {
     public void defaultInventory() {
         System.out.println("defaultInventory");
 
-        coins = 10;
+        coins = 1000;
         amountOfGrain = 3;
 
         saveInventoryOnlyToJSON();
@@ -72,20 +72,19 @@ public class Inventory {
         scrollTable.row();
 
         // Grain
-        Image GrainImage = new Image(Assets.grainTexture);
-        GrainImage.setScaling(Scaling.fit);
-        final Label Grain = new Label(String.valueOf(amountOfGrain), skin);
-        Grain.setFontScale(5);
+        Image grainImage = new Image(Assets.grainTexture);
+        grainImage.setScaling(Scaling.fit);
+        final Label grain = new Label(String.valueOf(amountOfGrain), skin);
+        grain.setFontScale(5);
         Image buyGrainImage = new Image(Assets.buyTexture);
         buyGrainImage.setScaling(Scaling.fit);
         buyGrainImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 buyGrain();
-                Grain.setText(String.valueOf(amountOfGrain));
+                grain.setText(String.valueOf(amountOfGrain));
                 coinLabel.setText(String.valueOf(coins));
                 FarmGameMain.settings.saveToJSON();
-                event.handle();//the Stage will stop trying to handle this event
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
@@ -95,18 +94,337 @@ public class Inventory {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 sellGrain();
-                Grain.setText(String.valueOf(amountOfGrain));
+                grain.setText(String.valueOf(amountOfGrain));
                 coinLabel.setText(String.valueOf(coins));
                 FarmGameMain.settings.saveToJSON();
-                event.handle();//the Stage will stop trying to handle this event
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
 
-        scrollTable.add(GrainImage);
-        scrollTable.add(Grain).center();
+        scrollTable.add(grainImage);
+        scrollTable.add(grain).center();
         scrollTable.add(buyGrainImage);
         scrollTable.add(sellGrainImage);
+        scrollTable.row();
+
+        // Carrot
+        Image carrotImage = new Image(Assets.carrotTexture);
+        carrotImage.setScaling(Scaling.fit);
+        final Label carrot = new Label(String.valueOf(amountOfCarrot), skin);
+        carrot.setFontScale(5);
+        Image buyCarrotImage = new Image(Assets.buyTexture);
+        buyCarrotImage.setScaling(Scaling.fit);
+        buyCarrotImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyCarrot();
+                carrot.setText(String.valueOf(amountOfCarrot));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellCarrotImage = new Image(Assets.sellTexture);
+        sellCarrotImage.setScaling(Scaling.fit);
+        sellCarrotImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellCarrot();
+                carrot.setText(String.valueOf(amountOfCarrot));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(carrotImage);
+        scrollTable.add(carrot).center();
+        scrollTable.add(buyCarrotImage);
+        scrollTable.add(sellCarrotImage);
+        scrollTable.row();
+
+        // Potato
+        Image potatoImage = new Image(Assets.potatoTexture);
+        potatoImage.setScaling(Scaling.fit);
+        final Label potato = new Label(String.valueOf(amountOfPotato), skin);
+        potato.setFontScale(5);
+        Image buyPotatoImage = new Image(Assets.buyTexture);
+        buyPotatoImage.setScaling(Scaling.fit);
+        buyPotatoImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyPotato();
+                potato.setText(String.valueOf(amountOfPotato));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellPotatoImage = new Image(Assets.sellTexture);
+        sellPotatoImage.setScaling(Scaling.fit);
+        sellPotatoImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellPotato();
+                potato.setText(String.valueOf(amountOfPotato));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(potatoImage);
+        scrollTable.add(potato).center();
+        scrollTable.add(buyPotatoImage);
+        scrollTable.add(sellPotatoImage);
+        scrollTable.row();
+
+        // Strawberry
+        Image strawberryImage = new Image(Assets.strawberryTexture);
+        strawberryImage.setScaling(Scaling.fit);
+        final Label strawberry = new Label(String.valueOf(amountOfStrawberry), skin);
+        strawberry.setFontScale(5);
+        Image buyStrawberryImage = new Image(Assets.buyTexture);
+        buyStrawberryImage.setScaling(Scaling.fit);
+        buyStrawberryImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyStrawberry();
+                strawberry.setText(String.valueOf(amountOfStrawberry));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellStrawberryImage = new Image(Assets.sellTexture);
+        sellStrawberryImage.setScaling(Scaling.fit);
+        sellStrawberryImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellStrawberry();
+                strawberry.setText(String.valueOf(amountOfStrawberry));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(strawberryImage);
+        scrollTable.add(strawberry).center();
+        scrollTable.add(buyStrawberryImage);
+        scrollTable.add(sellStrawberryImage);
+        scrollTable.row();
+
+        // Eggplant
+        Image eggplantImage = new Image(Assets.eggplantTexture);
+        eggplantImage.setScaling(Scaling.fit);
+        final Label eggplant = new Label(String.valueOf(amountOfEggplant), skin);
+        eggplant.setFontScale(5);
+        Image buyEggplantImage = new Image(Assets.buyTexture);
+        buyEggplantImage.setScaling(Scaling.fit);
+        buyEggplantImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyEggplant();
+                eggplant.setText(String.valueOf(amountOfEggplant));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellEggplantImage = new Image(Assets.sellTexture);
+        sellEggplantImage.setScaling(Scaling.fit);
+        sellEggplantImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellEggplant();
+                eggplant.setText(String.valueOf(amountOfEggplant));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(eggplantImage);
+        scrollTable.add(eggplant).center();
+        scrollTable.add(buyEggplantImage);
+        scrollTable.add(sellEggplantImage);
+        scrollTable.row();
+
+        // Apple
+        Image appleImage = new Image(Assets.appleTexture);
+        appleImage.setScaling(Scaling.fit);
+        final Label apple = new Label(String.valueOf(amountOfApples), skin);
+        apple.setFontScale(5);
+        Image buyAppleImage = new Image(Assets.buyTexture);
+        buyAppleImage.setScaling(Scaling.fit);
+        buyAppleImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyApple();
+                apple.setText(String.valueOf(amountOfApples));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellAppleImage = new Image(Assets.sellTexture);
+        sellAppleImage.setScaling(Scaling.fit);
+        sellAppleImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellApple();
+                apple.setText(String.valueOf(amountOfApples));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(appleImage);
+        scrollTable.add(apple).center();
+        scrollTable.add(buyAppleImage);
+        scrollTable.add(sellAppleImage);
+        scrollTable.row();
+
+        // Raspberry
+        Image raspberryImage = new Image(Assets.raspberryTexture);
+        raspberryImage.setScaling(Scaling.fit);
+        final Label raspberry = new Label(String.valueOf(amountOfRaspberries), skin);
+        raspberry.setFontScale(5);
+        Image buyRaspberryImage = new Image(Assets.buyTexture);
+        buyRaspberryImage.setScaling(Scaling.fit);
+        buyRaspberryImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyRaspberry();
+                raspberry.setText(String.valueOf(amountOfRaspberries));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellRaspberryImage = new Image(Assets.sellTexture);
+        sellRaspberryImage.setScaling(Scaling.fit);
+        sellRaspberryImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellRaspberry();
+                raspberry.setText(String.valueOf(amountOfRaspberries));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(raspberryImage);
+        scrollTable.add(raspberry).center();
+        scrollTable.add(buyRaspberryImage);
+        scrollTable.add(sellRaspberryImage);
+        scrollTable.row();
+
+        // Egg
+        Image eggImage = new Image(Assets.eggTexture);
+        eggImage.setScaling(Scaling.fit);
+        final Label egg = new Label(String.valueOf(amountOfEggs), skin);
+        egg.setFontScale(5);
+        Image buyEggImage = new Image(Assets.buyTexture);
+        buyEggImage.setScaling(Scaling.fit);
+        buyEggImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyEgg();
+                egg.setText(String.valueOf(amountOfEggs));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellEggImage = new Image(Assets.sellTexture);
+        sellEggImage.setScaling(Scaling.fit);
+        sellEggImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellEgg();
+                egg.setText(String.valueOf(amountOfEggs));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(eggImage);
+        scrollTable.add(egg).center();
+        scrollTable.add(buyEggImage);
+        scrollTable.add(sellEggImage);
+        scrollTable.row();
+
+        // Milk
+        Image milkImage = new Image(Assets.milkTexture);
+        milkImage.setScaling(Scaling.fit);
+        final Label milk = new Label(String.valueOf(amountOfMilk), skin);
+        milk.setFontScale(5);
+        Image buyMilkImage = new Image(Assets.buyTexture);
+        buyMilkImage.setScaling(Scaling.fit);
+        buyMilkImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                buyMilk();
+                milk.setText(String.valueOf(amountOfMilk));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        Image sellMilkImage = new Image(Assets.sellTexture);
+        sellMilkImage.setScaling(Scaling.fit);
+        sellMilkImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                sellMilk();
+                milk.setText(String.valueOf(amountOfMilk));
+                coinLabel.setText(String.valueOf(coins));
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(milkImage);
+        scrollTable.add(milk).center();
+        scrollTable.add(buyMilkImage);
+        scrollTable.add(sellMilkImage);
+        scrollTable.row();
+
+        // SuperItems
+        Image superFertilizerImage = new Image(Assets.superFertilizerTexture);
+        superFertilizerImage.setScaling(Scaling.fit);
+        final Label superFertilizer = new Label(String.valueOf(amountOfFertilizer), skin);
+        superFertilizer.setFontScale(5);
+        Image superGrainImage = new Image(Assets.superGrainTexture);
+        superGrainImage.setScaling(Scaling.fit);
+        final Label superGrain = new Label(String.valueOf(amountOfSuperGrain), skin);
+        superGrain.setFontScale(5);
+
+        scrollTable.add(superFertilizerImage);
+        scrollTable.add(superFertilizer).center();
+        scrollTable.add(superGrainImage);
+        scrollTable.add(superGrain).center();
         scrollTable.row();
 
         return scrollTable;
@@ -172,14 +490,14 @@ public class Inventory {
         return amountOfPotato;
     }
 
-    public void buyPatato() {
+    public void buyPotato() {
         if(this.coins >= 3) {
             this.amountOfPotato++;
             this.coins -= 3;
         }
     }
 
-    public void sellPatato() {
+    public void sellPotato() {
         if(this.amountOfPotato >= 1) {
             this.amountOfPotato--;
             this.coins += 2;
@@ -271,9 +589,9 @@ public class Inventory {
         }
     }
 
-    public void sellEggs(int amount) {
+    public void sellEgg() {
         if(this.amountOfEggs >= 1) {
-            this.amountOfEggs -= amount;
+            this.amountOfEggs --;
             this.coins += 5;
         }
     }
