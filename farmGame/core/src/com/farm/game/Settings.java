@@ -50,7 +50,7 @@ public class Settings {
             if(jsonFarmLandscapeString  == null || jsonFarmLandscapeString .equals("") || jsonFarmLandscapeString .equals("null")) {
                 FarmGameMain.landscape.defaultGrid();
             } else {
-                //System.out.println("loaded: " + jsonString);
+                //System.out.println("loaded: " + jsonFarmLandscapeString);
                 Grid grid = $json.fromJson(Grid.class, jsonFarmLandscapeString );
                 FarmGameMain.landscape.setGrid(grid);
             }
