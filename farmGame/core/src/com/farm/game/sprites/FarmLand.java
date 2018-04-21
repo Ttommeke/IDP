@@ -1,6 +1,7 @@
 package com.farm.game.sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -17,6 +18,7 @@ import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 import com.farm.game.states.GameStateManager;
 import com.farm.game.states.MenuState;
+import com.farm.game.states.TimeLeftMenuState;
 
 /**
  * The class representing a farmLand/acre (for planting seeds)
@@ -45,7 +47,7 @@ public class FarmLand extends FarmObject{
                 gsm.push(new MenuState(gsm, getUnplantedMenu(gsm), "Kies zaadje"));
                 break;
             case Growing:
-                gsm.push(new MenuState(gsm, getTimeLeftMenu(), "Zaadje groeit"));
+                pushTimeLeftMenu(gsm, "Zaadje groeid");
                 break;
             case FullyGrown:
                 switch ($type){
@@ -242,50 +244,33 @@ public class FarmLand extends FarmObject{
         return scrollTable;
     }
 
-    private Table getTimeLeftMenu() {
-        Table scrollTable = new Table();
-        scrollTable.defaults().pad(10).width(256).height(256);
-
-        Image typeImage = new Image();
+    private void pushTimeLeftMenu(GameStateManager gsm, String title) {
         long additionTime = 0L;
+        Texture texture = Assets.grainTexture;
         switch ($type){
             case Grain:
-                typeImage.setDrawable(new TextureRegionDrawable(new TextureRegion(Assets.grainTexture)));
+                texture = Assets.grainTexture;
                 additionTime = (grainGrowTime*60*1000);
                 break;
             case Carrot:
-                typeImage.setDrawable(new TextureRegionDrawable(new TextureRegion(Assets.carrotTexture)));
+                texture = Assets.carrotTexture;
                 additionTime = (carrotGrowTime*60*1000);
                 break;
             case Potato:
-                typeImage.setDrawable(new TextureRegionDrawable(new TextureRegion(Assets.potatoTexture)));
+                texture = Assets.potatoTexture;
                 additionTime = (potatoGrowTime*60*1000);
                 break;
             case Eggplant:
-                typeImage.setDrawable(new TextureRegionDrawable(new TextureRegion(Assets.eggplantTexture)));
+                texture = Assets.eggplantTexture;
                 additionTime = (eggplantGrowTime*60*1000);
                 break;
             case Strawberry:
-                typeImage.setDrawable(new TextureRegionDrawable(new TextureRegion(Assets.strawberryTexture)));
+                texture = Assets.strawberryTexture;
                 additionTime = (strawberryGrowTime*60*1000);
                 break;
         }
-        typeImage.setScaling(Scaling.fit);
 
-        Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
-        long fullSecondsLeft = ($plantTime + additionTime - System.currentTimeMillis())/1000;
-        long minutesLeft = fullSecondsLeft/60;
-        long secondsLeft = fullSecondsLeft%60;
-        Label timeLeft = new Label(("00" + String.valueOf(minutesLeft)).substring(String.valueOf(minutesLeft).length())
-                + ":" + ("00" + String.valueOf(secondsLeft)).substring(String.valueOf(secondsLeft).length()), skin);
-        timeLeft.setFontScale(5);
-
-        scrollTable.add(typeImage);
-        scrollTable.row();
-        scrollTable.add(timeLeft).center();
-        scrollTable.row();
-
-        return scrollTable;
+        gsm.push(new TimeLeftMenuState(gsm, texture, $plantTime, additionTime , title));
     }
 
     /**
