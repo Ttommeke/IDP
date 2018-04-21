@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "585179531964",
+    "firebase_url": "https://idpneuro.firebaseio.com",
+    "project_id": "idpneuro",
+    "storage_bucket": "idpneuro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585179531964:android:67eefd8a466132bf",
+        "android_client_info": {
+          "package_name": "com.farm.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585179531964-41db20dii0d41u7fi3gtotaek27dt1iv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxH0Yef-MtC25rGkWBuI3YgLUFEvR8MYk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
