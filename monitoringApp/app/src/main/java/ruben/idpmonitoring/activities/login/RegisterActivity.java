@@ -1,4 +1,4 @@
-package ruben.idpmonitoring.activities;
+package ruben.idpmonitoring.activities.login;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
+import ruben.idpmonitoring.application.communication.Callback;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText txt_firstname, txt_lastname, txt_email, txt_password, txt_password_repeat;
@@ -42,7 +43,12 @@ public class RegisterActivity extends AppCompatActivity {
                     if(password != null && password.length() != 0){
                         if(password_repeat != null && password_repeat.length() != 0){
                             if(password.equals(password_repeat)){
-                                this.finish();
+                                Application.getServerConnection().createUser(firstname, lastname, email, password, new Callback() {
+                                    @Override
+                                    public void taskCompleted(String results) {
+                                        finish();
+                                    }
+                                });
                             } else {
                                 Toast.makeText(this, "Wachtwoorden komen niet overeen.", Toast.LENGTH_LONG).show();
                             }

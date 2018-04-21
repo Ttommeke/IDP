@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Persoonlijk">
+        <EditTextPreference
+            android:title="Jouw voornaam"
+            android:key="user_firstname"
+            android:summary="Pas hier je voornaam aan"></EditTextPreference>
+        <EditTextPreference
+            android:title="Jouw achternaam"
+            android:key="user_lastname"
+            android:summary="Pas hier je achternaam aan"></EditTextPreference>
+        <EditTextPreference
+            android:title="Jouw email"
+            android:key="user_email"
+            android:summary="Pas hier je email aan"></EditTextPreference>
+        <EditTextPreference
+            android:title="Jouw wachtwoord"
+            android:key="user_password"
+            android:summary="Pas hier je wachtwoord aan"></EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Notificaties">
+        <SwitchPreference
+            android:title="Vragen"
+            android:key="notify_questions"
+            android:summary="Notificatie bij nieuwe vragensessie"></SwitchPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Login">
+        <CheckBoxPreference
+            android:title="Aangemeld blijven"
+            android:key="keep_me_logged_in"
+            android:summary="Laat mij aangemeld blijven"></CheckBoxPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

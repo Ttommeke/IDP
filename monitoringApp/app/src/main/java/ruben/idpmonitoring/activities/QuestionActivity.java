@@ -2,7 +2,6 @@ package ruben.idpmonitoring.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,7 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import java.util.ArrayList;
+
+import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
+import ruben.idpmonitoring.application.communication.Callback;
 import ruben.idpmonitoring.application.questions.Answer;
 import ruben.idpmonitoring.application.questions.Question;
 import ruben.idpmonitoring.application.questions.QuestionType;
@@ -37,6 +39,18 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void loadQuestions(){
+
+
+        /*
+        Application.getServerConnection().getQuestions(new Callback() {
+            @Override
+            public void taskCompleted(String results) {
+                // Set session data
+            }
+        });
+        */
+
+        //Temp hardcoded questions
         this.session = new Session();
 
         ArrayList<String> q1Answers = new ArrayList<String>();
@@ -141,6 +155,16 @@ public class QuestionActivity extends AppCompatActivity {
             }
             setActiveQuestion();
         } else {
+
+            /*
+            Application.getServerConnection().postAnswer("", "", new Callback() {
+                @Override
+                public void taskCompleted(String results) {
+                    //Implement correct upload
+                }
+            });
+            */
+
             Intent returnIntent = new Intent();
             returnIntent.putExtra("result","ditishetresultaat");
             this.setResult(Activity.RESULT_OK,returnIntent);
