@@ -10,6 +10,8 @@ import com.farm.game.sprites.FarmFieldStatusEnum;
 import com.farm.game.sprites.FarmFieldTypeEnum;
 import com.farm.game.sprites.FarmLand;
 import com.farm.game.sprites.FarmObject;
+import com.farm.game.sprites.FarmTree;
+import com.farm.game.sprites.FarmTreeFruitTypeEnum;
 import com.farm.game.states.GameStateManager;
 
 /**
@@ -60,6 +62,9 @@ public class FarmLandscape {
         $grid.insertIntoPosition(new FarmLand(), 5, 3);
         $grid.insertIntoPosition(new FarmLand(), 5, 4);
         $grid.insertIntoPosition(new FarmBuilding(), 4, 8);
+        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 2);
+        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 3);
+        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Raspberry), 1, 4);
         $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken, 3), 2, 8);
 
         saveGridOnlyToJSON();

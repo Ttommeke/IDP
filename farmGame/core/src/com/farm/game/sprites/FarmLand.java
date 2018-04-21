@@ -1,12 +1,16 @@
 package com.farm.game.sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Scaling;
@@ -14,6 +18,7 @@ import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 import com.farm.game.states.GameStateManager;
 import com.farm.game.states.MenuState;
+import com.farm.game.states.TimeLeftMenuState;
 
 /**
  * The class representing a farmLand/acre (for planting seeds)
@@ -24,6 +29,12 @@ public class FarmLand extends FarmObject{
     private FarmLandTypeEnum $type;
     private long $plantTime;
 
+    private final int grainGrowTime = 18; //In minutes
+    private final int carrotGrowTime = 22; //In minutes
+    private final int potatoGrowTime = 26; //In minutes
+    private final int eggplantGrowTime = 36; //In minutes
+    private final int strawberryGrowTime = 34; //In minutes
+
     public FarmLand(){
         super( 1, Assets.farmLandUnplantedTexture);
         resetLand();
@@ -33,10 +44,10 @@ public class FarmLand extends FarmObject{
     public void handleTouch(GameStateManager gsm) {
         switch ($status) {
             case Unplanted:
-                gsm.push(new MenuState(gsm, getUnplantedMenu(), "Kies zaadje"));
+                gsm.push(new MenuState(gsm, getUnplantedMenu(gsm), "Kies zaadje"));
                 break;
             case Growing:
-                // show time left menu
+                pushTimeLeftMenu(gsm, "Zaadje groeid");
                 break;
             case FullyGrown:
                 switch ($type){
@@ -61,6 +72,7 @@ public class FarmLand extends FarmObject{
                         resetLand();
                         break;
                 }
+                FarmGameMain.settings.saveToJSON();
                 break;
             case Rotten:
                 resetLand();
@@ -68,7 +80,7 @@ public class FarmLand extends FarmObject{
         }
     }
 
-    public void plant(FarmLandTypeEnum type) {
+    private void plant(FarmLandTypeEnum type) {
         $type = type;
         $status = FarmLandStatusEnum.Growing;
         $plantTime = System.currentTimeMillis();
@@ -91,6 +103,7 @@ public class FarmLand extends FarmObject{
                 break;
         }
         FarmGameMain.inventory.buySomething(cost);
+        FarmGameMain.settings.saveToJSON();
     }
 
     private void resetLand() {
@@ -105,51 +118,51 @@ public class FarmLand extends FarmObject{
             case Growing:
                 switch ($type){
                     case Grain:
-                        additionTime = (18*60*1000);                // Minutes = 18
+                        additionTime = (grainGrowTime*60*1000);
                         break;
                     case Carrot:
-                        additionTime = (22*60*1000);
+                        additionTime = (carrotGrowTime*60*1000);
                         break;
                     case Potato:
-                        additionTime = (26*60*1000);
+                        additionTime = (potatoGrowTime*60*1000);
                         break;
                     case Eggplant:
-                        additionTime = (36*60*1000);
+                        additionTime = (eggplantGrowTime*60*1000);
                         break;
                     case Strawberry:
-                        additionTime = (34*60*1000);
+                        additionTime = (strawberryGrowTime*60*1000);
                         break;
                 }
-                if($plantTime + additionTime >= System.currentTimeMillis()) {
+                if($plantTime + additionTime - System.currentTimeMillis() <= 0) {
                     $status = FarmLandStatusEnum.FullyGrown;
                 }
                 break;
             case FullyGrown:
                 switch ($type){
                     case Grain:
-                        additionTime = (18*60*1000) + (36*60*1000); // GrowingTime + 2*GrowingTime
+                        additionTime = (grainGrowTime*60*1000) + (grainGrowTime*2*60*1000); // GrowingTime + 2*GrowingTime
                         break;
                     case Carrot:
-                        additionTime = (22*60*1000) + (44*60*1000);
+                        additionTime = (carrotGrowTime*60*1000) + (carrotGrowTime*2*60*1000);
                         break;
                     case Potato:
-                        additionTime = (26*60*1000) + (52*60*1000);
+                        additionTime = (potatoGrowTime*60*1000) + (potatoGrowTime*2*60*1000);
                         break;
                     case Eggplant:
-                        additionTime = (36*60*1000) + (72*60*1000);
+                        additionTime = (eggplantGrowTime*60*1000) + (eggplantGrowTime*2*60*1000);
                         break;
                     case Strawberry:
-                        additionTime = (34*60*1000) + (68*60*1000);
+                        additionTime = (strawberryGrowTime*60*1000) + (strawberryGrowTime*2*60*1000);
                         break;
                 }
-                if($plantTime + additionTime >= System.currentTimeMillis()) {
+                if($plantTime + additionTime - System.currentTimeMillis() <= 0) {
                     $status = FarmLandStatusEnum.Rotten;
                 }
                 break;
         }
     }
 
-    private Table getUnplantedMenu() {
+    private Table getUnplantedMenu(final GameStateManager gsm) {
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
         Table scrollTable = new Table();
@@ -163,6 +176,7 @@ public class FarmLand extends FarmObject{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 plant(FarmLandTypeEnum.Grain);
+                gsm.pop();
             }
         });
 
@@ -174,6 +188,7 @@ public class FarmLand extends FarmObject{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 plant(FarmLandTypeEnum.Carrot);
+                gsm.pop();
             }
         });
 
@@ -185,6 +200,7 @@ public class FarmLand extends FarmObject{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 plant(FarmLandTypeEnum.Potato);
+                gsm.pop();
             }
         });
 
@@ -196,6 +212,7 @@ public class FarmLand extends FarmObject{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 plant(FarmLandTypeEnum.Strawberry);
+                gsm.pop();
             }
         });
 
@@ -207,6 +224,7 @@ public class FarmLand extends FarmObject{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 plant(FarmLandTypeEnum.Eggplant);
+                gsm.pop();
             }
         });
 
@@ -224,6 +242,35 @@ public class FarmLand extends FarmObject{
         scrollTable.row();
 
         return scrollTable;
+    }
+
+    private void pushTimeLeftMenu(GameStateManager gsm, String title) {
+        long additionTime = 0L;
+        Texture texture = Assets.grainTexture;
+        switch ($type){
+            case Grain:
+                texture = Assets.grainTexture;
+                additionTime = (grainGrowTime*60*1000);
+                break;
+            case Carrot:
+                texture = Assets.carrotTexture;
+                additionTime = (carrotGrowTime*60*1000);
+                break;
+            case Potato:
+                texture = Assets.potatoTexture;
+                additionTime = (potatoGrowTime*60*1000);
+                break;
+            case Eggplant:
+                texture = Assets.eggplantTexture;
+                additionTime = (eggplantGrowTime*60*1000);
+                break;
+            case Strawberry:
+                texture = Assets.strawberryTexture;
+                additionTime = (strawberryGrowTime*60*1000);
+                break;
+        }
+
+        gsm.push(new TimeLeftMenuState(gsm, texture, $plantTime, additionTime , title));
     }
 
     /**
