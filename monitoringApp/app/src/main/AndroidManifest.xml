@@ -16,19 +16,20 @@
         <activity android:name=".activities.MainActivity">
 
         </activity>
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RegisterActivity"/>
+        <activity android:name=".activities.login.RegisterActivity"/>
         <activity android:name=".activities.QuestionActivity" />
-        <activity android:name=".activities.OverviewActivity" />
-        <activity android:name=".activities.StepHistoryActivity" />
-        <activity android:name=".activities.HeartrateVsMoodActivity" />
-        <activity android:name=".activities.FatigueVsMoodActivity" />
-        <activity android:name=".activities.StepsVsHeartRateActivity" />
+        <activity android:name=".activities.history.OverviewActivity" />
+        <activity android:name=".activities.history.StepHistoryActivity" />
+        <activity android:name=".activities.history.HeartrateVsMoodActivity" />
+        <activity android:name=".activities.history.FatigueVsMoodActivity" />
+        <activity android:name=".activities.history.StepsVsHeartRateActivity" />
+        <activity android:name=".activities.settings.SettingsActivity" />
     </application>
 
 </manifest>

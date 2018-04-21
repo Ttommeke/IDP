@@ -1,4 +1,4 @@
-package ruben.idpmonitoring.activities;
+package ruben.idpmonitoring.activities.history;
 
 import android.app.Activity;
 import android.content.Intent;

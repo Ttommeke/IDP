@@ -21,11 +21,12 @@
             android:layout_weight="2">
 
             <EditText
-                android:id="@+id/txt_username"
+                android:id="@+id/txt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Gebruikersnaam"
+                android:maxLines="1"
+                android:hint="Email"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"/>
             <EditText

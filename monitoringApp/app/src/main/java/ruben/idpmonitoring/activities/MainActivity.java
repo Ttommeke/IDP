@@ -7,6 +7,8 @@ import android.view.View;
 
 import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
+import ruben.idpmonitoring.activities.history.OverviewActivity;
+import ruben.idpmonitoring.activities.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Application.loadQuestions(); test connection
     }
 
     public void btnQuestionsOnClick(View view){
@@ -25,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnOverviewOnClick(View view){
         Intent intent = new Intent(this, OverviewActivity.class);
+        this.startActivity(intent);
+    }
+
+    public void btnSettingsOnClick(View view){
+        Intent intent = new Intent(this, SettingsActivity.class);
         this.startActivity(intent);
     }
 
