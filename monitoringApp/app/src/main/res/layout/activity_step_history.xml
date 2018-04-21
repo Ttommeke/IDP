@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:id="@+id/btn_dayview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DAG"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:onClick="btnToggleDayViewOnClick"/>
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/btn_weekview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="WEEK"
+                android:textColor="@color/colorPrimary"
+                android:onClick="btnToggleWeekViewOnClick"/>
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/btn_monthview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="MAAND"
+                android:textColor="@color/colorPrimary"
+                android:onClick="btnToggleMonthViewOnClick"/>
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/btn_allview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ALLES"
+                android:textColor="@color/colorPrimary"
+                android:onClick="btnToggleAllViewOnClick"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="15">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart_steps"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Terug"
+                android:onClick="btnBackOnClick"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
