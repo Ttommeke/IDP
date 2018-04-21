@@ -17,7 +17,7 @@ public class Application {
         server_connection.getQuestions();
     }
 
-    public static void login(){
-        ser
+    public static void login(String user, String password){
+        server_connection.login(user, password);
     }
 }
