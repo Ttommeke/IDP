@@ -10,9 +10,14 @@ public class Application {
     public static ServerConnection server_connection = new ServerConnection();
 
     public Application(){
+
     }
 
     public static void loadQuestions(){
         server_connection.getQuestions();
+    }
+
+    public static void login(){
+        ser
     }
 }
