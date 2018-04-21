@@ -40,7 +40,6 @@ public class FarmLand extends FarmObject{
 
     @Override
     public void handleTouch(GameStateManager gsm) {
-        System.out.println("Handling: " + $status);
         switch ($status) {
             case Unplanted:
                 gsm.push(new MenuState(gsm, getUnplantedMenu(gsm), "Kies zaadje"));
@@ -83,7 +82,6 @@ public class FarmLand extends FarmObject{
         $type = type;
         $status = FarmLandStatusEnum.Growing;
         $plantTime = System.currentTimeMillis();
-        System.out.println("Plant: " + String.valueOf($plantTime));
         int cost = 0;
         switch ($type){
             case Grain:
