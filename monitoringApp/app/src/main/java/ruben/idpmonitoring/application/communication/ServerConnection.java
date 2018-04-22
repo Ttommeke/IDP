@@ -10,11 +10,16 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 
 public class ServerConnection {
-    private static final String BASE_URL = "http://192.168.0.142:80";
+    private static final String BASE_URL = "http://192.168.0.196:80";
     private static AsyncHttpClient client;
 
     public ServerConnection(){
         this.client = new AsyncHttpClient();
+    }
+
+    public static void setTokenHeader(String token) {
+        client.removeHeader("token");
+        client.addHeader("token", token);
     }
 
     public static void postObject(Object obj, Callback callback){
@@ -28,6 +33,12 @@ public class ServerConnection {
         params.put("email", email);
         params.put("password", password);
         post("/api/accountservice/login", params, null, callback);
+    }
+
+    public static void updateDeviceId(String deviceId, Callback callback){
+        RequestParams params = new RequestParams();
+        params.put("deviceId", deviceId);
+        put("/api/notificationservice/updatemyquestiondeviceid/", params, null, callback);
     }
 
     public static void createUser(String firstname, String lastname, String email, String password, Callback callback){

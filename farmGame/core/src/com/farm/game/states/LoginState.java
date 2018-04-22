@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
-import com.farm.game.Settings;
 
 public class LoginState extends State {
     private String $userName, $password;

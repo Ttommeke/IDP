@@ -9,6 +9,7 @@ let updateMyQuestionDeviceId = function (req, res) {
 
     models.QuestionNotificationKeyCouple.findOne({ where: { accountId: req.me.id } }).then(function(couple) {
         if (couple !== undefined && couple !== null) {
+            console.log(req.body);
             couple.deviceId = req.body.deviceId;
             return couple.save();
         } else {

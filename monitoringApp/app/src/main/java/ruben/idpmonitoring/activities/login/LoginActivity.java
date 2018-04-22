@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 
 import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
@@ -44,8 +48,18 @@ public class LoginActivity extends AppCompatActivity {
                     Application.getServerConnection().login(email, password, new Callback(){
                         @Override
                         public void taskCompleted(String results) {
-                            Intent intent = new Intent(this_context, MainActivity.class);
-                            this_context.startActivity(intent);
+                            Application.getServerConnection().setTokenHeader(
+                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxNTkyZjhjLTNkYmUtNDc4NS1hZWE5LTE2NjA3MTQ3NjA1NiIsImZpcnN0TmFtZSI6IlRvbSIsImxhc3ROYW1lIjoiVmFsa2VuZWVycyIsImVtYWlsIjoidG9tdmFsa2VuZWVyc0Bob3RtYWlsLmNvbSIsImlhdCI6MTUyNDM5NzU1OX0.kyTDamyxl9x6cJ_xE1_ONqs9uTJh8euMvHyMky9JoIg"
+                            );
+                            Application.getServerConnection().updateDeviceId(FirebaseInstanceId.getInstance().getToken(), new Callback() {
+                                @Override
+                                public void taskCompleted(String results) {
+                                    Log.d("[LAAT INS ZIEN]", "taskCompleted: " + results);
+
+                                    Intent intent = new Intent(this_context, MainActivity.class);
+                                    this_context.startActivity(intent);
+                                }
+                            });
                         }
                     });
                 } else {

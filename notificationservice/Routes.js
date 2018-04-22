@@ -12,6 +12,7 @@ app.use("/", securityFunctions.appendTokenToRequest);
 
 require("./api/questionNotificationCouple/Route").attachRoutes(app);
 require("./api/farmNotificationCouple/Route").attachRoutes(app);
+require("./api/sendNotificationTo/Route").attachRoutes(app);
 
 app.get("/", function(req, res) {
     res.send("Has to be implemented...");

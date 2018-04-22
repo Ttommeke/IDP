@@ -93,6 +93,7 @@ services:
             - JWTSecret=TomGeefInsEenSecret!
             - POSTGRES_PASSWORD=TheseHaveToBeTheSame
             - POSTGRES_USER=docker
+            - FIREBASEAPIKEY=AAAAiD9rCrw:APA91bEiAfloKtpF47y26zWkiuKV8s12FY4h_2rBPV9LAulaXzI6d9Q4Di1-hbn1IZ3I32-4yGL2jYKnNzxTYa-rY3UAZUVIkaTl2YN9jQaHLx9P8cpMeaxsncx4EDRI_j5MXScTtEUY
             - PORT=80
         depends_on:
             - db
