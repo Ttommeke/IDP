@@ -45,8 +45,18 @@ public class RegisterActivity extends AppCompatActivity {
                             if(password.equals(password_repeat)){
                                 Application.getServerConnection().createUser(firstname, lastname, email, password, new Callback() {
                                     @Override
-                                    public void taskCompleted(String results) {
-                                        finish();
+                                    public void taskCompleted(int status_code, String results) {
+                                        switch(status_code){
+                                            case 0:
+                                                Toast.makeText(getApplicationContext(), "Fout bij het maken van verbinding.", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case 200:
+                                                Toast.makeText(getApplicationContext(), "Account gecreëerd. U kan nu aanmelden.", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                                break;
+                                            default:
+                                                Toast.makeText(getApplicationContext(), "Onbekende fout.", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 });
                             } else {
