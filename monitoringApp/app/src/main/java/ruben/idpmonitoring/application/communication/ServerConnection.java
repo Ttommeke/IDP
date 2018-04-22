@@ -5,12 +5,15 @@ import android.telecom.Call;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
 public class ServerConnection {
-    private static final String BASE_URL = "http://192.168.0.196:80";
+    private static final String BASE_URL = "http://192.168.0.142:80";
     private static AsyncHttpClient client;
 
     public ServerConnection(){
@@ -97,48 +100,54 @@ public class ServerConnection {
     }
 
     private static void post(String url, RequestParams params, Object param, final Callback callback){
-        client.post(BASE_URL + url, params, new AsyncHttpResponseHandler() {
+        client.post(BASE_URL + url, params, new JsonHttpResponseHandler() {
+
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                callback.taskCompleted(new String(responseBody));
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                callback.taskCompleted(statusCode, new String(response.toString()));
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 if(statusCode == 0){
-                    //Connection timed out: not connection / server not started
+                    //Connection timed out: no connection / server not started
+                    callback.taskCompleted(statusCode, null);
                 }
             }
         });
     }
 
     public static void get(String url, RequestParams params, Object param, final Callback callback) {
-        client.get(BASE_URL + url, params, new AsyncHttpResponseHandler() {
+        client.get(BASE_URL + url, params, new JsonHttpResponseHandler() {
+
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                callback.taskCompleted(new String(responseBody));
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                callback.taskCompleted(statusCode, new String(response.toString()));
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 if(statusCode == 0){
-                    //Connection timed out: not connection / server not started
+                    //Connection timed out: no connection / server not started
+                    callback.taskCompleted(statusCode, null);
                 }
             }
         });
     }
 
     private static void put(String url, RequestParams params, Object param, final Callback callback){
-        client.put(BASE_URL + url, params, new AsyncHttpResponseHandler() {
+        client.put(BASE_URL + url, params, new JsonHttpResponseHandler() {
+
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                callback.taskCompleted(new String(responseBody));
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                callback.taskCompleted(statusCode, new String(response.toString()));
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 if(statusCode == 0){
-                    //Connection timed out: not connection / server not started
+                    //Connection timed out: no connection / server not started
+                    callback.taskCompleted(statusCode, null);
                 }
             }
         });
