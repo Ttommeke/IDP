@@ -1,12 +1,13 @@
 package ruben.idpmonitoring.activities.login;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
@@ -45,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if(password.equals(password_repeat)){
                                 Application.getServerConnection().createUser(firstname, lastname, email, password, new Callback() {
                                     @Override
-                                    public void taskCompleted(int status_code, String results) {
+                                    public void taskCompleted(int status_code, String json) {
                                         switch(status_code){
                                             case 0:
                                                 Toast.makeText(getApplicationContext(), "Fout bij het maken van verbinding.", Toast.LENGTH_SHORT).show();
@@ -53,6 +54,9 @@ public class RegisterActivity extends AppCompatActivity {
                                             case 200:
                                                 Toast.makeText(getApplicationContext(), "Account gecreëerd. U kan nu aanmelden.", Toast.LENGTH_SHORT).show();
                                                 finish();
+                                                break;
+                                            case 400:
+                                                Toast.makeText(getApplicationContext(), "Email reeds in gebruik of foutief wachtwoord.", Toast.LENGTH_SHORT).show();
                                                 break;
                                             default:
                                                 Toast.makeText(getApplicationContext(), "Onbekende fout.", Toast.LENGTH_SHORT).show();
