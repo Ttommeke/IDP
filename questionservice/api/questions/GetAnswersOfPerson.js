@@ -4,6 +4,9 @@ let getAnswersOfPerson = function (req, res) {
 
     models.Answer.findAll({
         where: { accountId: req.params.personid },
+        order: [
+            ['createdAt', 'DESC']
+        ],
         include: [{
             model: models.PossibleAnswerOnQuestion,
             include: [{
@@ -11,7 +14,7 @@ let getAnswersOfPerson = function (req, res) {
                 include: [{
                     model: models.PossibleAnswerOnQuestion,
                     as: 'PossibleAnswersOnQuestion'
-                }] 
+                }]
             }]
         }]
     }).then((answers) => {

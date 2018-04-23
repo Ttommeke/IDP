@@ -14,4 +14,6 @@ app.get("/", function(req, res) {
     res.send("Has to be implemented...");
 });
 
+require("./api/feedback/Route").attachRoutes(app);
+
 module.exports = app;

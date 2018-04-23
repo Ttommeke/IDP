@@ -84,6 +84,8 @@ services:
             - db
         links:
             - db:db
+            - question_service:question_service
+            - fitness_service:fitness_service
     notification_service:
         build:
             context: ./notificationservice

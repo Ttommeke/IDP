@@ -3,7 +3,10 @@ const models = require("../../models/index");
 let getFitnessOfPerson = function (req, res) {
 
     models.Fitness.findAll({
-        where: { accountId: req.params.personid }
+        where: { accountId: req.params.personid },
+        order: [
+            ['measurementDate', 'DESC']
+        ]
     }).then((fitnesses) => {
         res.send(fitnesses);
     }).catch(function(e) {
