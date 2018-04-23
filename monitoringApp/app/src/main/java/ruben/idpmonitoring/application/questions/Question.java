@@ -6,14 +6,14 @@ public class Question {
     private String uuid;
     private QuestionType type;
     private String content;
-    private ArrayList<String> possible_answers;
+    private ArrayList<Answer> possible_answers;
     private int score;
 
     public Question(){
 
     }
 
-    public Question(String uuid, QuestionType type, String content, ArrayList<String> possible_answers){
+    public Question(String uuid, QuestionType type, String content, ArrayList<Answer> possible_answers){
         this.uuid = uuid;
         this.type = type;
         this.content = content;
@@ -44,11 +44,11 @@ public class Question {
         this.content = content;
     }
 
-    public ArrayList<String> getPossibleAnswers() {
+    public ArrayList<Answer> getPossibleAnswers() {
         return this.possible_answers;
     }
 
-    public void setPossibleAnswers(ArrayList<String> possible_answers){
+    public void setPossibleAnswers(ArrayList<Answer> possible_answers){
         this.possible_answers = possible_answers;
     }
 

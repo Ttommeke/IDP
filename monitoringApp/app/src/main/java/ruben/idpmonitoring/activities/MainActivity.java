@@ -18,6 +18,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Application.checkUserLoggedIn();
+    }
+
     public void btnQuestionsOnClick(View view){
         Intent intent = new Intent(this, QuestionActivity.class);
         intent.putExtra("optionele", "parameters");
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    public void btnCloseOnClick(View view){
-        this.finishAffinity();
+    public void btnLogoutOnClick(View view){
+        Application.logout();
     }
 }

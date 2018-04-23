@@ -13,8 +13,16 @@ public class Answer {
         this.uuid = uuid;
     }
 
+    public String getUuid(){
+        return this.uuid;
+    }
+
     public void setContent(String content){
         this.content = content;
+    }
+
+    public String getContent(){
+        return this.content;
     }
 
     public void setType(QuestionType type){

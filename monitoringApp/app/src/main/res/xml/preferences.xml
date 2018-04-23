@@ -25,12 +25,21 @@
             android:title="Vragen"
             android:key="notify_questions"
             android:summary="Notificatie bij nieuwe vragensessie"></SwitchPreference>
+        <Preference
+            android:key="notifications_from"
+            android:title="Notificaties vanaf"
+            android:summary="Stel hier in vanaf hoelaat je notificaties wil ontvangen"/>
+        <Preference
+            android:key="notifications_until"
+            android:title="Notificaties tot"
+            android:summary="Stel hier in tot hoelaat je notificaties wil ontvangen"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Login">
         <CheckBoxPreference
             android:title="Aangemeld blijven"
             android:key="keep_me_logged_in"
-            android:summary="Laat mij aangemeld blijven"></CheckBoxPreference>
+            android:summary="Laat mij aangemeld blijven"
+            android:defaultValue="false"></CheckBoxPreference>
     </PreferenceCategory>
 </PreferenceScreen>
