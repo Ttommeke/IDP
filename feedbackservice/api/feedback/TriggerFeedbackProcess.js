@@ -14,10 +14,31 @@ let triggerFeedbackProcess = function (req, res) {
         return makeHttpGetRequest("http://question_service/getanswersofperson/" + req.me.id);
     }).then(function(data) {
         questions = data;
+
+        return getThresshold(req.me.id);
         console.log(questions);
+    }).then(function(thresshold) {
+
+
     }).catch(function(e) {
         console.log(e);
     });
+};
+
+let getThresshold = function(accountId) {
+
+    return new Promise(function(resolve, reject) {
+        models.Thresshold.findOne({ where: { accountId: accountId } }).then(function(data) {
+            if (data == undefined || data == null) {
+                resolve({ heartRate: 70, steps: 1000 });
+            } else {
+                resolve(data);
+            }
+        }).catch(function(e) {
+            reject(e);
+        });
+    });
+
 };
 
 let makeHttpGetRequest = function(options, body) {

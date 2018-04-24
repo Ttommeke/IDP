@@ -15,5 +15,6 @@ app.get("/", function(req, res) {
 });
 
 require("./api/feedback/Route").attachRoutes(app);
+require("./api/thresshold/Route").attachRoutes(app);
 
 module.exports = app;
