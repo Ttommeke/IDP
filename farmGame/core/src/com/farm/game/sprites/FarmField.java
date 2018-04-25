@@ -157,6 +157,7 @@ public class FarmField extends FarmObject {
     public void write(Json json) {
         json.writeValue("status", $status);
         json.writeValue("type", $type);
+        json.writeValue("animals", $farmAnimals);
     }
 
     @Override

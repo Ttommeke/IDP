@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
+import com.farm.game.spriteData.FarmAnimal;
+import com.farm.game.spriteData.FarmAnimalChicken;
 import com.farm.game.sprites.FarmBuilding;
 import com.farm.game.sprites.FarmField;
 import com.farm.game.spriteData.FarmFieldStatusEnum;
@@ -13,6 +15,8 @@ import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.FarmTree;
 import com.farm.game.spriteData.FarmTreeFruitTypeEnum;
 import com.farm.game.states.GameStateManager;
+
+import java.util.ArrayList;
 
 /**
  * This class contains all objects on the landscape of the farm.
@@ -65,7 +69,12 @@ public class FarmLandscape {
         $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 2);
         $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 3);
         $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Raspberry), 1, 4);
-        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken, 3), 2, 8);
+        ArrayList<FarmAnimal> farmAnimals = new ArrayList<>();
+        farmAnimals.add(new FarmAnimalChicken());
+        farmAnimals.add(new FarmAnimalChicken());
+        farmAnimals.add(new FarmAnimalChicken());
+
+        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken, farmAnimals), 2, 8);
 
         saveGridOnlyToJSON();
     }
