@@ -4,31 +4,45 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Scaling;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 
 public class FarmState extends State implements InputProcessor{
-    private Rectangle $inventoryButtonBounds;
+    private Rectangle inventoryButtonBounds, buildButtonBounds, moveButtonBounds,
+            deleteButtonBounds, settingsButtonBounds, mapButtonBounds;
 
     public FarmState(GameStateManager gsm) {
         super(gsm);
         Gdx.input.setInputProcessor(this);
         $camera.setToOrtho(true, FarmGameMain.WIDTH, FarmGameMain.HEIGHT);
 
-        $inventoryButtonBounds = new Rectangle(FarmGameMain.WIDTH - 133, 0, 128, 128);
+        // 10 padding + 128 texture
+        inventoryButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10, 128, 128);
+        buildButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10 + 128, 128, 128);
+        moveButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10 + (128*2), 128, 128);
+        deleteButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10 + (128*3), 128, 128);
+        settingsButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*2), 128, 128);
+        mapButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 138, 128, 128);
     }
 
     @Override
     public void handleInput() {
         if (Gdx.input.justTouched()) {
-            if ($inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+            if (inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
+            } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                System.out.println("Show build menu -> place item");
+            } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                System.out.println("Show move state");
+            } else if (deleteButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                System.out.println("Show delete state");
+            } else if (settingsButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                System.out.println("Show settings menu");
+            } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+               $gsm.set(new MapState($gsm));
+            } else {
+                FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY(), $gsm);
             }
-
-            FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY(), $gsm);
         }
     }
 
@@ -45,8 +59,13 @@ public class FarmState extends State implements InputProcessor{
         // Grid + Objects on grid
         FarmGameMain.landscape.drawObjects(sb);
 
-        // Menus
-        sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 133, FarmGameMain.HEIGHT - 133, 128, 128);
+        // Menus => 10 padding + 128 texture
+        sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 138, 128, 128);
+        sb.draw(Assets.farmBuildingTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*2), 128, 128);
+        sb.draw(Assets.moveTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*3), 128, 128);
+        sb.draw(Assets.cancelTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*4), 128, 128);
+        sb.draw(Assets.settingsTexture, FarmGameMain.WIDTH - 138, 10 + 128, 128, 128);
+        sb.draw(Assets.mapTexture, FarmGameMain.WIDTH - 138, 10, 128, 128);
 
         // Inventory info on screen
         sb.draw(Assets.coinsTexture, 0, FarmGameMain.HEIGHT - 69, 64, 64);
