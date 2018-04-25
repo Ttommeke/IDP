@@ -1,4 +1,4 @@
-package com.farm.game.sprites;
+package com.farm.game.spriteData;
 
 public enum FarmTreeFruitTypeEnum {
     Apple,

@@ -9,8 +9,13 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Scaling;
 import com.farm.game.Assets;
+import com.farm.game.spriteData.FarmAnimal;
+import com.farm.game.spriteData.FarmFieldStatusEnum;
+import com.farm.game.spriteData.FarmFieldTypeEnum;
 import com.farm.game.states.GameStateManager;
 import com.farm.game.states.MenuState;
+
+import java.util.ArrayList;
 
 /**
  * The class representing a farmField(weide, For growing animals)
@@ -19,22 +24,23 @@ public class FarmField extends FarmObject {
     // status & type will change over time (with the use of a Timer or initialPlantTime or something like that)
     private FarmFieldStatusEnum $status;
     private FarmFieldTypeEnum $type;
-    private int $amountOfAnimals;
+    private ArrayList<FarmAnimal> $farmAnimals;
 
     public FarmField(){
         super( 2, Assets.farmFieldUninhabitedTexture);
 
         $status = FarmFieldStatusEnum.Uninhabited;
         $type = FarmFieldTypeEnum.Uninhabited;
-        $amountOfAnimals = 0;
+        $farmAnimals = new ArrayList<>();
     }
 
-    public FarmField(FarmFieldStatusEnum status, FarmFieldTypeEnum type, int amountOfAnimals){
+    // Used on Default farmLandscape
+    public FarmField(FarmFieldStatusEnum status, FarmFieldTypeEnum type, ArrayList<FarmAnimal> farmAnimals){
         super( 2, Assets.farmFieldUninhabitedTexture);
 
         $status = status;
         $type = type;
-        $amountOfAnimals = amountOfAnimals;
+        $farmAnimals = farmAnimals;
 
         changeTexture();
     }
@@ -127,7 +133,7 @@ public class FarmField extends FarmObject {
 
         Image chickenImage = new Image(Assets.chickenTexture);
         chickenImage.setScaling(Scaling.fit);
-        Label animalAmount = new Label(String.valueOf($amountOfAnimals), skin);
+        Label animalAmount = new Label(String.valueOf($farmAnimals.size()), skin);
         animalAmount.setFontScale(5);
 
         Table scrollTable = new Table();
@@ -140,25 +146,23 @@ public class FarmField extends FarmObject {
     }
 
     public void addAnimal() {
-        $amountOfAnimals++;
+
     }
 
     public void removeOneAnimal() {
-        $amountOfAnimals--;
+
     }
 
     @Override
     public void write(Json json) {
         json.writeValue("status", $status);
         json.writeValue("type", $type);
-        json.writeValue("amountOfAnimals", $amountOfAnimals);
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
         $status = FarmFieldStatusEnum.valueOf(jsonData.getString("status"));
         $type = FarmFieldTypeEnum.valueOf(jsonData.getString("type"));
-        $amountOfAnimals = jsonData.getInt("amountOfAnimals");
         changeTexture();
     }
 }

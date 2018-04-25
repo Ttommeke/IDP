@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.GridSquare;
 import com.farm.game.sprites.InvisibleChildSquare;
-import com.farm.game.sprites.InvisibleGridSquare;
 import com.farm.game.states.GameStateManager;
 
 public class Grid {
@@ -38,7 +37,7 @@ public class Grid {
     public void updateGrid() {
         for(int i=0; i<$grid.length; i++) {
             for(int j=0; j<$grid[i].length; j++) {
-                $grid[i][j].updateTexture();
+                $grid[i][j].update();
             }
         }
     }

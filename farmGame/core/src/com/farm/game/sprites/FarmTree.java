@@ -1,20 +1,14 @@
 package com.farm.game.sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Scaling;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
+import com.farm.game.spriteData.FarmTreeFruitTypeEnum;
+import com.farm.game.spriteData.FarmTreeStatusEnum;
+import com.farm.game.spriteData.FarmTreeTypeEnum;
 import com.farm.game.states.GameStateManager;
-import com.farm.game.states.MenuState;
 import com.farm.game.states.TimeLeftMenuState;
 
 /**
@@ -192,7 +186,7 @@ public class FarmTree extends FarmObject {
     }
 
     @Override
-    public void updateTexture() {
+    public void update() {
         changeTexture();
     }
 

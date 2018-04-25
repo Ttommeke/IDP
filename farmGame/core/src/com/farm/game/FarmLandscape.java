@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.farm.game.sprites.FarmBuilding;
 import com.farm.game.sprites.FarmField;
-import com.farm.game.sprites.FarmFieldStatusEnum;
-import com.farm.game.sprites.FarmFieldTypeEnum;
+import com.farm.game.spriteData.FarmFieldStatusEnum;
+import com.farm.game.spriteData.FarmFieldTypeEnum;
 import com.farm.game.sprites.FarmLand;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.FarmTree;
-import com.farm.game.sprites.FarmTreeFruitTypeEnum;
+import com.farm.game.spriteData.FarmTreeFruitTypeEnum;
 import com.farm.game.states.GameStateManager;
 
 /**

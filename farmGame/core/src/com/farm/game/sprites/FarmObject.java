@@ -1,7 +1,6 @@
 package com.farm.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.farm.game.states.GameStateManager;
@@ -23,7 +22,7 @@ public class FarmObject implements Json.Serializable{
         return $texture;
     }
 
-    public void updateTexture() {}
+    public void update() {}
 
     public void handleTouch(GameStateManager gsm) { }
 
