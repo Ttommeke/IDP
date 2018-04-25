@@ -10,6 +10,8 @@ public abstract class FarmAnimal implements Json.Serializable{
     protected boolean $productReady;
     protected long $timer;      // when not an adult -> time child purchased | when an adult -> time for production
 
+    private final int maxAmountOfAnimals = 5;
+
     FarmAnimal(){}
 
     public Texture getTexture() {
@@ -34,14 +36,18 @@ public abstract class FarmAnimal implements Json.Serializable{
 
     @Override
     public void write(Json json) {
-        json.writeValue("adult", $adult);
+        System.out.println("test write");
         json.writeValue("timer", $timer);
+        json.writeValue("adult", $adult);
+        json.writeValue("productReady", $productReady);
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
-        $adult = jsonData.getBoolean("adult");
+        System.out.println("test read");
         $timer = jsonData.getLong("time");
+        $adult = jsonData.getBoolean("adult");
+        $productReady = jsonData.getBoolean("productReady");
         changeTexture();
     }
 }

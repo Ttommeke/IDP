@@ -24,7 +24,7 @@ public class FarmField extends FarmObject {
     // status & type will change over time (with the use of a Timer or initialPlantTime or something like that)
     private FarmFieldStatusEnum $status;
     private FarmFieldTypeEnum $type;
-    private ArrayList<FarmAnimal> $farmAnimals;
+    private ArrayList $farmAnimals;
 
     public FarmField(){
         super( 2, Assets.farmFieldUninhabitedTexture);
@@ -164,6 +164,10 @@ public class FarmField extends FarmObject {
     public void read(Json json, JsonValue jsonData) {
         $status = FarmFieldStatusEnum.valueOf(jsonData.getString("status"));
         $type = FarmFieldTypeEnum.valueOf(jsonData.getString("type"));
+        //String test = jsonData.getString("animals");
+        //System.out.println("test field");
+        //System.out.println(json.toJson(test));
+        //System.out.println(json.prettyPrint(jsonData.getString("animals")));
         changeTexture();
     }
 }
