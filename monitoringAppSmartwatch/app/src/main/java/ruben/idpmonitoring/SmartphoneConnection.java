@@ -92,7 +92,7 @@ public class SmartphoneConnection implements GoogleApiClient.ConnectionCallbacks
 
             ObjectiveMeasurement obj = Application.generateObjectiveMeasurement();
 
-            sendData("{heartrate : '" + Integer.toString(obj.getHeartrate()) + "', steps: '" + obj.getSteps() + "'}" + "|");
+            sendData("{heartrate : " + Integer.toString(obj.getHeartrate()) + ", steps: " + obj.getSteps() + "}" + "|");
         }
     }
 }
