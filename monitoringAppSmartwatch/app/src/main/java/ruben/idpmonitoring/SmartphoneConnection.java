@@ -37,6 +37,14 @@ public class SmartphoneConnection implements GoogleApiClient.ConnectionCallbacks
         sendMessage(data);
     }
 
+    public boolean isConnected(){
+        return node_connected;
+    }
+
+    public void retryConnection(){
+        google_api_client.connect();
+    }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         node_connected = true;
@@ -81,7 +89,10 @@ public class SmartphoneConnection implements GoogleApiClient.ConnectionCallbacks
     public void onMessageReceived(MessageEvent messageEvent) {
         if(messageEvent.getPath().equals("/MessageFromPhone")) {
             Log.d("SmartphoneConnection","Message from phone received: " + new String(messageEvent.getData()));
-            sendData("Message from Watch");
+
+            ObjectiveMeasurement obj = Application.generateObjectiveMeasurement();
+
+            sendData("{heartrate : '" + Integer.toString(obj.getHeartrate()) + "', steps: '" + obj.getSteps() + "'}" + "|");
         }
     }
 }

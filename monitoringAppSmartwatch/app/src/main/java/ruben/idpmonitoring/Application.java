@@ -25,6 +25,18 @@ public class Application {
     }
 
     public static void stopSensors(){
+        heartrate_service.stopSensor(sensor_manager);
+        step_count_service.stopSensor(sensor_manager);
+    }
 
+    public static ObjectiveMeasurement generateObjectiveMeasurement(){
+        ObjectiveMeasurement obj = new ObjectiveMeasurement();
+        obj.setHeartrate(heartrate_service.getHeartrate());
+        obj.setSteps(step_count_service.getSteps());
+        return obj;
+    }
+
+    public static SmartphoneConnection getSmartphoneConnection() {
+        return smartphone_connection;
     }
 }

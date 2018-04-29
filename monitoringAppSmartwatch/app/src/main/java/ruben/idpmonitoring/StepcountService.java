@@ -8,6 +8,7 @@ import android.util.Log;
 
 public class StepcountService implements SensorEventListener {
     private Sensor sensor;
+    private int steps;
 
     public StepcountService(Sensor sensor){
         this.sensor = sensor;
@@ -25,13 +26,16 @@ public class StepcountService implements SensorEventListener {
         manager.unregisterListener(this);
     }
 
+    public int getSteps(){
+        return this.steps;
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        String msg;
         switch(sensorEvent.sensor.getType()){
             case Sensor.TYPE_STEP_COUNTER:
-                msg = "" + (int)sensorEvent.values[0];
-                Log.d("MainActivity - Step Counter", msg);
+                steps = (int)sensorEvent.values[0];
+                Log.d("MainActivity - Step Counter", Integer.toString(steps));
                 break;
             default:
                 Log.d("MainActivity", "Unknown sensor data received");

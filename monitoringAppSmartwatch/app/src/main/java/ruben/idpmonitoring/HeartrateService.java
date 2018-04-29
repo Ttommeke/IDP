@@ -8,6 +8,7 @@ import android.util.Log;
 
 public class HeartrateService implements SensorEventListener{
     private Sensor sensor;
+    private int heartrate = 60; //default value to start with
 
     public HeartrateService(Sensor sensor){
         this.sensor = sensor;
@@ -25,13 +26,16 @@ public class HeartrateService implements SensorEventListener{
         manager.unregisterListener(this);
     }
 
+    public int getHeartrate(){
+        return this.heartrate;
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        String msg;
         switch(sensorEvent.sensor.getType()){
             case Sensor.TYPE_HEART_RATE:
-                msg = "" + (int)sensorEvent.values[0];
-                Log.d("MainActivity - Heartrate", msg);
+                heartrate = (int)(0.5 * heartrate + 0.5 * (int)sensorEvent.values[0]);
+                Log.d("MainActivity - Heartrate", Integer.toString(heartrate));
                 break;
             default:
                 Log.d("MainActivity", "Unknown sensor data received");
