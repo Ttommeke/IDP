@@ -1,5 +1,6 @@
 package com.farm.game.spriteData;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 
@@ -11,6 +12,13 @@ public class FarmAnimalChicken extends FarmAnimal {
         $texture = Assets.chickTexture;
         $timer = System.currentTimeMillis();
         $adult = false;
+    }
+
+    public FarmAnimalChicken(JsonValue value){
+        $timer = value.getLong("timer");
+        $adult = value.getBoolean("adult");
+        $productReady = value.getBoolean("productReady");
+        changeTexture();
     }
 
     @Override

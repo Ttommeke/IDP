@@ -1,19 +1,28 @@
 package com.farm.game.sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Scaling;
 import com.farm.game.Assets;
+import com.farm.game.FarmGameMain;
 import com.farm.game.spriteData.FarmAnimal;
+import com.farm.game.spriteData.FarmAnimalChicken;
+import com.farm.game.spriteData.FarmAnimalCow;
+import com.farm.game.spriteData.FarmAnimalPig;
 import com.farm.game.spriteData.FarmFieldStatusEnum;
 import com.farm.game.spriteData.FarmFieldTypeEnum;
+import com.farm.game.spriteData.FarmLandTypeEnum;
 import com.farm.game.states.GameStateManager;
 import com.farm.game.states.MenuState;
+import com.google.gson.JsonArray;
 
 import java.util.ArrayList;
 
@@ -24,7 +33,7 @@ public class FarmField extends FarmObject {
     // status & type will change over time (with the use of a Timer or initialPlantTime or something like that)
     private FarmFieldStatusEnum $status;
     private FarmFieldTypeEnum $type;
-    private ArrayList $farmAnimals;
+    private ArrayList<FarmAnimal> $farmAnimals;
 
     public FarmField(){
         super( 2, Assets.farmFieldUninhabitedTexture);
@@ -47,7 +56,6 @@ public class FarmField extends FarmObject {
 
     /**
      * Change the texture according to the status & type
-     * (Change textures if created)
      */
     private void changeTexture() {
         switch ($status) {
@@ -57,13 +65,13 @@ public class FarmField extends FarmObject {
             case Children:
                 switch ($type) {
                     case Chicken:
-                        $texture = Assets.farmFieldUninhabitedTexture;
+                        $texture = Assets.farmFieldChickTexture;
                         break;
                     case Pig:
-                        $texture = Assets.farmFieldUninhabitedTexture;
+                        $texture = Assets.farmFieldPigletTexture;
                         break;
                     case Cow:
-                        $texture = Assets.farmFieldUninhabitedTexture;
+                        $texture = Assets.farmFieldCalfTexture;
                         break;
                 }
                 break;
@@ -73,10 +81,23 @@ public class FarmField extends FarmObject {
                         $texture = Assets.farmFieldChickenTexture;
                         break;
                     case Pig:
-                        $texture = Assets.farmFieldUninhabitedTexture;
+                        $texture = Assets.farmFieldPigTexture;
                         break;
                     case Cow:
-                        $texture = Assets.farmFieldUninhabitedTexture;
+                        $texture = Assets.farmFieldCowTexture;
+                        break;
+                }
+                break;
+            case ChildrenWithAdults:
+                switch ($type) {
+                    case Chicken:
+                        $texture = Assets.farmFieldChickenAndChickTexture;
+                        break;
+                    case Pig:
+                        $texture = Assets.farmFieldPigAndPigletTexture;
+                        break;
+                    case Cow:
+                        $texture = Assets.farmFieldCowAndCalfTexture;
                         break;
                 }
                 break;
@@ -85,45 +106,68 @@ public class FarmField extends FarmObject {
 
     @Override
     public void handleTouch(GameStateManager gsm) {
-        gsm.push(new MenuState(gsm, getTable(), "Field"));
+        switch ($status) {
+            case Uninhabited:
+                gsm.push(new MenuState(gsm, getChooseAnimalTable(gsm), "Field"));
+                break;
+            default:
+                gsm.push(new MenuState(gsm, getAdultChickenTable(), "Field"));
+        }
     }
 
     /**
      * Add table functions and apply them to the right choice
      */
-    private Table getTable() {
+    private Table getChooseAnimalTable(final GameStateManager gsm) {
+        Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+
         Table scrollTable = new Table();
-        switch ($status) {
-            case Uninhabited:
-                scrollTable = getAdultChickenTable();
-                break;
-            case Children:
-                switch ($type) {
-                    case Chicken:
-                        scrollTable = getAdultChickenTable();
-                        break;
-                    case Pig:
-                        scrollTable = getAdultChickenTable();
-                        break;
-                    case Cow:
-                        scrollTable = getAdultChickenTable();
-                        break;
-                }
-                break;
-            case Adults:
-                switch ($type) {
-                    case Chicken:
-                        scrollTable = getAdultChickenTable();
-                        break;
-                    case Pig:
-                        scrollTable = getAdultChickenTable();
-                        break;
-                    case Cow:
-                        scrollTable = getAdultChickenTable();
-                        break;
-                }
-                break;
-        }
+        scrollTable.defaults().pad(10).width(256).height(256);
+
+        // Chicken
+        Image chickImage = new Image(Assets.chickTexture);
+        chickImage.setScaling(Scaling.fit);
+        TextButton buyChick = new TextButton("Buy   1", skin);
+        buyChick.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                addAnimal(FarmFieldTypeEnum.Chicken);
+                gsm.pop();
+            }
+        });
+
+        // Pig
+        Image pigletImage = new Image(Assets.pigletTexture);
+        pigletImage.setScaling(Scaling.fit);
+        TextButton buyPiglet = new TextButton("Buy   1", skin);
+        buyPiglet.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                addAnimal(FarmFieldTypeEnum.Chicken);
+                gsm.pop();
+            }
+        });
+
+        // Cow
+        Image calfImage = new Image(Assets.calfTexture);
+        calfImage.setScaling(Scaling.fit);
+        TextButton buyCalf = new TextButton("Buy   2", skin);
+        buyCalf.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                addAnimal(FarmFieldTypeEnum.Chicken);
+                gsm.pop();
+            }
+        });
+
+        scrollTable.add(chickImage);
+        scrollTable.add(pigletImage);
+        scrollTable.add(calfImage);
+        scrollTable.row();
+        scrollTable.add(buyChick);
+        scrollTable.add(buyPiglet);
+        scrollTable.add(buyCalf);
+        scrollTable.row();
 
         return scrollTable;
     }
@@ -145,8 +189,56 @@ public class FarmField extends FarmObject {
         return scrollTable;
     }
 
-    public void addAnimal() {
+    @Override
+    public void update() {
+        boolean adult = false;
+        boolean child = false;
 
+        for(Object animal: $farmAnimals) {
+            FarmAnimal farmAnimal = (FarmAnimalChicken) animal;
+            farmAnimal.update();
+            if(farmAnimal.isAdult()) {
+                adult = true;
+            } else {
+                child = true;
+            }
+        }
+
+        if(adult && child) {
+            $status = FarmFieldStatusEnum.ChildrenWithAdults;
+        } else if(adult) {
+            $status = FarmFieldStatusEnum.Adults;
+        } else if(child) {
+            $status = FarmFieldStatusEnum.Children;
+        }
+
+        changeTexture();
+    }
+
+    private void addAnimal(FarmFieldTypeEnum type) {
+        $farmAnimals.add(new FarmAnimalChicken());
+        int cost = 0;
+        switch ($type){
+            case Chicken:
+                cost = 22;
+                break;
+            case Pig:
+                cost = 74;
+                break;
+            case Cow:
+                cost = 97;
+                break;
+        }
+        FarmGameMain.inventory.buySomething(cost);
+
+        if($status == FarmFieldStatusEnum.Adults) {
+            $status = FarmFieldStatusEnum.ChildrenWithAdults;
+        } else if($status == FarmFieldStatusEnum.Uninhabited){
+            $status = FarmFieldStatusEnum.Children;
+        }
+
+        FarmGameMain.settings.saveToJSON();
+        changeTexture();
     }
 
     public void removeOneAnimal() {
@@ -164,10 +256,22 @@ public class FarmField extends FarmObject {
     public void read(Json json, JsonValue jsonData) {
         $status = FarmFieldStatusEnum.valueOf(jsonData.getString("status"));
         $type = FarmFieldTypeEnum.valueOf(jsonData.getString("type"));
-        //String test = jsonData.getString("animals");
-        //System.out.println("test field");
-        //System.out.println(json.toJson(test));
-        //System.out.println(json.prettyPrint(jsonData.getString("animals")));
+        JsonValue value = jsonData.get("animals");
+
+        for (JsonValue v : value) {
+            switch ($type) {
+                case Chicken:
+                    $farmAnimals.add(new FarmAnimalChicken(v));
+                    break;
+                case Cow:
+                    $farmAnimals.add(new FarmAnimalCow(v));
+                    break;
+                case Pig:
+                    $farmAnimals.add(new FarmAnimalPig(v));
+                    break;
+            }
+        }
+
         changeTexture();
     }
 }

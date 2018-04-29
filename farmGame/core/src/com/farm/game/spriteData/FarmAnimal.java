@@ -12,8 +12,6 @@ public abstract class FarmAnimal implements Json.Serializable{
 
     private final int maxAmountOfAnimals = 5;
 
-    FarmAnimal(){}
-
     public Texture getTexture() {
         return $texture;
     }
@@ -21,6 +19,10 @@ public abstract class FarmAnimal implements Json.Serializable{
     protected abstract void changeTexture();
 
     protected abstract void checkTimer();
+
+    public boolean isAdult() {
+        return $adult;
+    }
 
     public void update() {
         checkTimer();
