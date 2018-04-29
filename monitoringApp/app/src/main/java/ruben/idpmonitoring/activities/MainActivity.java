@@ -8,6 +8,7 @@ import android.view.View;
 import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
 import ruben.idpmonitoring.activities.history.OverviewActivity;
+import ruben.idpmonitoring.activities.questions.QuestionActivity;
 import ruben.idpmonitoring.activities.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnQuestionsOnClick(View view){
         Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra("optionele", "parameters");
-        this.startActivityForResult(intent, 100);
+        this.startActivity(intent);
     }
 
     public void btnOverviewOnClick(View view){
@@ -48,4 +48,5 @@ public class MainActivity extends AppCompatActivity {
     public void btnLogoutOnClick(View view){
         Application.logout();
     }
+
 }

@@ -1,20 +1,30 @@
 package ruben.idpmonitoring.application.history;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 public class ObjectiveMeasurement {
     private DateTime time;
-    private int heart_rate;
-    private int steps_taken;
+    private int heartrate;
+    private int steps;
 
     public ObjectiveMeasurement(){
 
     }
 
-    public ObjectiveMeasurement(DateTime time, int heart_rate, int steps_taken){
+    public ObjectiveMeasurement(int heartrate, int steps){
+        this.time = new DateTime(DateTimeZone.UTC);
+        this.heartrate = heartrate;
+        this.steps = steps;
+    }
+
+    public ObjectiveMeasurement(DateTime time, int heartrate, int steps){
         this.time = time;
-        this.heart_rate = heart_rate;
-        this.steps_taken = steps_taken;
+        this.heartrate = heartrate;
+        this.steps = steps;
     }
 
     public void setTime(DateTime time){
@@ -25,19 +35,29 @@ public class ObjectiveMeasurement {
         return this.time;
     }
 
-    public void setHeartRate(int heart_rate){
-        this.heart_rate = heart_rate;
+    public void setHeartrate(int heart_rate){
+        this.heartrate = heart_rate;
     }
 
-    public int getHeartRate(){
-        return this.heart_rate;
+    public int getHeartrate(){
+        return this.heartrate;
     }
 
-    public void setStepsTaken(int steps_taken){
-        this.steps_taken = steps_taken;
+    public void setSteps(int steps_taken){
+        this.steps = steps_taken;
     }
 
-    public int getStepsTaken(){
-        return this.steps_taken;
+    public int getSteps(){
+        return this.steps;
+    }
+
+    public static ObjectiveMeasurement fromJson(String json){
+        JsonParser parser = new JsonParser();
+        JsonObject json_object = parser.parse(json).getAsJsonObject();
+
+        ObjectiveMeasurement obj = new ObjectiveMeasurement(
+                json_object.get("heartrate").getAsInt(),
+                json_object.get("steps").getAsInt());
+        return obj;
     }
 }

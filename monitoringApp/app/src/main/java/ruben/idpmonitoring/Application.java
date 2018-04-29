@@ -9,11 +9,13 @@ import ruben.idpmonitoring.activities.login.LoginActivity;
 import ruben.idpmonitoring.application.User;
 import ruben.idpmonitoring.application.communication.Callback;
 import ruben.idpmonitoring.application.communication.ServerConnection;
+import ruben.idpmonitoring.application.communication.SmartwatchConnection;
 import ruben.idpmonitoring.application.questions.Question;
 import ruben.idpmonitoring.application.settings.Settings;
 
 public class Application{
     private static ServerConnection server_connection;
+    private static SmartwatchConnection smartwatch_connection;
     private static Settings settings;
     private static Context context;
     private static User user;
@@ -22,11 +24,16 @@ public class Application{
     public static void initialise(Context c){
         context = c;
         server_connection = new ServerConnection(context);
+        smartwatch_connection = new SmartwatchConnection(context);
         settings = new Settings(context);
     }
 
     public static ServerConnection getServerConnection(){
         return server_connection;
+    }
+
+    public static SmartwatchConnection getSmartwatchConnection(){
+        return smartwatch_connection;
     }
 
     public static Settings getSettings(){

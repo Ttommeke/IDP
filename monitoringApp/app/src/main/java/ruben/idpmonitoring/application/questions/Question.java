@@ -1,6 +1,11 @@
 package ruben.idpmonitoring.application.questions;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Question {
     private String uuid;
@@ -58,5 +63,37 @@ public class Question {
 
     public void setScore(int score){
         this.score = score;
+    }
+
+    public static Question fromJson(String json){
+        JsonParser parser = new JsonParser();
+        JsonObject json_object = parser.parse(json).getAsJsonObject();
+        JsonArray possible_answers = json_object.getAsJsonArray("PossibleAnswersOnQuestion");
+
+        String id = json_object.get("id").getAsString();
+        String content = json_object.get("question").getAsString();
+
+        QuestionType question_type;
+        if(json_object.get("questionType").getAsString().equals("MULTIPLECHOICE")){
+            question_type = QuestionType.Radio;
+        } else {
+            question_type = QuestionType.Rating;
+        }
+
+        ArrayList<Answer> possible_answers_on_question = new ArrayList<>();
+
+        if (possible_answers != null) {
+            for (int i = 0; i < possible_answers.size(); i++){
+                Answer answer = Answer.fromJson(possible_answers.get(i).getAsJsonObject().toString());
+                possible_answers_on_question.add(answer);
+            }
+        }
+
+        Question question = new Question();
+        question.setUuid(id);
+        question.setContent(content);
+        question.setType(question_type);
+        question.setPossibleAnswers(possible_answers_on_question);
+        return question;
     }
 }

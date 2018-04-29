@@ -23,17 +23,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.login.RegisterActivity"/>
-        <activity android:name=".activities.QuestionActivity" />
+        <activity android:name=".activities.questions.QuestionActivity" />
+        <activity android:name=".activities.questions.OpenGameDialog"
+            android:theme="@style/DialogTheme"/>
         <activity android:name=".activities.history.OverviewActivity" />
         <activity android:name=".activities.history.StepHistoryActivity" />
         <activity android:name=".activities.history.HeartrateVsMoodActivity" />
         <activity android:name=".activities.history.FatigueVsMoodActivity" />
         <activity android:name=".activities.history.StepsVsHeartRateActivity" />
         <activity android:name=".activities.settings.SettingsActivity" />
+        <activity android:name=".activities.SmartwatchActivity"/>
         <activity
             android:name=".activities.settings.ChooseTimeDialog"
             android:parentActivityName=".activities.settings.SettingsActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            android:theme="@style/DialogTheme">
         </activity>
     </application>
 

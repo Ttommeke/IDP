@@ -16,11 +16,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/txt_heartrate"
             android:text="placeholder_heartrate"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_message"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Get data"
-            android:onClick="btnGetDataOnClick"/>
+            android:text="Send Message"
+            android:onClick="btnSendMessageOnClick"/>
     </LinearLayout>
 
 </RelativeLayout>

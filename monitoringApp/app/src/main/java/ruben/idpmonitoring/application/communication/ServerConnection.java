@@ -17,9 +17,11 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 import ruben.idpmonitoring.Application;
+import ruben.idpmonitoring.application.history.ObjectiveMeasurement;
 
 public class ServerConnection {
-    private static final String BASE_URL = "http://192.168.0.142:80";
+    private static final String BASE_URL = "http://192.168.0.142:80"; //Thuis
+    //private static final String BASE_URL = "http://192.168.16.115"; //EDM
     private AsyncHttpClient client;
     private Context context;
 
@@ -100,14 +102,14 @@ public class ServerConnection {
         put("/api/accountservice/editUser", entity, callback);
     }
 
-    public void postfitness(String id, int heartrate, int steps, String date, Callback callback){
+    public void postObjectiveMeasurement(String id, ObjectiveMeasurement obj, Callback callback){
         JSONObject json_params = new JSONObject();
         StringEntity entity = null;
         try {
             json_params.put("accountId", id);
-            json_params.put("heartRate", heartrate);
-            json_params.put("steps", steps);
-            json_params.put("measurementDate", date);
+            json_params.put("heartRate", obj.getHeartrate());
+            json_params.put("steps", obj.getSteps());
+            json_params.put("measurementDate", obj.getTime().toString());
             entity = new StringEntity(json_params.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch(Exception ex){
@@ -151,7 +153,10 @@ public class ServerConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                callback.taskCompleted(statusCode, errorResponse.toString());
+                if(errorResponse != null)
+                    callback.taskCompleted(statusCode, errorResponse.toString());
+                else
+                    callback.taskCompleted(statusCode, null);
             }
 
             @Override
@@ -161,7 +166,10 @@ public class ServerConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                callback.taskCompleted(statusCode, errorResponse.toString());
+                if(errorResponse != null)
+                    callback.taskCompleted(statusCode, errorResponse.toString());
+                else
+                    callback.taskCompleted(statusCode, null);
             }
         });
     }
@@ -175,7 +183,10 @@ public class ServerConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                callback.taskCompleted(statusCode, errorResponse.toString());
+                if(errorResponse != null)
+                    callback.taskCompleted(statusCode, errorResponse.toString());
+                else
+                    callback.taskCompleted(statusCode, null);
             }
 
             @Override
@@ -184,8 +195,11 @@ public class ServerConnection {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray response) {
-                callback.taskCompleted(statusCode, response.toString());
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                if(errorResponse != null)
+                    callback.taskCompleted(statusCode, errorResponse.toString());
+                else
+                    callback.taskCompleted(statusCode, null);
             }
         });
     }
@@ -199,7 +213,10 @@ public class ServerConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                callback.taskCompleted(statusCode, errorResponse.toString());
+                if(errorResponse != null)
+                    callback.taskCompleted(statusCode, errorResponse.toString());
+                else
+                    callback.taskCompleted(statusCode, null);
             }
 
             @Override
@@ -209,7 +226,10 @@ public class ServerConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                callback.taskCompleted(statusCode, errorResponse.toString());
+                if(errorResponse != null)
+                    callback.taskCompleted(statusCode, errorResponse.toString());
+                else
+                    callback.taskCompleted(statusCode, null);
             }
         });
     }
