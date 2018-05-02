@@ -3,7 +3,6 @@ package com.farm.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -446,6 +445,8 @@ public class Inventory {
         return amountOfGrain;
     }
 
+    public void useGrain() {--amountOfGrain;}
+
     public void buyGrain() {
         if(this.coins >= 3) {
             this.amountOfGrain++;
@@ -467,6 +468,8 @@ public class Inventory {
     public int getAmountOfCarrot() {
         return amountOfCarrot;
     }
+
+    public void useCarrot() {--amountOfCarrot;}
 
     public void buyCarrot() {
         if(this.coins >= 2) {
@@ -490,6 +493,8 @@ public class Inventory {
         return amountOfPotato;
     }
 
+    public void usePotato() {--amountOfPotato;}
+
     public void buyPotato() {
         if(this.coins >= 3) {
             this.amountOfPotato++;
@@ -512,6 +517,8 @@ public class Inventory {
         return amountOfStrawberry;
     }
 
+    public void useStrawberry() {--amountOfStrawberry;}
+
     public void buyStrawberry() {
         if(this.coins >= 20) {
             this.amountOfStrawberry++;
@@ -533,6 +540,8 @@ public class Inventory {
     public int getAmountOfEggplant() {
         return amountOfEggplant;
     }
+
+    public void useEggplant() {--amountOfEggplant;}
 
     public void buyEggplant() {
         if(this.coins >= 24) {

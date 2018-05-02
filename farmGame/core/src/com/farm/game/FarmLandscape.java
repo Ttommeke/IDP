@@ -74,7 +74,8 @@ public class FarmLandscape {
         farmAnimals.add(new FarmAnimalChicken());
         farmAnimals.add(new FarmAnimalChicken());
 
-        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Children, FarmFieldTypeEnum.Chicken, farmAnimals), 2, 8);
+        //$grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Children, FarmFieldTypeEnum.Chicken, farmAnimals), 2, 8);
+        $grid.insertIntoPosition(new FarmField(), 2, 8);
 
         saveGridOnlyToJSON();
     }

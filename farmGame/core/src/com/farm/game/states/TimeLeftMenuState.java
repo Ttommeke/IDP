@@ -35,20 +35,23 @@ public class TimeLeftMenuState extends State {
         titleLabel.setFontScale(8);
 
         Table scrollTable = new Table();
-        scrollTable.defaults().pad(10).width(256).height(256);
+        scrollTable.defaults().pad(10).width(128).height(128);
 
         Image typeImage = new Image(texture);
         typeImage.setScaling(Scaling.fit);
+        Image timerImage = new Image(Assets.timerTexture);
+        timerImage.setScaling(Scaling.fit);
 
         long fullSecondsLeft = (timer + additionTime - System.currentTimeMillis())/1000;
         long minutesLeft = fullSecondsLeft/60;
         long secondsLeft = fullSecondsLeft%60;
-        timeLeft = new Label(("00" + String.valueOf(minutesLeft)).substring(String.valueOf(minutesLeft).length())
+        Label timeLeft = new Label(String.valueOf(minutesLeft)
                 + ":" + ("00" + String.valueOf(secondsLeft)).substring(String.valueOf(secondsLeft).length()), skin);
         timeLeft.setFontScale(5);
 
-        scrollTable.add(typeImage);
+        scrollTable.add(typeImage).width(256).height(256).colspan(2);
         scrollTable.row();
+        scrollTable.add(timerImage);
         scrollTable.add(timeLeft).center();
         scrollTable.row();
 
@@ -88,7 +91,7 @@ public class TimeLeftMenuState extends State {
         long minutesLeft = fullSecondsLeft/60;
         long secondsLeft = fullSecondsLeft%60;
 
-        timeLeft.setText(("00" + String.valueOf(minutesLeft)).substring(String.valueOf(minutesLeft).length())
+        timeLeft.setText(String.valueOf(minutesLeft)
                 + ":" + ("00" + String.valueOf(secondsLeft)).substring(String.valueOf(secondsLeft).length()));
     }
 

@@ -20,6 +20,7 @@ import com.farm.game.spriteData.FarmAnimalPig;
 import com.farm.game.spriteData.FarmFieldStatusEnum;
 import com.farm.game.spriteData.FarmFieldTypeEnum;
 import com.farm.game.spriteData.FarmLandTypeEnum;
+import com.farm.game.states.FieldMenuState;
 import com.farm.game.states.GameStateManager;
 import com.farm.game.states.MenuState;
 import com.google.gson.JsonArray;
@@ -34,6 +35,7 @@ public class FarmField extends FarmObject {
     private FarmFieldStatusEnum $status;
     private FarmFieldTypeEnum $type;
     private ArrayList<FarmAnimal> $farmAnimals;
+    private final int maxAmountOfAnimals = 5;
 
     public FarmField(){
         super( 2, Assets.farmFieldUninhabitedTexture);
@@ -52,6 +54,30 @@ public class FarmField extends FarmObject {
         $farmAnimals = farmAnimals;
 
         changeTexture();
+    }
+
+    public FarmFieldTypeEnum getType() {
+        return $type;
+    }
+
+    public FarmFieldStatusEnum getStatus() {
+        return $status;
+    }
+
+    public ArrayList<FarmAnimal> getFarmAnimals() {
+        return $farmAnimals;
+    }
+
+    public boolean isFull() {
+        return $farmAnimals.size() >= maxAmountOfAnimals;
+    }
+
+    public void removeAnimal(FarmAnimal farmAnimal) {
+        $farmAnimals.remove(farmAnimal);
+        if($farmAnimals.size() == 0) {
+            $type = FarmFieldTypeEnum.Uninhabited;
+            $status = FarmFieldStatusEnum.Uninhabited;
+        }
     }
 
     /**
@@ -108,10 +134,10 @@ public class FarmField extends FarmObject {
     public void handleTouch(GameStateManager gsm) {
         switch ($status) {
             case Uninhabited:
-                gsm.push(new MenuState(gsm, getChooseAnimalTable(gsm), "Field"));
+                gsm.push(new MenuState(gsm, getChooseAnimalTable(gsm), "Veld"));
                 break;
             default:
-                gsm.push(new MenuState(gsm, getAdultChickenTable(), "Field"));
+                gsm.push(new FieldMenuState(gsm, this));
         }
     }
 
@@ -127,7 +153,7 @@ public class FarmField extends FarmObject {
         // Chicken
         Image chickImage = new Image(Assets.chickTexture);
         chickImage.setScaling(Scaling.fit);
-        TextButton buyChick = new TextButton("Buy   1", skin);
+        TextButton buyChick = new TextButton("Koop   22", skin);
         buyChick.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -139,11 +165,11 @@ public class FarmField extends FarmObject {
         // Pig
         Image pigletImage = new Image(Assets.pigletTexture);
         pigletImage.setScaling(Scaling.fit);
-        TextButton buyPiglet = new TextButton("Buy   1", skin);
+        TextButton buyPiglet = new TextButton("Koop   74", skin);
         buyPiglet.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                addAnimal(FarmFieldTypeEnum.Chicken);
+                addAnimal(FarmFieldTypeEnum.Pig);
                 gsm.pop();
             }
         });
@@ -151,11 +177,11 @@ public class FarmField extends FarmObject {
         // Cow
         Image calfImage = new Image(Assets.calfTexture);
         calfImage.setScaling(Scaling.fit);
-        TextButton buyCalf = new TextButton("Buy   2", skin);
+        TextButton buyCalf = new TextButton("Koop   97", skin);
         buyCalf.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                addAnimal(FarmFieldTypeEnum.Chicken);
+                addAnimal(FarmFieldTypeEnum.Cow);
                 gsm.pop();
             }
         });
@@ -172,30 +198,12 @@ public class FarmField extends FarmObject {
         return scrollTable;
     }
 
-    private Table getAdultChickenTable() {
-        Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
-
-        Image chickenImage = new Image(Assets.chickenTexture);
-        chickenImage.setScaling(Scaling.fit);
-        Label animalAmount = new Label(String.valueOf($farmAnimals.size()), skin);
-        animalAmount.setFontScale(5);
-
-        Table scrollTable = new Table();
-        scrollTable.defaults().pad(10).width(128).height(128);
-
-        scrollTable.add(chickenImage);
-        scrollTable.add(animalAmount).center();
-
-        return scrollTable;
-    }
-
     @Override
     public void update() {
         boolean adult = false;
         boolean child = false;
 
-        for(Object animal: $farmAnimals) {
-            FarmAnimal farmAnimal = (FarmAnimalChicken) animal;
+        for(FarmAnimal farmAnimal: $farmAnimals) {
             farmAnimal.update();
             if(farmAnimal.isAdult()) {
                 adult = true;
@@ -215,18 +223,25 @@ public class FarmField extends FarmObject {
         changeTexture();
     }
 
-    private void addAnimal(FarmFieldTypeEnum type) {
-        $farmAnimals.add(new FarmAnimalChicken());
+    public void addAnimal(FarmFieldTypeEnum type) {
+        if(isFull()) {
+            return;
+        }
+
         int cost = 0;
+        $type = type;
         switch ($type){
             case Chicken:
-                cost = 22;
+                $farmAnimals.add(new FarmAnimalChicken());
+                cost = FarmAnimalChicken.chickPrize;
                 break;
             case Pig:
-                cost = 74;
+                $farmAnimals.add(new FarmAnimalPig());
+                cost = FarmAnimalPig.pigletPrize;
                 break;
             case Cow:
-                cost = 97;
+                $farmAnimals.add(new FarmAnimalCow());
+                cost = FarmAnimalCow.calfPrize;
                 break;
         }
         FarmGameMain.inventory.buySomething(cost);
@@ -237,12 +252,8 @@ public class FarmField extends FarmObject {
             $status = FarmFieldStatusEnum.Children;
         }
 
-        FarmGameMain.settings.saveToJSON();
         changeTexture();
-    }
-
-    public void removeOneAnimal() {
-
+        FarmGameMain.settings.saveToJSON();
     }
 
     @Override
