@@ -2,8 +2,8 @@
     "questions": [
         {
             "id": "11e121bb-46b6-4f8f-acec-5280c4f1e4ac",
-            "questionType": "MULTIPLECHOICE",
-            "question": "whoop whoop!",
+            "questionType": "RATING",
+            "question": "Op een schaal van 1 tot 5, hoeveel heb je bewogen de laatste twee uur?",
             "PossibleAnswersOnQuestion": [
                 {
                     "id": "d873b204-3a06-48b6-9fd6-f8afa3427806",
@@ -23,6 +23,80 @@
                 },
                 {
                     "id": "7142af5d-0c82-4ffe-89ed-01e3f0b7a04a",
+                    "answer": "5"
+                }
+            ]
+        },{
+            "id": "76fdc098-dda6-4e20-b392-7cd793995359",
+            "questionType": "MULTIPLECHOICE",
+            "question": "Waar ben je op dit moment?",
+            "PossibleAnswersOnQuestion": [
+                {
+                    "id": "24c36bc9-b40d-4ebf-93a0-6c169f900c36",
+                    "answer": "Thuis"
+                },
+                {
+                    "id": "656ba911-d16b-4e8a-ac02-9fba24af3516",
+                    "answer": "Bij vrienden"
+                },
+                {
+                    "id": "008da7a4-9d2c-4195-88ef-b1913660b221",
+                    "answer": "School/werk"
+                },
+                {
+                    "id": "8e3b7051-2b98-4838-aa26-f39361c0674f",
+                    "answer": "Vrije tijd activiteit"
+                }
+            ]
+        },{
+            "id": "42d264f9-a6d1-4b6f-b21f-6389cc264879",
+            "questionType": "RATING",
+            "question": "Hoe moe ben je, op een schaal van 1 tot 5?",
+            "PossibleAnswersOnQuestion": [
+                {
+                    "id": "a78f5029-1267-4990-bcc7-1fdacf984bf9",
+                    "answer": "1"
+                },
+                {
+                    "id": "feb0eb82-67ea-42cc-bc09-19aab10d9d4b",
+                    "answer": "2"
+                },
+                {
+                    "id": "48573aad-44fc-4086-9ab6-bef06a08bac0",
+                    "answer": "3"
+                },
+                {
+                    "id": "c2aeae3d-1a41-4393-ad76-978bafb780e1",
+                    "answer": "4"
+                },
+                {
+                    "id": "ab18a714-2dc5-4c8e-a12a-b837e517ab84",
+                    "answer": "5"
+                }
+            ]
+        },{
+            "id": "4e782b0e-132d-4999-9420-d6470601aabb",
+            "questionType": "RATING",
+            "question": "Hoe gelukkig ben je, op een schaal van 1 tot 5?",
+            "PossibleAnswersOnQuestion": [
+                {
+                    "id": "7abce500-5490-46a2-be48-eb612fa2e3ee",
+                    "answer": "1"
+                },
+                {
+                    "id": "2e47156a-d070-4a5e-b7a2-2a94e46842b0",
+                    "answer": "2"
+                },
+                {
+                    "id": "fefe9607-0204-42ad-a02a-ac8d930fc367",
+                    "answer": "3"
+                },
+                {
+                    "id": "9cff7c21-3ab8-4f47-b13f-b19f7597f807",
+                    "answer": "4"
+                },
+                {
+                    "id": "56ef2d36-e540-427a-b633-d3688af07c04",
                     "answer": "5"
                 }
             ]
