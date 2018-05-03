@@ -61,7 +61,7 @@ public class FarmState extends State implements InputProcessor{
 
         // Menus => 10 padding + 128 texture
         sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 138, 128, 128);
-        sb.draw(Assets.farmBuildingTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*2), 128, 128);
+        sb.draw(Assets.buildTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*2), 128, 128);
         sb.draw(Assets.moveTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*3), 128, 128);
         sb.draw(Assets.cancelTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*4), 128, 128);
         sb.draw(Assets.settingsTexture, FarmGameMain.WIDTH - 138, 10 + 128, 128, 128);

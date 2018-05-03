@@ -81,7 +81,7 @@ public class Settings {
 
             // Save inventory
             String jsonInventoryString = $json.prettyPrint(FarmGameMain.inventory);
-            prefs.putString("inventory", jsonInventoryString );
+            prefs.putString("inventory", jsonInventoryString);
 
             prefs.flush();
         } catch (Throwable e) {

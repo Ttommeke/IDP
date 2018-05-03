@@ -31,6 +31,8 @@ public class Assets {
     public static Texture timerTexture;
     public static Texture buyTexture;
     public static Texture sellTexture;
+    public static Texture buildTexture;
+    public static Texture feedTexture;
 
     // Grid textures
     // Farmland textures
@@ -109,6 +111,8 @@ public class Assets {
         timerTexture = new Texture("icons/icons8-time-100.png");
         buyTexture = new Texture("icons/buy.png");
         sellTexture = new Texture("icons/sell.png");
+        buildTexture = new Texture("icons/hammer.png");
+        feedTexture = new Texture("icons/animal-feed.png");
 
         // Grid textures
         // Farmland textures
@@ -188,6 +192,8 @@ public class Assets {
         timerTexture.dispose();
         buyTexture.dispose();
         sellTexture.dispose();
+        buildTexture.dispose();
+        feedTexture.dispose();
 
         // Grid textures
         // Farmland textures

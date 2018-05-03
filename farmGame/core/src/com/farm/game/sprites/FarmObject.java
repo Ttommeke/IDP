@@ -3,13 +3,19 @@ package com.farm.game.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.farm.game.Assets;
 import com.farm.game.states.GameStateManager;
 
 public class FarmObject implements Json.Serializable{
     protected Texture $texture;
     protected int $amountOfCells;
 
-    FarmObject(int amountOfCells, Texture texture){
+    public FarmObject() {
+        $amountOfCells = 1;
+        $texture = Assets.gridSquareTexture;
+    }
+
+    public FarmObject(int amountOfCells, Texture texture){
         $amountOfCells = amountOfCells;
         $texture = texture;
     }

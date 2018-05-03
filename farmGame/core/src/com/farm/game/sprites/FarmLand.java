@@ -46,7 +46,7 @@ public class FarmLand extends FarmObject{
                 gsm.push(new MenuState(gsm, getUnplantedMenu(gsm), "Kies zaadje"));
                 break;
             case Growing:
-                pushTimeLeftMenu(gsm, "Zaadje groeid");
+                pushTimeLeftMenu(gsm, "Zaadje groei");
                 break;
             case FullyGrown:
                 switch ($type){

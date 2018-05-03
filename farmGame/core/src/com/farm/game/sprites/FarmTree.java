@@ -49,9 +49,9 @@ public class FarmTree extends FarmObject {
             case Growing:
                 String title;
                 if ($type == FarmTreeTypeEnum.Tree) {
-                    title = "Boom groeid";
+                    title = "Boom groeit";
                 } else {
-                    title = "Struik groeid";
+                    title = "Struik groeit";
                 }
                 pushTimeLeftMenu(gsm, title);
                 break;
