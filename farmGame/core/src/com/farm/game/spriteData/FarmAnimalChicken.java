@@ -24,6 +24,11 @@ public class FarmAnimalChicken extends FarmAnimal {
         changeTexture();
     }
 
+    public void makeDefault() {
+        $adult = true;
+        $texture = Assets.chickenTexture;
+    }
+
     @Override
     public void changeTexture() {
         if($adult) {

@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.farm.game.spriteData.FarmAnimal;
 import com.farm.game.spriteData.FarmAnimalChicken;
-import com.farm.game.spriteData.FarmTreeFruitTypeEnum;
+import com.farm.game.spriteData.FarmFieldStatusEnum;
+import com.farm.game.spriteData.FarmFieldTypeEnum;
 import com.farm.game.sprites.FarmBuilding;
 import com.farm.game.sprites.FarmField;
 import com.farm.game.sprites.FarmLand;
 import com.farm.game.sprites.FarmObject;
-import com.farm.game.sprites.FarmTree;
 import com.farm.game.states.GameStateManager;
 
 import java.util.ArrayList;
@@ -43,7 +43,11 @@ public class FarmLandscape {
     }
 
     public void moveIntoPosition(float x, float y, FarmObject farmObject) {
-        $grid.moveIntoPosition(x, y, farmObject);
+        $grid.moveIntoPosition(x, y, farmObject, false);
+    }
+
+    public void moveNewIntoPosition(float x, float y, FarmObject farmObject) {
+        $grid.moveIntoPosition(x, y, farmObject, true);
     }
 
     public void gridIndexesTouched(int rowIndex, int columnIndex, GameStateManager gsm) {
@@ -70,6 +74,14 @@ public class FarmLandscape {
         $grid.updateGrid();
     }
 
+    public void setBackup() {
+        $grid.setBackup();
+    }
+
+    public void restoreBackup() {
+        $grid.restoreBackup();
+    }
+
     public void defaultGrid() {
         System.out.println("defaultGrid");
 
@@ -84,10 +96,17 @@ public class FarmLandscape {
         $grid.insertIntoPosition(new FarmLand(), 5, 3, true);
         $grid.insertIntoPosition(new FarmLand(), 5, 4, true);
         $grid.insertIntoPosition(new FarmBuilding(), 4, 8, true);
-        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 2, true);
-        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 3, true);
-        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Raspberry), 1, 4, true);
-        $grid.insertIntoPosition(new FarmField(), 2, 8, true);
+        ArrayList<FarmAnimal> farmAnimals = new ArrayList<>();
+        FarmAnimalChicken chicken = new FarmAnimalChicken();
+        chicken.makeDefault();
+        farmAnimals.add(chicken);
+        chicken = new FarmAnimalChicken();
+        chicken.makeDefault();
+        farmAnimals.add(chicken);
+        chicken = new FarmAnimalChicken();
+        chicken.makeDefault();
+        farmAnimals.add(chicken);
+        $grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Adults, FarmFieldTypeEnum.Chicken, farmAnimals), 2, 8, true);
 
         saveGridOnlyToJSON();
     }

@@ -30,7 +30,7 @@ public class RemoveState extends State {
                 $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
-                System.out.println("Show build menu -> place item");
+                $gsm.push(new MenuState($gsm, BuildState.getBuildingsMenu($gsm), "Kies Gebouw"));
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
                 $gsm.push(new MoveState($gsm));

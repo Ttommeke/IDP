@@ -31,7 +31,7 @@ public class FarmState extends State implements InputProcessor{
             if (inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                System.out.println("Show build menu -> place item");
+                $gsm.push(new MenuState($gsm, BuildState.getBuildingsMenu($gsm), "Kies Gebouw"));
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.push(new MoveState($gsm));
             } else if (deleteButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {

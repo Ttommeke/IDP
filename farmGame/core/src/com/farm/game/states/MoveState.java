@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
-import com.farm.game.Grid;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.GridSquare;
 
@@ -16,13 +15,12 @@ public class MoveState extends State {
             cancenButtonBounds, acceptButtonBounds;
     private boolean moving;
     private FarmObject farmObject;
-    private Grid backup;
 
     public MoveState(GameStateManager gsm) {
         super(gsm);
         $camera.setToOrtho(true, FarmGameMain.WIDTH, FarmGameMain.HEIGHT);
         moving = false;
-        backup = FarmGameMain.landscape.getGrid();
+        FarmGameMain.landscape.setBackup();
 
         // 10 padding + 128 texture
         inventoryButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10, 128, 128);
@@ -42,30 +40,31 @@ public class MoveState extends State {
             if (inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
-                FarmGameMain.landscape.setGrid(backup);
-                System.out.println("Show build menu -> place item");
+                $gsm.push(new MenuState($gsm, BuildState.getBuildingsMenu($gsm), "Kies Gebouw"));
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
-                FarmGameMain.landscape.setGrid(backup);
             } else if (deleteButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
-                FarmGameMain.landscape.setGrid(backup);
                 $gsm.push(new RemoveState($gsm));
             } else if (settingsButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 System.out.println("Show settings menu");
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
-                FarmGameMain.landscape.setGrid(backup);
                 $gsm.set(new MapState($gsm));
             } else {
                 if(moving) {
                     if (acceptButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                         moving = false;
+                        FarmGameMain.landscape.setBackup();
                         FarmGameMain.settings.saveToJSON();
                     } else if (cancenButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                         moving = false;
-                        FarmGameMain.landscape.setGrid(backup);
+                        FarmGameMain.landscape.restoreBackup();
                     } else {
                         FarmGameMain.landscape.moveIntoPosition(Gdx.input.getX(), Gdx.input.getY(), farmObject);
                     }

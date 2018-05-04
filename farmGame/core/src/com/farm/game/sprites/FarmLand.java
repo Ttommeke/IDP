@@ -173,7 +173,7 @@ public class FarmLand extends FarmObject{
         // Grain
         Image grainImage = new Image(Assets.grainTexture);
         grainImage.setScaling(Scaling.fit);
-        TextButton buyGrain = new TextButton("Buy   1", skin);
+        TextButton buyGrain = new TextButton("Koop   1", skin);
         buyGrain.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -185,7 +185,7 @@ public class FarmLand extends FarmObject{
         // Carrot
         Image carrotImage = new Image(Assets.carrotTexture);
         carrotImage.setScaling(Scaling.fit);
-        TextButton buyCarrot = new TextButton("Buy   1", skin);
+        TextButton buyCarrot = new TextButton("Koop   1", skin);
         buyCarrot.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -197,7 +197,7 @@ public class FarmLand extends FarmObject{
         // Potato
         Image potatoImage = new Image(Assets.potatoTexture);
         potatoImage.setScaling(Scaling.fit);
-        TextButton buyPotato = new TextButton("Buy   2", skin);
+        TextButton buyPotato = new TextButton("Koop   2", skin);
         buyPotato.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -209,7 +209,7 @@ public class FarmLand extends FarmObject{
         // Strawberry
         Image strawberryImage = new Image(Assets.strawberryTexture);
         strawberryImage.setScaling(Scaling.fit);
-        TextButton buyStrawberry = new TextButton("Buy   4", skin);
+        TextButton buyStrawberry = new TextButton("Koop   4", skin);
         buyStrawberry.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -221,7 +221,7 @@ public class FarmLand extends FarmObject{
         // Eggplant
         Image eggplantImage = new Image(Assets.eggplantTexture);
         eggplantImage.setScaling(Scaling.fit);
-        TextButton buyEggplant = new TextButton("Buy   6", skin);
+        TextButton buyEggplant = new TextButton("Koop   6", skin);
         buyEggplant.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

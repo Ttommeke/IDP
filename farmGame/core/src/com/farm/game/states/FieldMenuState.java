@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,8 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
@@ -22,10 +19,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 import com.farm.game.spriteData.FarmAnimal;
-import com.farm.game.spriteData.FarmAnimalChicken;
-import com.farm.game.spriteData.FarmAnimalCow;
-import com.farm.game.spriteData.FarmAnimalPig;
-import com.farm.game.spriteData.FarmFieldTypeEnum;
 import com.farm.game.sprites.FarmField;
 
 import java.util.ArrayList;
@@ -111,6 +104,7 @@ public class FieldMenuState extends State {
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                         farmAnimal.collectProduct();
+                        FarmGameMain.settings.saveToJSON();
                         $gsm.pop();
                         $gsm.push(new FieldMenuState($gsm, $field));
                         return true; //the input multiplexer will stop trying to handle this touch
@@ -140,6 +134,7 @@ public class FieldMenuState extends State {
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                         FarmGameMain.inventory.earnSomething(sellPrice);
                         $field.removeAnimal(farmAnimal);
+                        FarmGameMain.settings.saveToJSON();
                         $gsm.pop();
                         if($field.getFarmAnimals().size() > 0) {
                             $gsm.push(new FieldMenuState($gsm, $field));

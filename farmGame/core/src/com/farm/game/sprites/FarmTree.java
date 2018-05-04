@@ -52,6 +52,10 @@ public class FarmTree extends FarmObject {
         $timer = System.currentTimeMillis();
     }
 
+    public FarmTreeFruitTypeEnum getFruitType() {
+        return $fruitType;
+    }
+
     @Override
     public void handleTouch(GameStateManager gsm) {
         switch ($status) {
