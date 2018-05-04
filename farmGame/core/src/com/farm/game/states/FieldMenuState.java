@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 import com.farm.game.spriteData.FarmAnimal;
+import com.farm.game.spriteData.FarmAnimalPig;
 import com.farm.game.sprites.FarmField;
 
 import java.util.ArrayList;
@@ -113,16 +114,19 @@ public class FieldMenuState extends State {
                 scrollTable.add(productImage);
             } else if(farmAnimal.isAdult()) { // if animal is adult -> show sell button
                 if (!farmAnimal.isEating()) { // If animal is not eating -> show feed menu opener which will feed the animal else show timer
-                    Image feedImage = new Image(Assets.feedTexture);
-                    feedImage.setScaling(Scaling.fit);
-                    feedImage.addListener(new ClickListener() {
-                        @Override
-                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                            $gsm.push(new MenuState($gsm, getFoodMenu(farmAnimal, $gsm, $field), "Gebruik"));
-                            return true; //the input multiplexer will stop trying to handle this touch
-                        }
-                    });
-                    scrollTable.add(feedImage);
+                    if(farmAnimal.getClass() != FarmAnimalPig.class)
+                    {
+                        Image feedImage = new Image(Assets.feedTexture);
+                        feedImage.setScaling(Scaling.fit);
+                        feedImage.addListener(new ClickListener() {
+                            @Override
+                            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                $gsm.push(new MenuState($gsm, getFoodMenu(farmAnimal, $gsm, $field), "Gebruik"));
+                                return true; //the input multiplexer will stop trying to handle this touch
+                            }
+                        });
+                        scrollTable.add(feedImage);
+                    }
                 } else {
                     scrollTable.add(timeLeft).right();
                 }

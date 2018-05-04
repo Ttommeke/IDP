@@ -120,7 +120,7 @@ public class Grid {
             for(int j=0; j<$grid[i].length; j++) {
                 sb.draw($grid[i][j].getTexture(), j*$cellSize, i*$cellSize,
                         $grid[i][j].getAmountOfCells() * $cellSize, $grid[i][j].getAmountOfCells() * $cellSize);
-                
+
                 if($grid[i][j].getClass() == FarmLand.class) {
                     FarmLand farmLand = (FarmLand) $grid[i][j];
                     switch (farmLand.getStatus()) {
