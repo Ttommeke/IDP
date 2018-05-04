@@ -42,6 +42,10 @@ public class FarmLand extends FarmObject{
         resetLand();
     }
 
+    public FarmLandStatusEnum getStatus() {
+        return $status;
+    }
+
     @Override
     public void handleTouch(GameStateManager gsm) {
         switch ($status) {

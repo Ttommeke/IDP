@@ -2,6 +2,7 @@ package com.farm.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.farm.game.sprites.FarmLand;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.GridSquare;
 import com.farm.game.sprites.InvisibleChildSquare;
@@ -119,6 +120,21 @@ public class Grid {
             for(int j=0; j<$grid[i].length; j++) {
                 sb.draw($grid[i][j].getTexture(), j*$cellSize, i*$cellSize,
                         $grid[i][j].getAmountOfCells() * $cellSize, $grid[i][j].getAmountOfCells() * $cellSize);
+                
+                if($grid[i][j].getClass() == FarmLand.class) {
+                    FarmLand farmLand = (FarmLand) $grid[i][j];
+                    switch (farmLand.getStatus()) {
+                        case Growing:
+                            sb.draw(Assets.timerTexture, j*$cellSize + 85, i*$cellSize + 85,40, 40);
+                            break;
+                        case FullyGrown:
+                            sb.draw(Assets.acceptTexture, j*$cellSize + 85, i*$cellSize + 85,40, 40);
+                            break;
+                        case Rotten:
+                            sb.draw(Assets.cancelTexture, j*$cellSize + 85, i*$cellSize + 85,40, 40);
+                            break;
+                    }
+                }
             }
         }
     }
