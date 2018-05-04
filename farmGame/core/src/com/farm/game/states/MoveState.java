@@ -4,15 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
+import com.farm.game.Grid;
+import com.farm.game.sprites.FarmObject;
+import com.farm.game.sprites.GridSquare;
 
-public class RemoveState extends State {
+public class MoveState extends State {
     private Rectangle inventoryButtonBounds, buildButtonBounds, moveButtonBounds,
-            deleteButtonBounds, settingsButtonBounds, mapButtonBounds;
+            deleteButtonBounds, settingsButtonBounds, mapButtonBounds,
+            cancenButtonBounds, acceptButtonBounds;
+    private boolean moving;
+    private FarmObject farmObject;
+    private Grid backup;
 
-    public RemoveState(GameStateManager gsm) {
+    public MoveState(GameStateManager gsm) {
         super(gsm);
         $camera.setToOrtho(true, FarmGameMain.WIDTH, FarmGameMain.HEIGHT);
+        moving = false;
+        backup = FarmGameMain.landscape.getGrid();
 
         // 10 padding + 128 texture
         inventoryButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10, 128, 128);
@@ -21,6 +31,9 @@ public class RemoveState extends State {
         deleteButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10 + (128*3), 128, 128);
         settingsButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*2), 128, 128);
         mapButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 138, 128, 128);
+
+        acceptButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10 + (128*4), 128, 128);
+        cancenButtonBounds = new Rectangle(FarmGameMain.WIDTH - 138, 10 + (128*5), 128, 128);
     }
 
     @Override
@@ -30,19 +43,36 @@ public class RemoveState extends State {
                 $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
+                FarmGameMain.landscape.setGrid(backup);
                 System.out.println("Show build menu -> place item");
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
-                $gsm.push(new MoveState($gsm));
+                FarmGameMain.landscape.setGrid(backup);
             } else if (deleteButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
+                FarmGameMain.landscape.setGrid(backup);
+                $gsm.push(new RemoveState($gsm));
             } else if (settingsButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 System.out.println("Show settings menu");
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
+                FarmGameMain.landscape.setGrid(backup);
                 $gsm.set(new MapState($gsm));
             } else {
-                FarmGameMain.landscape.handleDelete(Gdx.input.getX(), Gdx.input.getY(), $gsm);
+                if(moving) {
+                    if (acceptButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                        moving = false;
+                        FarmGameMain.settings.saveToJSON();
+                    } else if (cancenButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                        moving = false;
+                        FarmGameMain.landscape.setGrid(backup);
+                    } else {
+                        FarmGameMain.landscape.moveIntoPosition(Gdx.input.getX(), Gdx.input.getY(), farmObject);
+                    }
+                } else {
+                    farmObject = FarmGameMain.landscape.objectToMove(Gdx.input.getX(), Gdx.input.getY());
+                    moving = farmObject.getClass() != GridSquare.class;
+                }
             }
         }
     }
@@ -55,14 +85,21 @@ public class RemoveState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        Gdx.gl.glClearColor(0, 125/255f, 0, 1);
 
         // Info on screen
-        String text = "Klik om te verwijderen";
+        String text;
+        if(moving) {
+            text = "Klik om te verplaatsen";
+
+            sb.draw(Assets.acceptTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*5), 128, 128);
+            sb.draw(Assets.cancelTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*6), 128, 128);
+        } else {
+            text = "Klik om een object te kiezen";
+        }
         GlyphLayout gl = new GlyphLayout();
-        gl.setText(FarmGameMain.redFont, text);
+        gl.setText(FarmGameMain.blueFont, text);
         float textWidth = FarmGameMain.WIDTH / 2 - gl.width / 2;
-        FarmGameMain.redFont.draw(sb, text, textWidth, FarmGameMain.HEIGHT - 5);
+        FarmGameMain.blueFont.draw(sb, text, textWidth, FarmGameMain.HEIGHT - 5);
 
         sb.end();
     }

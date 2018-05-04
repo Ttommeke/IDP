@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.farm.game.spriteData.FarmAnimal;
 import com.farm.game.spriteData.FarmAnimalChicken;
+import com.farm.game.spriteData.FarmTreeFruitTypeEnum;
 import com.farm.game.sprites.FarmBuilding;
 import com.farm.game.sprites.FarmField;
-import com.farm.game.spriteData.FarmFieldStatusEnum;
-import com.farm.game.spriteData.FarmFieldTypeEnum;
 import com.farm.game.sprites.FarmLand;
 import com.farm.game.sprites.FarmObject;
 import com.farm.game.sprites.FarmTree;
-import com.farm.game.spriteData.FarmTreeFruitTypeEnum;
 import com.farm.game.states.GameStateManager;
 
 import java.util.ArrayList;
@@ -38,6 +36,14 @@ public class FarmLandscape {
 
     public void handleDelete(float x, float y, GameStateManager gsm) {
         $grid.handleDelete(x, y, gsm);
+    }
+
+    public FarmObject objectToMove(float x, float y) {
+        return $grid.getObject(x, y);
+    }
+
+    public void moveIntoPosition(float x, float y, FarmObject farmObject) {
+        $grid.moveIntoPosition(x, y, farmObject);
     }
 
     public void gridIndexesTouched(int rowIndex, int columnIndex, GameStateManager gsm) {
@@ -68,26 +74,20 @@ public class FarmLandscape {
         System.out.println("defaultGrid");
 
         $grid = new Grid();
-        $grid.insertIntoPosition(new FarmLand(), 3, 2);
-        $grid.insertIntoPosition(new FarmLand(), 3, 3);
-        $grid.insertIntoPosition(new FarmLand(), 3, 4);
-        $grid.insertIntoPosition(new FarmLand(), 4, 2);
-        $grid.insertIntoPosition(new FarmLand(), 4, 3);
-        $grid.insertIntoPosition(new FarmLand(), 4, 4);
-        $grid.insertIntoPosition(new FarmLand(), 5, 2);
-        $grid.insertIntoPosition(new FarmLand(), 5, 3);
-        $grid.insertIntoPosition(new FarmLand(), 5, 4);
-        $grid.insertIntoPosition(new FarmBuilding(), 4, 8);
-        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 2);
-        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 3);
-        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Raspberry), 1, 4);
-        ArrayList<FarmAnimal> farmAnimals = new ArrayList<>();
-        farmAnimals.add(new FarmAnimalChicken());
-        farmAnimals.add(new FarmAnimalChicken());
-        farmAnimals.add(new FarmAnimalChicken());
-
-        //$grid.insertIntoPosition(new FarmField(FarmFieldStatusEnum.Children, FarmFieldTypeEnum.Chicken, farmAnimals), 2, 8);
-        $grid.insertIntoPosition(new FarmField(), 2, 8);
+        $grid.insertIntoPosition(new FarmLand(), 3, 2, true);
+        $grid.insertIntoPosition(new FarmLand(), 3, 3, true);
+        $grid.insertIntoPosition(new FarmLand(), 3, 4, true);
+        $grid.insertIntoPosition(new FarmLand(), 4, 2, true);
+        $grid.insertIntoPosition(new FarmLand(), 4, 3, true);
+        $grid.insertIntoPosition(new FarmLand(), 4, 4, true);
+        $grid.insertIntoPosition(new FarmLand(), 5, 2, true);
+        $grid.insertIntoPosition(new FarmLand(), 5, 3, true);
+        $grid.insertIntoPosition(new FarmLand(), 5, 4, true);
+        $grid.insertIntoPosition(new FarmBuilding(), 4, 8, true);
+        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 2, true);
+        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Apple), 1, 3, true);
+        $grid.insertIntoPosition(new FarmTree(FarmTreeFruitTypeEnum.Raspberry), 1, 4, true);
+        $grid.insertIntoPosition(new FarmField(), 2, 8, true);
 
         saveGridOnlyToJSON();
     }

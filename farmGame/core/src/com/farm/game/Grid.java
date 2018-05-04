@@ -11,6 +11,7 @@ public class Grid {
     private FarmObject[][] $grid;
     private Rectangle[][] $gridRectangle;
     private final int $cellSize = 128;
+    private int previousRowIndex, previousColumnIndex;
 
     public Grid() {
         $grid = new FarmObject[8][13];
@@ -24,14 +25,66 @@ public class Grid {
         }
     }
 
-    public void insertIntoPosition(FarmObject farmObject, int row, int column) {
-        int amountOfCells = farmObject.getAmountOfCells();
-        for(int i=0; i<amountOfCells; i++){
-            for (int j=0; j<amountOfCells; j++) {
-                $grid[row+i][column+j] = new InvisibleChildSquare(row, column);
+    public FarmObject getObject(float x, float y) {
+        for(int i=0; i<$gridRectangle.length; i++) {
+            for(int j=0; j<$gridRectangle[i].length; j++) {
+                if($gridRectangle[i][j].contains(x, y)) {
+                    previousRowIndex = i;
+                    previousColumnIndex = j;
+                    return $grid[i][j];
+                }
             }
         }
-        $grid[row][column] = farmObject;
+        return new GridSquare();
+    }
+
+    public void insertIntoPosition(FarmObject farmObject, int row, int column, boolean def) {
+        int amountOfCells = farmObject.getAmountOfCells();
+        boolean clear = true;
+
+        if(row+amountOfCells > $grid.length || column+amountOfCells > $grid[0].length) {
+            clear = false;
+        } else {
+            for (int i = 0; i < amountOfCells; i++) {
+                for (int j = 0; j < amountOfCells; j++) {
+                    if ($grid[row + i][column + j].getClass() != GridSquare.class) {
+                        clear = false;
+                    }
+                }
+            }
+        }
+
+        if(clear) {
+            for(int i=0; i<amountOfCells; i++){
+                for (int j=0; j<amountOfCells; j++) {
+                    $grid[row+i][column+j] = new InvisibleChildSquare(row, column);
+                }
+            }
+            $grid[row][column] = farmObject;
+        }
+
+        if(clear && !def) {
+            deleteFromPosition(previousRowIndex, previousColumnIndex);
+            previousRowIndex = row;
+            previousColumnIndex = column;
+        }
+    }
+
+    public void moveIntoPosition(float x, float y, FarmObject farmObject) {
+        if(farmObject.getClass() == InvisibleChildSquare.class) {
+            InvisibleChildSquare child = (InvisibleChildSquare) farmObject;
+            previousRowIndex = child.getParentRow();
+            previousColumnIndex = child.getParentColumn();
+            farmObject = $grid[previousRowIndex][previousColumnIndex];
+        }
+
+        for(int i=0; i<$gridRectangle.length; i++) {
+            for(int j=0; j<$gridRectangle[i].length; j++) {
+                if($gridRectangle[i][j].contains(x, y)) {
+                    insertIntoPosition(farmObject, i, j, false);
+                }
+            }
+        }
     }
 
     public void updateGrid() {

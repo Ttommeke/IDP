@@ -33,7 +33,7 @@ public class FarmState extends State implements InputProcessor{
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 System.out.println("Show build menu -> place item");
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                System.out.println("Show move state");
+                $gsm.push(new MoveState($gsm));
             } else if (deleteButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.push(new RemoveState($gsm));
             } else if (settingsButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {

@@ -22,6 +22,14 @@ public class InvisibleChildSquare extends FarmObject {
         $parentColumn = parentColumn;
     }
 
+    public int getParentRow() {
+        return $parentRow;
+    }
+
+    public int getParentColumn() {
+        return $parentColumn;
+    }
+
     @Override
     public void handleTouch(GameStateManager gsm) {
         FarmGameMain.landscape.gridIndexesTouched($parentRow, $parentColumn, gsm);
