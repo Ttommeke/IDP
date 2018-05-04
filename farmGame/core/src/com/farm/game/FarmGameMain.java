@@ -19,6 +19,7 @@ public class FarmGameMain extends ApplicationAdapter {
     public static Settings settings;
 
 	public static BitmapFont font;
+	public static BitmapFont redFont;
 
 	private GameStateManager $gsm;
 	private SpriteBatch $batch;
@@ -32,6 +33,10 @@ public class FarmGameMain extends ApplicationAdapter {
         param.borderWidth = 2;
         param.borderColor = Color.BLACK;
         font = gen.generateFont(param);
+
+        param.size = 100;
+        param.color = Color.RED;
+        redFont = gen.generateFont(param);
         gen.dispose();
 
         WIDTH = Gdx.graphics.getWidth();

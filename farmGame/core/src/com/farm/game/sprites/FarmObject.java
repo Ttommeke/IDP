@@ -32,6 +32,8 @@ public class FarmObject implements Json.Serializable{
 
     public void handleTouch(GameStateManager gsm) { }
 
+    public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) { }
+
     @Override
     public void write(Json json) { }
 

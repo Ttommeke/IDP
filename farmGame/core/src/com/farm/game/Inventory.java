@@ -263,7 +263,7 @@ public class Inventory {
         appleImage.setScaling(Scaling.fit);
         final Label apple = new Label(String.valueOf(amountOfApples), skin);
         apple.setFontScale(5);
-        Image buyAppleImage = new Image(Assets.buyTexture);
+        /*Image buyAppleImage = new Image(Assets.buyTexture);
         buyAppleImage.setScaling(Scaling.fit);
         buyAppleImage.addListener(new ClickListener() {
             @Override
@@ -275,7 +275,7 @@ public class Inventory {
                 event.handle(); //the Stage will stop trying to handle this event
                 return true; //the input multiplexer will stop trying to handle this touch
             }
-        });
+        });*/
         Image sellAppleImage = new Image(Assets.sellTexture);
         sellAppleImage.setScaling(Scaling.fit);
         sellAppleImage.addListener(new ClickListener() {
@@ -292,7 +292,7 @@ public class Inventory {
 
         scrollTable.add(appleImage);
         scrollTable.add(apple).center();
-        scrollTable.add(buyAppleImage);
+        scrollTable.add(/*buyAppleImage*/);
         scrollTable.add(sellAppleImage);
         scrollTable.row();
 
@@ -301,7 +301,7 @@ public class Inventory {
         raspberryImage.setScaling(Scaling.fit);
         final Label raspberry = new Label(String.valueOf(amountOfRaspberries), skin);
         raspberry.setFontScale(5);
-        Image buyRaspberryImage = new Image(Assets.buyTexture);
+        /*Image buyRaspberryImage = new Image(Assets.buyTexture);
         buyRaspberryImage.setScaling(Scaling.fit);
         buyRaspberryImage.addListener(new ClickListener() {
             @Override
@@ -313,7 +313,7 @@ public class Inventory {
                 event.handle(); //the Stage will stop trying to handle this event
                 return true; //the input multiplexer will stop trying to handle this touch
             }
-        });
+        });*/
         Image sellRaspberryImage = new Image(Assets.sellTexture);
         sellRaspberryImage.setScaling(Scaling.fit);
         sellRaspberryImage.addListener(new ClickListener() {
@@ -330,7 +330,7 @@ public class Inventory {
 
         scrollTable.add(raspberryImage);
         scrollTable.add(raspberry).center();
-        scrollTable.add(buyRaspberryImage);
+        scrollTable.add(/*buyRaspberryImage*/);
         scrollTable.add(sellRaspberryImage);
         scrollTable.row();
 
@@ -339,7 +339,7 @@ public class Inventory {
         eggImage.setScaling(Scaling.fit);
         final Label egg = new Label(String.valueOf(amountOfEggs), skin);
         egg.setFontScale(5);
-        Image buyEggImage = new Image(Assets.buyTexture);
+        /*Image buyEggImage = new Image(Assets.buyTexture);
         buyEggImage.setScaling(Scaling.fit);
         buyEggImage.addListener(new ClickListener() {
             @Override
@@ -351,7 +351,7 @@ public class Inventory {
                 event.handle(); //the Stage will stop trying to handle this event
                 return true; //the input multiplexer will stop trying to handle this touch
             }
-        });
+        });*/
         Image sellEggImage = new Image(Assets.sellTexture);
         sellEggImage.setScaling(Scaling.fit);
         sellEggImage.addListener(new ClickListener() {
@@ -368,7 +368,7 @@ public class Inventory {
 
         scrollTable.add(eggImage);
         scrollTable.add(egg).center();
-        scrollTable.add(buyEggImage);
+        scrollTable.add(/*buyEggImage*/);
         scrollTable.add(sellEggImage);
         scrollTable.row();
 
@@ -377,7 +377,7 @@ public class Inventory {
         milkImage.setScaling(Scaling.fit);
         final Label milk = new Label(String.valueOf(amountOfMilk), skin);
         milk.setFontScale(5);
-        Image buyMilkImage = new Image(Assets.buyTexture);
+        /*Image buyMilkImage = new Image(Assets.buyTexture);
         buyMilkImage.setScaling(Scaling.fit);
         buyMilkImage.addListener(new ClickListener() {
             @Override
@@ -389,7 +389,7 @@ public class Inventory {
                 event.handle(); //the Stage will stop trying to handle this event
                 return true; //the input multiplexer will stop trying to handle this touch
             }
-        });
+        });*/
         Image sellMilkImage = new Image(Assets.sellTexture);
         sellMilkImage.setScaling(Scaling.fit);
         sellMilkImage.addListener(new ClickListener() {
@@ -406,7 +406,7 @@ public class Inventory {
 
         scrollTable.add(milkImage);
         scrollTable.add(milk).center();
-        scrollTable.add(buyMilkImage);
+        scrollTable.add(/*buyMilkImage*/);
         scrollTable.add(sellMilkImage);
         scrollTable.row();
 
@@ -445,7 +445,14 @@ public class Inventory {
         return amountOfGrain;
     }
 
-    public void useGrain() {--amountOfGrain;}
+    public boolean useGrain() {
+        if(this.amountOfGrain >= 1) {
+            this.amountOfGrain--;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void buyGrain() {
         if(this.coins >= 3) {
@@ -469,7 +476,14 @@ public class Inventory {
         return amountOfCarrot;
     }
 
-    public void useCarrot() {--amountOfCarrot;}
+    public boolean useCarrot() {
+        if(this.amountOfCarrot >= 1) {
+            this.amountOfCarrot--;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void buyCarrot() {
         if(this.coins >= 2) {
@@ -493,7 +507,14 @@ public class Inventory {
         return amountOfPotato;
     }
 
-    public void usePotato() {--amountOfPotato;}
+    public boolean usePotato() {
+        if(this.amountOfCarrot >= 1) {
+            this.amountOfCarrot--;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void buyPotato() {
         if(this.coins >= 3) {
@@ -517,7 +538,14 @@ public class Inventory {
         return amountOfStrawberry;
     }
 
-    public void useStrawberry() {--amountOfStrawberry;}
+    public boolean useStrawberry() {
+        if(this.amountOfStrawberry >= 1) {
+            this.amountOfStrawberry--;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void buyStrawberry() {
         if(this.coins >= 20) {
@@ -541,7 +569,14 @@ public class Inventory {
         return amountOfEggplant;
     }
 
-    public void useEggplant() {--amountOfEggplant;}
+    public boolean useEggplant() {
+        if(this.amountOfEggplant >= 1) {
+            this.amountOfEggplant--;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void buyEggplant() {
         if(this.coins >= 24) {

@@ -35,7 +35,7 @@ public class FarmState extends State implements InputProcessor{
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 System.out.println("Show move state");
             } else if (deleteButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                System.out.println("Show delete state");
+                $gsm.push(new RemoveState($gsm));
             } else if (settingsButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 System.out.println("Show settings menu");
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
@@ -63,7 +63,7 @@ public class FarmState extends State implements InputProcessor{
         sb.draw(Assets.inventoryTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 138, 128, 128);
         sb.draw(Assets.buildTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*2), 128, 128);
         sb.draw(Assets.moveTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*3), 128, 128);
-        sb.draw(Assets.cancelTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*4), 128, 128);
+        sb.draw(Assets.removeTexture, FarmGameMain.WIDTH - 138, FarmGameMain.HEIGHT - 10 - (128*4), 128, 128);
         sb.draw(Assets.settingsTexture, FarmGameMain.WIDTH - 138, 10 + 128, 128, 128);
         sb.draw(Assets.mapTexture, FarmGameMain.WIDTH - 138, 10, 128, 128);
 
@@ -75,7 +75,7 @@ public class FarmState extends State implements InputProcessor{
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() { }
 
     /**
      * Section

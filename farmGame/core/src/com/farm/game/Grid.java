@@ -61,7 +61,31 @@ public class Grid {
         }
     }
 
+    public void handleDelete(float x, float y, GameStateManager gsm) {
+        for(int i=0; i<$gridRectangle.length; i++) {
+            for(int j=0; j<$gridRectangle[i].length; j++) {
+                if($gridRectangle[i][j].contains(x, y)) {
+                    $grid[i][j].confirmDelete(gsm, i, j);
+                }
+            }
+        }
+    }
+
     public void gridIndexesTouched(int rowIndex, int columnIndex, GameStateManager gsm) {
         $grid[rowIndex][columnIndex].handleTouch(gsm);
+    }
+
+    public void gridIndexesConfirmForDeletion(int rowIndex, int columnIndex, GameStateManager gsm) {
+        $grid[rowIndex][columnIndex].confirmDelete(gsm, rowIndex, columnIndex);
+    }
+
+    public void deleteFromPosition(int rowIndex, int columnIndex) {
+        FarmObject farmObject = $grid[rowIndex][columnIndex];
+        int amountOfCells = farmObject.getAmountOfCells();
+        for(int i=0; i<amountOfCells; i++){
+            for (int j=0; j<amountOfCells; j++) {
+                $grid[rowIndex+i][columnIndex+j] = new GridSquare();
+            }
+        }
     }
 }

@@ -45,7 +45,7 @@ public class TimeLeftMenuState extends State {
         long fullSecondsLeft = (timer + additionTime - System.currentTimeMillis())/1000;
         long minutesLeft = fullSecondsLeft/60;
         long secondsLeft = fullSecondsLeft%60;
-        Label timeLeft = new Label(String.valueOf(minutesLeft)
+        timeLeft = new Label(String.valueOf(minutesLeft)
                 + ":" + ("00" + String.valueOf(secondsLeft)).substring(String.valueOf(secondsLeft).length()), skin);
         timeLeft.setFontScale(5);
 

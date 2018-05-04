@@ -42,6 +42,7 @@ public class Settings {
     }
 
     public void loadFromJSON() {
+        System.out.println("test load");
         try {
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
@@ -71,6 +72,7 @@ public class Settings {
     }
 
     public void saveToJSON() {
+        System.out.println("test save");
         try {
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
 

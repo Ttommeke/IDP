@@ -255,12 +255,13 @@ public class FieldMenuState extends State {
         useGrainImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                FarmGameMain.inventory.useGrain();
-                animal.feedAnimal();
-                FarmGameMain.settings.saveToJSON();
-                gsm.pop();
-                gsm.pop();
-                gsm.push(new FieldMenuState(gsm, field));
+                if(FarmGameMain.inventory.useGrain()){
+                    animal.feedAnimal();
+                    FarmGameMain.settings.saveToJSON();
+                    gsm.pop();
+                    gsm.pop();
+                    gsm.push(new FieldMenuState(gsm, field));
+                }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
@@ -279,12 +280,13 @@ public class FieldMenuState extends State {
         useCarrotImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                FarmGameMain.inventory.useCarrot();
-                animal.feedAnimal();
-                FarmGameMain.settings.saveToJSON();
-                gsm.pop();
-                gsm.pop();
-                gsm.push(new FieldMenuState(gsm, field));
+                if(FarmGameMain.inventory.useCarrot()) {
+                    animal.feedAnimal();
+                    FarmGameMain.settings.saveToJSON();
+                    gsm.pop();
+                    gsm.pop();
+                    gsm.push(new FieldMenuState(gsm, field));
+                }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
@@ -303,12 +305,13 @@ public class FieldMenuState extends State {
         usePotatoImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                FarmGameMain.inventory.usePotato();
-                animal.feedAnimal();
-                FarmGameMain.settings.saveToJSON();
-                gsm.pop();
-                gsm.pop();
-                gsm.push(new FieldMenuState(gsm, field));
+                if(FarmGameMain.inventory.usePotato()) {
+                    animal.feedAnimal();
+                    FarmGameMain.settings.saveToJSON();
+                    gsm.pop();
+                    gsm.pop();
+                    gsm.push(new FieldMenuState(gsm, field));
+                }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
@@ -327,12 +330,13 @@ public class FieldMenuState extends State {
         useStrawberryImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                FarmGameMain.inventory.useStrawberry();
-                animal.feedAnimal();
-                FarmGameMain.settings.saveToJSON();
-                gsm.pop();
-                gsm.pop();
-                gsm.push(new FieldMenuState(gsm, field));
+                if(FarmGameMain.inventory.useStrawberry()) {
+                    animal.feedAnimal();
+                    FarmGameMain.settings.saveToJSON();
+                    gsm.pop();
+                    gsm.pop();
+                    gsm.push(new FieldMenuState(gsm, field));
+                }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });
@@ -351,12 +355,13 @@ public class FieldMenuState extends State {
         useEggplantImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                FarmGameMain.inventory.useEggplant();
-                animal.feedAnimal();
-                FarmGameMain.settings.saveToJSON();
-                gsm.pop();
-                gsm.pop();
-                gsm.push(new FieldMenuState(gsm, field));
+                if(FarmGameMain.inventory.useEggplant()){
+                    animal.feedAnimal();
+                    FarmGameMain.settings.saveToJSON();
+                    gsm.pop();
+                    gsm.pop();
+                    gsm.push(new FieldMenuState(gsm, field));
+                }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
         });

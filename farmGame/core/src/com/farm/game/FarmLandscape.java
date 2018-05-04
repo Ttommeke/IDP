@@ -36,8 +36,20 @@ public class FarmLandscape {
         $grid.handleTouch(x, y, gsm);
     }
 
+    public void handleDelete(float x, float y, GameStateManager gsm) {
+        $grid.handleDelete(x, y, gsm);
+    }
+
     public void gridIndexesTouched(int rowIndex, int columnIndex, GameStateManager gsm) {
         $grid.gridIndexesTouched(rowIndex, columnIndex, gsm);
+    }
+
+    public void gridIndexesConfirmForDeletion(int rowIndex, int columnIndex, GameStateManager gsm) {
+        $grid.gridIndexesConfirmForDeletion(rowIndex, columnIndex, gsm);
+    }
+
+    public void deleteIndexes(int rowIndex, int columnIndex) {
+        $grid.deleteFromPosition(rowIndex, columnIndex);
     }
 
     public void setGrid(Grid grid) {

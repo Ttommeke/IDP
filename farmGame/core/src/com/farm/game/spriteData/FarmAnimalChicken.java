@@ -7,8 +7,8 @@ import com.farm.game.FarmGameMain;
 public class FarmAnimalChicken extends FarmAnimal {
     public static int chickPrize = 22;
 
-    public FarmAnimalChicken() { // 40, 12
-        super(1, 1);
+    public FarmAnimalChicken() {
+        super(40, 12);
         $texture = Assets.chickTexture;
         $timer = System.currentTimeMillis();
         $adult = false;
@@ -16,7 +16,7 @@ public class FarmAnimalChicken extends FarmAnimal {
     }
 
     public FarmAnimalChicken(JsonValue value){
-        super(1, 1);
+        super(40, 12);
         $timer = value.getLong("timer");
         $adult = value.getBoolean("adult");
         $productReady = value.getBoolean("productReady");

@@ -70,7 +70,6 @@ public abstract class FarmAnimal implements Json.Serializable{
 
     @Override
     public void write(Json json) {
-        System.out.println("test write");
         json.writeValue("timer", $timer);
         json.writeValue("adult", $adult);
         json.writeValue("productReady", $productReady);
@@ -79,7 +78,6 @@ public abstract class FarmAnimal implements Json.Serializable{
 
     @Override
     public void read(Json json, JsonValue jsonData) {
-        System.out.println("test read");
         $timer = jsonData.getLong("time");
         $adult = jsonData.getBoolean("adult");
         $productReady = jsonData.getBoolean("productReady");

@@ -3,11 +3,14 @@ package com.farm.game.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Scaling;
@@ -270,6 +273,61 @@ public class FarmLand extends FarmObject{
         }
 
         gsm.push(new TimeLeftMenuState(gsm, texture, $plantTime, additionTime , title));
+    }
+
+    @Override
+    public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
+        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen akker"));
+    }
+
+    private Table confirmTable(final GameStateManager gsm, final int rowIndex, final int columnIndex) {
+        Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+
+        Table scrollTable = new Table();
+        scrollTable.defaults().pad(10).width(128).height(128);
+
+        Label infoLabel = new Label("Ben je zeker dat je dit", skin);
+        Label info2Label = new Label("akker wilt verwijderen?", skin);
+        infoLabel.setFontScale(5);
+        info2Label.setFontScale(5);
+
+        // Accept
+        Image acceptImage = new Image(Assets.acceptTexture);
+        acceptImage.setScaling(Scaling.fit);
+        acceptImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                gsm.pop();
+                FarmGameMain.landscape.deleteIndexes(rowIndex, columnIndex);
+                FarmGameMain.settings.saveToJSON();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        // Cancel
+        Image cancelImage = new Image(Assets.cancelTexture);
+        cancelImage.setScaling(Scaling.fit);
+        cancelImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                gsm.pop();
+                event.handle(); //the Stage will stop trying to handle this event
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(infoLabel).left();
+        scrollTable.row();
+        scrollTable.add(info2Label).left();
+        scrollTable.row();
+        scrollTable.row();
+        scrollTable.row();
+        scrollTable.add(acceptImage);
+        scrollTable.add();scrollTable.add();scrollTable.add();
+        scrollTable.add(cancelImage);
+        scrollTable.row();
+
+        return scrollTable;
     }
 
     /**

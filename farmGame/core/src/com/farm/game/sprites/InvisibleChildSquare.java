@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
 import com.farm.game.states.GameStateManager;
+import com.farm.game.states.MenuState;
 
 public class InvisibleChildSquare extends FarmObject {
     private int $parentRow;
@@ -24,6 +25,11 @@ public class InvisibleChildSquare extends FarmObject {
     @Override
     public void handleTouch(GameStateManager gsm) {
         FarmGameMain.landscape.gridIndexesTouched($parentRow, $parentColumn, gsm);
+    }
+
+    @Override
+    public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
+        FarmGameMain.landscape.gridIndexesConfirmForDeletion($parentRow, $parentColumn, gsm);
     }
 
     @Override
