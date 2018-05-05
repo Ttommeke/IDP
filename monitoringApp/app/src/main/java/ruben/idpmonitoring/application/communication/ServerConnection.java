@@ -118,6 +118,10 @@ public class ServerConnection {
         post("/fitnessservice/postfitness", entity, callback);
     }
 
+    public void triggerFeedbackProcess(Callback callback){
+        get("/api/feedbackservice/triggerfeedbackprocess/", callback);
+    }
+
     public void getFitnessOfPerson(String id, Callback callback){
         get("/api/fitnessservice/getfitnessofperson/" + id, callback);
     }
