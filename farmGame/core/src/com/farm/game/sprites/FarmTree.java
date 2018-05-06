@@ -201,9 +201,9 @@ public class FarmTree extends FarmObject {
     @Override
     public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
         if($type == FarmTreeTypeEnum.Tree) {
-            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen boom"));
+            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen boom", null));
         } else {
-            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen struik"));
+            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen struik", null));
         }
     }
 

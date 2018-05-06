@@ -27,10 +27,10 @@ public class RemoveState extends State {
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             if (inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
+                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen", null));
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
-                $gsm.push(new MenuState($gsm, BuildState.getBuildingsMenu($gsm), "Kies Gebouw"));
+                $gsm.push(new MenuState($gsm, BuildState.getBuildingsMenu($gsm), "Kies Gebouw", null));
             } else if (moveButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
                 $gsm.push(new MoveState($gsm));

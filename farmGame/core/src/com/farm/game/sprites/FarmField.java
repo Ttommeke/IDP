@@ -36,6 +36,7 @@ public class FarmField extends FarmObject {
     private FarmFieldTypeEnum $type;
     private ArrayList<FarmAnimal> $farmAnimals;
     private final int maxAmountOfAnimals = 5;
+    private int $foodStorage;
 
     public FarmField(){
         super( 2, Assets.farmFieldUninhabitedTexture);
@@ -43,6 +44,7 @@ public class FarmField extends FarmObject {
         $status = FarmFieldStatusEnum.Uninhabited;
         $type = FarmFieldTypeEnum.Uninhabited;
         $farmAnimals = new ArrayList<>();
+        $foodStorage = 0;
     }
 
     // Used on Default farmLandscape
@@ -52,6 +54,7 @@ public class FarmField extends FarmObject {
         $status = status;
         $type = type;
         $farmAnimals = farmAnimals;
+        $foodStorage = 0;
 
         changeTexture();
     }
@@ -70,6 +73,23 @@ public class FarmField extends FarmObject {
 
     public boolean isFull() {
         return $farmAnimals.size() >= maxAmountOfAnimals;
+    }
+
+    public boolean getFoodFromStorage() {
+        if($foodStorage >= 1) {
+            --$foodStorage;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void addFoodToStorage(int amount) {
+        $foodStorage += amount;
+    }
+
+    public int getAmountOfFoodStorage() {
+        return $foodStorage;
     }
 
     public void removeAnimal(FarmAnimal farmAnimal) {
@@ -134,7 +154,7 @@ public class FarmField extends FarmObject {
     public void handleTouch(GameStateManager gsm) {
         switch ($status) {
             case Uninhabited:
-                gsm.push(new MenuState(gsm, getChooseAnimalTable(gsm), "Veld"));
+                gsm.push(new MenuState(gsm, getChooseAnimalTable(gsm), "Veld", null));
                 break;
             default:
                 gsm.push(new FieldMenuState(gsm, this));
@@ -143,7 +163,7 @@ public class FarmField extends FarmObject {
 
     @Override
     public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
-        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen veld"));
+        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen veld", null));
     }
 
     private Table confirmTable(final GameStateManager gsm, final int rowIndex, final int columnIndex) {
@@ -212,8 +232,10 @@ public class FarmField extends FarmObject {
         buyChick.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                addAnimal(FarmFieldTypeEnum.Chicken);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= FarmAnimalChicken.chickPrize) {
+                    addAnimal(FarmFieldTypeEnum.Chicken);
+                    gsm.pop();
+                }
             }
         });
 
@@ -224,8 +246,10 @@ public class FarmField extends FarmObject {
         buyPiglet.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                addAnimal(FarmFieldTypeEnum.Pig);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= FarmAnimalPig.pigletPrize) {
+                    addAnimal(FarmFieldTypeEnum.Pig);
+                    gsm.pop();
+                }
             }
         });
 
@@ -236,8 +260,10 @@ public class FarmField extends FarmObject {
         buyCalf.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                addAnimal(FarmFieldTypeEnum.Cow);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= FarmAnimalCow.calfPrize) {
+                    addAnimal(FarmFieldTypeEnum.Cow);
+                    gsm.pop();
+                }
             }
         });
 
@@ -283,23 +309,20 @@ public class FarmField extends FarmObject {
             return;
         }
 
-        int cost = 0;
-        $type = type;
-        switch ($type){
+        switch (type){
             case Chicken:
                 $farmAnimals.add(new FarmAnimalChicken());
-                cost = FarmAnimalChicken.chickPrize;
                 break;
             case Pig:
                 $farmAnimals.add(new FarmAnimalPig());
-                cost = FarmAnimalPig.pigletPrize;
                 break;
             case Cow:
                 $farmAnimals.add(new FarmAnimalCow());
-                cost = FarmAnimalCow.calfPrize;
                 break;
         }
-        FarmGameMain.inventory.buySomething(cost);
+
+        $type = type;
+        FarmGameMain.inventory.buySomething(getCostForType(type));
 
         if($status == FarmFieldStatusEnum.Adults) {
             $status = FarmFieldStatusEnum.ChildrenWithAdults;
@@ -311,17 +334,35 @@ public class FarmField extends FarmObject {
         FarmGameMain.settings.saveToJSON();
     }
 
+    public static int getCostForType(FarmFieldTypeEnum type) {
+        int cost = 0;
+        switch (type){
+            case Chicken:
+                cost = FarmAnimalChicken.chickPrize;
+                break;
+            case Pig:
+                cost = FarmAnimalPig.pigletPrize;
+                break;
+            case Cow:
+                cost = FarmAnimalCow.calfPrize;
+                break;
+        }
+        return cost;
+    }
+
     @Override
     public void write(Json json) {
         json.writeValue("status", $status);
         json.writeValue("type", $type);
         json.writeValue("animals", $farmAnimals);
+        json.writeValue("foodStorage", $foodStorage);
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
         $status = FarmFieldStatusEnum.valueOf(jsonData.getString("status"));
         $type = FarmFieldTypeEnum.valueOf(jsonData.getString("type"));
+        $foodStorage = jsonData.getInt("foodStorage");
         JsonValue value = jsonData.get("animals");
 
         for (JsonValue v : value) {

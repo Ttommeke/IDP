@@ -33,12 +33,14 @@ public class LoginState extends State {
         table.defaults().pad(10);
 
         Label username = new Label("Gebruikersnaam : ", skin);
-        username.setFontScale(6);
+        username.setFontScale(2);
         final TextField usernameField = new TextField("", skin);
 
         Label password = new Label("Wachtwoord : ", skin);
-        password.setFontScale(6);
+        password.setFontScale(2);
         final TextField passwordField = new TextField("", skin);
+        passwordField.setPasswordMode(true);
+        passwordField.setPasswordCharacter('*');
 
         TextButton login = new TextButton("Login", skin);
         login.addListener(new ChangeListener() {
@@ -57,13 +59,13 @@ public class LoginState extends State {
 
         table.row();
         table.add(username).left();
-        table.add(usernameField).width(300).height(50);
+        table.add(usernameField).width(400).height(50);
         table.row();
         table.add(password).left();
-        table.add(passwordField).width(300).height(50);
+        table.add(passwordField).width(400).height(50);
         table.row();
         table.add();
-        table.add(login).width(300).height(50);
+        table.add(login).width(400).height(50);
 
         $stage.addActor(table);
         Gdx.input.setInputProcessor($stage);
