@@ -55,7 +55,8 @@ public class MoveState extends State {
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
-                $gsm.set(new MapState($gsm));
+                FarmGameMain.androidEnvironmentCallback.startMapsActivity();
+                //$gsm.set(new MapState($gsm));
             } else {
                 if(moving) {
                     if (acceptButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {

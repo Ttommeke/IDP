@@ -24,6 +24,12 @@ public class FarmGameMain extends ApplicationAdapter {
 
 	private GameStateManager $gsm;
 	private SpriteBatch $batch;
+
+    public static AndroidEnvironmentCallback androidEnvironmentCallback;
+
+    public FarmGameMain(AndroidEnvironmentCallback androidEnvironmentCallback){
+        this.androidEnvironmentCallback = androidEnvironmentCallback;
+    }
 	
 	@Override
 	public void create () {

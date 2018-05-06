@@ -7,6 +7,6 @@ import com.farm.game.FarmGameMain;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new FarmGameMain(), config);
+		new LwjglApplication(new FarmGameMain(null), config);
 	}
 }

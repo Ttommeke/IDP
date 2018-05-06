@@ -39,7 +39,8 @@ public class FarmState extends State implements InputProcessor{
             } else if (settingsButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 System.out.println("Show settings menu");
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-               $gsm.set(new MapState($gsm));
+                FarmGameMain.androidEnvironmentCallback.startMapsActivity();
+               //$gsm.set(new MapState($gsm));
             } else {
                 FarmGameMain.landscape.handleTouch(Gdx.input.getX(), Gdx.input.getY(), $gsm);
             }

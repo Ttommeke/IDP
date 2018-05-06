@@ -40,7 +40,8 @@ public class RemoveState extends State {
                 System.out.println("Show settings menu");
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
-                $gsm.set(new MapState($gsm));
+                FarmGameMain.androidEnvironmentCallback.startMapsActivity();
+                //$gsm.set(new MapState($gsm));
             } else {
                 FarmGameMain.landscape.handleDelete(Gdx.input.getX(), Gdx.input.getY(), $gsm);
             }

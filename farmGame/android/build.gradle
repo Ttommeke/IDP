@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "27.0.3"
-    compileSdkVersion 24
+    compileSdkVersion 27
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -127,4 +127,10 @@ idea {
             }
         }
     }
+}
+
+dependencies {
+    implementation 'com.google.android.gms:play-services-maps:+'
+    implementation 'com.android.support:appcompat-v7:27.+'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
 }

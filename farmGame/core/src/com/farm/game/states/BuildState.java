@@ -65,7 +65,8 @@ public class BuildState extends State {
             } else if (mapButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
-                $gsm.set(new MapState($gsm));
+                FarmGameMain.androidEnvironmentCallback.startMapsActivity();
+                //$gsm.set(new MapState($gsm));
             } else if (acceptButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 payForObject();
                 FarmGameMain.landscape.setBackup();
