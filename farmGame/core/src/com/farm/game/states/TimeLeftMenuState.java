@@ -32,7 +32,7 @@ public class TimeLeftMenuState extends State {
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
         Label titleLabel = new Label(title, skin);
-        titleLabel.setFontScale(8);
+        titleLabel.setFontScale(3);
 
         Table scrollTable = new Table();
         scrollTable.defaults().pad(10).width(128).height(128);
@@ -47,7 +47,7 @@ public class TimeLeftMenuState extends State {
         long secondsLeft = fullSecondsLeft%60;
         timeLeft = new Label(String.valueOf(minutesLeft)
                 + ":" + ("00" + String.valueOf(secondsLeft)).substring(String.valueOf(secondsLeft).length()), skin);
-        timeLeft.setFontScale(5);
+        timeLeft.setFontScale(2);
 
         scrollTable.add(typeImage).width(256).height(256).colspan(2);
         scrollTable.row();

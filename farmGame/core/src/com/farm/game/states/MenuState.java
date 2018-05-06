@@ -26,7 +26,7 @@ public class MenuState extends State {
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
         Label titleLabel = new Label(title, skin);
-        titleLabel.setFontScale(8);
+        titleLabel.setFontScale(3);
 
         ScrollPane scroller = new ScrollPane(scrollTable);
 

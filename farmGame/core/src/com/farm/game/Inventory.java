@@ -61,7 +61,7 @@ public class Inventory {
         Image coinsImage = new Image(Assets.coinsTexture);
         coinsImage.setScaling(Scaling.fit);
         final Label coinLabel = new Label(String.valueOf(coins), skin);
-        coinLabel.setFontScale(5);
+        coinLabel.setFontScale(2);
 
         Table scrollTable = new Table();
         scrollTable.defaults().pad(10).width(128).height(128);
@@ -74,7 +74,7 @@ public class Inventory {
         Image grainImage = new Image(Assets.grainTexture);
         grainImage.setScaling(Scaling.fit);
         final Label grain = new Label(String.valueOf(amountOfGrain), skin);
-        grain.setFontScale(5);
+        grain.setFontScale(2);
         Image buyGrainImage = new Image(Assets.buyTexture);
         buyGrainImage.setScaling(Scaling.fit);
         buyGrainImage.addListener(new ClickListener() {
@@ -126,7 +126,7 @@ public class Inventory {
         Image carrotImage = new Image(Assets.carrotTexture);
         carrotImage.setScaling(Scaling.fit);
         final Label carrot = new Label(String.valueOf(amountOfCarrot), skin);
-        carrot.setFontScale(5);
+        carrot.setFontScale(2);
         Image buyCarrotImage = new Image(Assets.buyTexture);
         buyCarrotImage.setScaling(Scaling.fit);
         buyCarrotImage.addListener(new ClickListener() {
@@ -180,7 +180,7 @@ public class Inventory {
         Image potatoImage = new Image(Assets.potatoTexture);
         potatoImage.setScaling(Scaling.fit);
         final Label potato = new Label(String.valueOf(amountOfPotato), skin);
-        potato.setFontScale(5);
+        potato.setFontScale(2);
         Image buyPotatoImage = new Image(Assets.buyTexture);
         buyPotatoImage.setScaling(Scaling.fit);
         buyPotatoImage.addListener(new ClickListener() {
@@ -234,7 +234,7 @@ public class Inventory {
         Image strawberryImage = new Image(Assets.strawberryTexture);
         strawberryImage.setScaling(Scaling.fit);
         final Label strawberry = new Label(String.valueOf(amountOfStrawberry), skin);
-        strawberry.setFontScale(5);
+        strawberry.setFontScale(2);
         Image buyStrawberryImage = new Image(Assets.buyTexture);
         buyStrawberryImage.setScaling(Scaling.fit);
         buyStrawberryImage.addListener(new ClickListener() {
@@ -288,7 +288,7 @@ public class Inventory {
         Image eggplantImage = new Image(Assets.eggplantTexture);
         eggplantImage.setScaling(Scaling.fit);
         final Label eggplant = new Label(String.valueOf(amountOfEggplant), skin);
-        eggplant.setFontScale(5);
+        eggplant.setFontScale(2);
         Image buyEggplantImage = new Image(Assets.buyTexture);
         buyEggplantImage.setScaling(Scaling.fit);
         buyEggplantImage.addListener(new ClickListener() {
@@ -342,7 +342,7 @@ public class Inventory {
         Image appleImage = new Image(Assets.appleTexture);
         appleImage.setScaling(Scaling.fit);
         final Label apple = new Label(String.valueOf(amountOfApples), skin);
-        apple.setFontScale(5);
+        apple.setFontScale(2);
         /*Image buyAppleImage = new Image(Assets.buyTexture);
         buyAppleImage.setScaling(Scaling.fit);
         buyAppleImage.addListener(new ClickListener() {
@@ -396,7 +396,7 @@ public class Inventory {
         Image raspberryImage = new Image(Assets.raspberryTexture);
         raspberryImage.setScaling(Scaling.fit);
         final Label raspberry = new Label(String.valueOf(amountOfRaspberries), skin);
-        raspberry.setFontScale(5);
+        raspberry.setFontScale(2);
         /*Image buyRaspberryImage = new Image(Assets.buyTexture);
         buyRaspberryImage.setScaling(Scaling.fit);
         buyRaspberryImage.addListener(new ClickListener() {
@@ -450,7 +450,7 @@ public class Inventory {
         Image eggImage = new Image(Assets.eggTexture);
         eggImage.setScaling(Scaling.fit);
         final Label egg = new Label(String.valueOf(amountOfEggs), skin);
-        egg.setFontScale(5);
+        egg.setFontScale(2);
         /*Image buyEggImage = new Image(Assets.buyTexture);
         buyEggImage.setScaling(Scaling.fit);
         buyEggImage.addListener(new ClickListener() {
@@ -504,7 +504,7 @@ public class Inventory {
         Image milkImage = new Image(Assets.milkTexture);
         milkImage.setScaling(Scaling.fit);
         final Label milk = new Label(String.valueOf(amountOfMilk), skin);
-        milk.setFontScale(5);
+        milk.setFontScale(2);
         /*Image buyMilkImage = new Image(Assets.buyTexture);
         buyMilkImage.setScaling(Scaling.fit);
         buyMilkImage.addListener(new ClickListener() {
@@ -558,11 +558,11 @@ public class Inventory {
         Image superFertilizerImage = new Image(Assets.superFertilizerTexture);
         superFertilizerImage.setScaling(Scaling.fit);
         final Label superFertilizer = new Label(String.valueOf(amountOfFertilizer), skin);
-        superFertilizer.setFontScale(5);
+        superFertilizer.setFontScale(2);
         Image superGrainImage = new Image(Assets.superGrainTexture);
         superGrainImage.setScaling(Scaling.fit);
         final Label superGrain = new Label(String.valueOf(amountOfSuperGrain), skin);
-        superGrain.setFontScale(5);
+        superGrain.setFontScale(2);
 
         scrollTable.add(superFertilizerImage);
         scrollTable.add(superFertilizer).center();

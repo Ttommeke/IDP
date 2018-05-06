@@ -46,7 +46,7 @@ public class FieldMenuState extends State {
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
         Label titleLabel = new Label("Veld", skin);
-        titleLabel.setFontScale(8);
+        titleLabel.setFontScale(3);
 
         Table scrollTable = new Table();
         scrollTable.defaults().pad(10).width(128).height(128);
@@ -132,7 +132,7 @@ public class FieldMenuState extends State {
         scrollTable.add(addFoodImage);
 
         Label foodStorageLabel = new Label(String.valueOf($field.getAmountOfFoodStorage()), skin);
-        foodStorageLabel.setFontScale(5);
+        foodStorageLabel.setFontScale(2);
         scrollTable.add(foodStorageLabel);
         scrollTable.row();
 
@@ -153,7 +153,7 @@ public class FieldMenuState extends State {
             long secondsLeft = fullSecondsLeft%60;
             Label timeLeft = new Label(String.valueOf(minutesLeft)
                     + ":" + ("00" + String.valueOf(secondsLeft)).substring(String.valueOf(secondsLeft).length()), skin);
-            timeLeft.setFontScale(5);
+            timeLeft.setFontScale(2);
 
             $initialTimers.add(farmAnimal.getTimer());
             $additionTimes.add(additionTime);
@@ -298,7 +298,7 @@ public class FieldMenuState extends State {
         Image grainImage = new Image(Assets.grainTexture);
         grainImage.setScaling(Scaling.fit);
         final Label grain = new Label(String.valueOf(FarmGameMain.inventory.getAmountOfGrain()), skin);
-        grain.setFontScale(5);
+        grain.setFontScale(2);
         Image useGrainImage = new Image(Assets.feedTexture);
         useGrainImage.addListener(new ClickListener() {
             @Override
@@ -321,7 +321,7 @@ public class FieldMenuState extends State {
         Image carrotImage = new Image(Assets.carrotTexture);
         carrotImage.setScaling(Scaling.fit);
         final Label carrot = new Label(String.valueOf(FarmGameMain.inventory.getAmountOfCarrot()), skin);
-        carrot.setFontScale(5);
+        carrot.setFontScale(2);
         Image useCarrotImage = new Image(Assets.feedTexture);
         useCarrotImage.addListener(new ClickListener() {
             @Override
@@ -344,7 +344,7 @@ public class FieldMenuState extends State {
         Image potatoImage = new Image(Assets.potatoTexture);
         potatoImage.setScaling(Scaling.fit);
         final Label potato = new Label(String.valueOf(FarmGameMain.inventory.getAmountOfPotato()), skin);
-        potato.setFontScale(5);
+        potato.setFontScale(2);
         Image usePotatoImage = new Image(Assets.feedTexture);
         usePotatoImage.addListener(new ClickListener() {
             @Override
@@ -367,7 +367,7 @@ public class FieldMenuState extends State {
         Image strawberryImage = new Image(Assets.strawberryTexture);
         strawberryImage.setScaling(Scaling.fit);
         final Label strawberry = new Label(String.valueOf(FarmGameMain.inventory.getAmountOfStrawberry()), skin);
-        strawberry.setFontScale(5);
+        strawberry.setFontScale(2);
         Image useStrawberryImage = new Image(Assets.feedTexture);
         useStrawberryImage.addListener(new ClickListener() {
             @Override
@@ -390,7 +390,7 @@ public class FieldMenuState extends State {
         Image eggplantImage = new Image(Assets.eggplantTexture);
         eggplantImage.setScaling(Scaling.fit);
         final Label eggplant = new Label(String.valueOf(FarmGameMain.inventory.getAmountOfEggplant()), skin);
-        eggplant.setFontScale(5);
+        eggplant.setFontScale(2);
         Image useEggplantImage = new Image(Assets.feedTexture);
         useEggplantImage.addListener(new ClickListener() {
             @Override
