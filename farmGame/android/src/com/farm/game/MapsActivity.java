@@ -244,10 +244,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory.fromBitmap(generateBitmap(resource.getType().getIcon(), 64,64)))));
             }
         }
-
-        currentMarkers.add(mMap.addMarker(new MarkerOptions().position(new LatLng(51.215436, 5.428550))
-        .snippet("{\"resourceType\": " + 2 + "}")
-        .icon(BitmapDescriptorFactory.fromBitmap(generateBitmap(ResourceType.POTATO.getIcon(), 64,64)))));
     }
 
     /**
