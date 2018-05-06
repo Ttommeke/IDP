@@ -49,7 +49,7 @@ public class BuildState extends State {
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             if (inventoryButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen"));
+                $gsm.push(new MenuState($gsm, FarmGameMain.inventory.getScrollTable(), "Goederen", null));
             } else if (buildButtonBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 FarmGameMain.landscape.restoreBackup();
                 $gsm.pop();
@@ -138,8 +138,10 @@ public class BuildState extends State {
         buyFarmLand.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gsm.pop();
-                gsm.push(new BuildState(gsm, new FarmLand()));
+                if(FarmGameMain.inventory.getCoins() >= 4) {
+                    gsm.pop();
+                    gsm.push(new BuildState(gsm, new FarmLand()));
+                }
             }
         });
 
@@ -150,8 +152,10 @@ public class BuildState extends State {
         buyFarmField.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gsm.pop();
-                gsm.push(new BuildState(gsm, new FarmField()));
+                if(FarmGameMain.inventory.getCoins() >= 6) {
+                    gsm.pop();
+                    gsm.push(new BuildState(gsm, new FarmField()));
+                }
             }
         });
 
@@ -162,8 +166,10 @@ public class BuildState extends State {
         buyAppleTree.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gsm.pop();
-                gsm.push(new BuildState(gsm, new FarmTree(FarmTreeFruitTypeEnum.Apple)));
+                if(FarmGameMain.inventory.getCoins() >= 61) {
+                    gsm.pop();
+                    gsm.push(new BuildState(gsm, new FarmTree(FarmTreeFruitTypeEnum.Apple)));
+                }
             }
         });
 
@@ -174,8 +180,10 @@ public class BuildState extends State {
         buyRaspberryBush.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gsm.pop();
-                gsm.push(new BuildState(gsm, new FarmTree(FarmTreeFruitTypeEnum.Raspberry)));
+                if(FarmGameMain.inventory.getCoins() >= 42) {
+                    gsm.pop();
+                    gsm.push(new BuildState(gsm, new FarmTree(FarmTreeFruitTypeEnum.Raspberry)));
+                }
             }
         });
 

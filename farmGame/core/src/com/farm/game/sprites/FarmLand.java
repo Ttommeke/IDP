@@ -50,7 +50,7 @@ public class FarmLand extends FarmObject{
     public void handleTouch(GameStateManager gsm) {
         switch ($status) {
             case Unplanted:
-                gsm.push(new MenuState(gsm, getUnplantedMenu(gsm), "Kies zaadje"));
+                gsm.push(new MenuState(gsm, getUnplantedMenu(gsm), "Kies zaadje", null));
                 break;
             case Growing:
                 pushTimeLeftMenu(gsm, "Zaadje groei");
@@ -102,10 +102,10 @@ public class FarmLand extends FarmObject{
                 cost = 2;
                 break;
             case Eggplant:
-                cost = 4;
+                cost = 6;
                 break;
             case Strawberry:
-                cost = 6;
+                cost = 4;
                 break;
         }
         FarmGameMain.inventory.buySomething(cost);
@@ -181,8 +181,10 @@ public class FarmLand extends FarmObject{
         buyGrain.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plant(FarmLandTypeEnum.Grain);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= 1) {
+                    plant(FarmLandTypeEnum.Grain);
+                    gsm.pop();
+                }
             }
         });
 
@@ -193,8 +195,10 @@ public class FarmLand extends FarmObject{
         buyCarrot.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plant(FarmLandTypeEnum.Carrot);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= 1) {
+                    plant(FarmLandTypeEnum.Carrot);
+                    gsm.pop();
+                }
             }
         });
 
@@ -205,8 +209,10 @@ public class FarmLand extends FarmObject{
         buyPotato.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plant(FarmLandTypeEnum.Potato);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= 2) {
+                    plant(FarmLandTypeEnum.Potato);
+                    gsm.pop();
+                }
             }
         });
 
@@ -217,8 +223,10 @@ public class FarmLand extends FarmObject{
         buyStrawberry.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plant(FarmLandTypeEnum.Strawberry);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= 4) {
+                    plant(FarmLandTypeEnum.Strawberry);
+                    gsm.pop();
+                }
             }
         });
 
@@ -229,8 +237,10 @@ public class FarmLand extends FarmObject{
         buyEggplant.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plant(FarmLandTypeEnum.Eggplant);
-                gsm.pop();
+                if(FarmGameMain.inventory.getCoins() >= 6) {
+                    plant(FarmLandTypeEnum.Eggplant);
+                    gsm.pop();
+                }
             }
         });
 
@@ -281,7 +291,7 @@ public class FarmLand extends FarmObject{
 
     @Override
     public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
-        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen akker"));
+        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen akker", null));
     }
 
     private Table confirmTable(final GameStateManager gsm, final int rowIndex, final int columnIndex) {

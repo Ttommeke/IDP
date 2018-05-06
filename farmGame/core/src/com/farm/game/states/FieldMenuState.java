@@ -71,7 +71,70 @@ public class FieldMenuState extends State {
                 break;
         }
 
-        Boolean buttonShown = false;
+        if(!$field.isFull()) {
+            Image buyNewAnimal = new Image(Assets.buyTexture);
+            buyNewAnimal.setScaling(Scaling.fit);
+            buyNewAnimal.addListener(new ClickListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    if(FarmGameMain.inventory.getCoins() >= FarmField.getCostForType($field.getType())) {
+                        $field.addAnimal($field.getType());
+                        $gsm.pop();
+                        $gsm.push(new FieldMenuState($gsm, $field));
+                    }
+                    return true; //the input multiplexer will stop trying to handle this touch
+                }
+            });
+            scrollTable.add(buyNewAnimal);
+        } else {
+            scrollTable.add();
+        }
+
+        boolean aProductIsReady = false;
+        for(final FarmAnimal farmAnimal: $field.getFarmAnimals()) {
+            if (farmAnimal.isProductReady()) { // if a product is ready -> show collect all button
+                aProductIsReady = true;
+            }
+        }
+
+        if(aProductIsReady) {
+            Image collectAllImage = new Image(productTexture);
+            collectAllImage.setScaling(Scaling.fit);
+            collectAllImage.addListener(new ClickListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    for(final FarmAnimal farmAnimal: $field.getFarmAnimals()) {
+                        if (farmAnimal.isProductReady()) {
+                            farmAnimal.collectProduct();
+                        }
+                    }
+                    FarmGameMain.settings.saveToJSON();
+                    $gsm.pop();
+                    $gsm.push(new FieldMenuState($gsm, $field));
+                    return true; //the input multiplexer will stop trying to handle this touch
+                }
+            });
+            scrollTable.add(collectAllImage);
+        } else {
+            scrollTable.add();
+        }
+
+        scrollTable.add();
+        Image addFoodImage = new Image(Assets.feedTexture);
+        addFoodImage.setScaling(Scaling.fit);
+        addFoodImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                $gsm.push(new MenuState($gsm, getFoodMenu(), "Gebruik", $field));
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+        scrollTable.add(addFoodImage);
+
+        Label foodStorageLabel = new Label(String.valueOf($field.getAmountOfFoodStorage()), skin);
+        foodStorageLabel.setFontScale(5);
+        scrollTable.add(foodStorageLabel);
+        scrollTable.row();
 
         for(final FarmAnimal farmAnimal: $field.getFarmAnimals()) {
             Image typeImage = new Image();
@@ -112,6 +175,9 @@ public class FieldMenuState extends State {
                     }
                 });
                 scrollTable.add(productImage);
+                scrollTable.add();
+                scrollTable.add();
+                scrollTable.add();
             } else if(farmAnimal.isAdult()) { // if animal is adult -> show sell button
                 if (!farmAnimal.isEating()) { // If animal is not eating -> show feed menu opener which will feed the animal else show timer
                     if(farmAnimal.getClass() != FarmAnimalPig.class)
@@ -121,7 +187,9 @@ public class FieldMenuState extends State {
                         feedImage.addListener(new ClickListener() {
                             @Override
                             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                $gsm.push(new MenuState($gsm, getFoodMenu(farmAnimal, $gsm, $field), "Gebruik"));
+                                if($field.getFoodFromStorage()) {
+                                    farmAnimal.feedAnimal();
+                                }
                                 return true; //the input multiplexer will stop trying to handle this touch
                             }
                         });
@@ -151,25 +219,6 @@ public class FieldMenuState extends State {
                 scrollTable.add(sellImage);
             } else {
                 scrollTable.add(timeLeft).right();
-            }
-
-            if(!$field.isFull() && !buttonShown) {
-                buttonShown = true;
-                Image buyNewAnimal = new Image(Assets.buyTexture);
-                buyNewAnimal.setScaling(Scaling.fit);
-                buyNewAnimal.addListener(new ClickListener() {
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        $field.addAnimal($field.getType());
-                        $gsm.pop();
-                        $gsm.push(new FieldMenuState($gsm, $field));
-                        return true; //the input multiplexer will stop trying to handle this touch
-                    }
-                });
-                if(!farmAnimal.isAdult() || farmAnimal.isProductReady()) {
-                    scrollTable.add();scrollTable.add();
-                }
-                scrollTable.add(buyNewAnimal);
             }
             scrollTable.row();
         }
@@ -239,7 +288,7 @@ public class FieldMenuState extends State {
         $stage.dispose();
     }
 
-    private Table getFoodMenu(final FarmAnimal animal, final GameStateManager gsm, final FarmField field) {
+    private Table getFoodMenu() {
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
         Table scrollTable = new Table();
@@ -255,11 +304,9 @@ public class FieldMenuState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(FarmGameMain.inventory.useGrain()){
-                    animal.feedAnimal();
+                    grain.setText(String.valueOf(FarmGameMain.inventory.getAmountOfGrain()));
+                    $field.addFoodToStorage(1);
                     FarmGameMain.settings.saveToJSON();
-                    gsm.pop();
-                    gsm.pop();
-                    gsm.push(new FieldMenuState(gsm, field));
                 }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
@@ -280,11 +327,9 @@ public class FieldMenuState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(FarmGameMain.inventory.useCarrot()) {
-                    animal.feedAnimal();
+                    carrot.setText(String.valueOf(FarmGameMain.inventory.getAmountOfCarrot()));
+                    $field.addFoodToStorage(1);
                     FarmGameMain.settings.saveToJSON();
-                    gsm.pop();
-                    gsm.pop();
-                    gsm.push(new FieldMenuState(gsm, field));
                 }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
@@ -305,11 +350,9 @@ public class FieldMenuState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(FarmGameMain.inventory.usePotato()) {
-                    animal.feedAnimal();
+                    potato.setText(String.valueOf(FarmGameMain.inventory.getAmountOfPotato()));
+                    $field.addFoodToStorage(1);
                     FarmGameMain.settings.saveToJSON();
-                    gsm.pop();
-                    gsm.pop();
-                    gsm.push(new FieldMenuState(gsm, field));
                 }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
@@ -330,11 +373,9 @@ public class FieldMenuState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(FarmGameMain.inventory.useStrawberry()) {
-                    animal.feedAnimal();
+                    strawberry.setText(String.valueOf(FarmGameMain.inventory.getAmountOfStrawberry()));
+                    $field.addFoodToStorage(1);
                     FarmGameMain.settings.saveToJSON();
-                    gsm.pop();
-                    gsm.pop();
-                    gsm.push(new FieldMenuState(gsm, field));
                 }
                 return true; //the input multiplexer will stop trying to handle this touch
             }
@@ -355,11 +396,9 @@ public class FieldMenuState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(FarmGameMain.inventory.useEggplant()){
-                    animal.feedAnimal();
+                    eggplant.setText(String.valueOf(FarmGameMain.inventory.getAmountOfEggplant()));
+                    $field.addFoodToStorage(1);
                     FarmGameMain.settings.saveToJSON();
-                    gsm.pop();
-                    gsm.pop();
-                    gsm.push(new FieldMenuState(gsm, field));
                 }
                 return true; //the input multiplexer will stop trying to handle this touch
             }

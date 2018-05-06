@@ -1,7 +1,6 @@
 package com.farm.game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,14 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
+import com.farm.game.sprites.FarmField;
 
 public class MenuState extends State {
     private Stage $stage;
     private Rectangle $menuBounds, $exitBounds;
+    private FarmField $thatFeedMenuThough;
 
-    public MenuState(GameStateManager gsm, Table scrollTable, String title) {
+    public MenuState(GameStateManager gsm, Table scrollTable, String title, FarmField thatFeedMenuThough) {
         super(gsm);
 
+        $thatFeedMenuThough = thatFeedMenuThough;
         $stage = new Stage(new ScreenViewport());
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
@@ -47,6 +49,10 @@ public class MenuState extends State {
             if (!$menuBounds.contains(Gdx.input.getX(), Gdx.input.getY())
                     || $exitBounds.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 $gsm.pop();
+                if($thatFeedMenuThough != null) {
+                    $gsm.pop();
+                    $gsm.push(new FieldMenuState($gsm, $thatFeedMenuThough));
+                }
             }
         }
     }
