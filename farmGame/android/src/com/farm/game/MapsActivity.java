@@ -50,20 +50,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Activity views
     private ImageButton btnCloseMap;
 
+    private int maxDistanceForUser = 1000;                                      //Set default value
+    private int initialResourcesToGenerate = 100;                               //Set default value (MAX 100!)
+    private int lureDistance = 200;                                             //Lures will be placed whithin this radius
     private GoogleMap mMap;
-    private LatLng currentLatLng;
-    private LatLng lastResourceLoadLocation;
-    private Marker currentLocationMarker;
-    private Marker selectedResourceMarker;
-    private HTTPConnection httpConnection;
-    private int maxDistanceForUser = 1000;          //Set default value
-    private int initialResourcesToGenerate = 100;    //Set default value (MAX 100!)
-    private ArrayList<Resource> preLoadedResources;
-    private ArrayList<Marker> currentMarkers;
+    private LatLng currentLatLng;                                               //Holds current location after loading locationservices and receiving update
+    private LatLng lastResourceLoadLocation;                                    //Holds the location from which the last resource-load occured
+    private Marker currentLocationMarker;                                       //Holds the Google Marker of the current location
+    private Marker selectedResourceMarker;                                      //Holds the marker that was selected by the user
+    private HTTPConnection httpConnection;                                      //Communication with outside services
+    private ArrayList<Resource> preLoadedResources;                             //Holds resources that are already present in the save game
+    private ArrayList<Marker> currentMarkers;                                   //Holds a list of markers that are present on the map
 
-    private boolean initialLocationLoad;
+    private boolean initialLocationLoad;                                        //Value that indicates if location was loaded for the first time
+    private boolean placeLures;
 
-    private LocationManager mLocationManager;
+    private LocationManager mLocationManager;                                   //LocationManager used for locationlistener
 
     //LocationListener with defined onChange event
     private LocationListener mLocationListener = new LocationListener() {
@@ -97,10 +99,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 if(lastResourceLoadLocation != null){
                     if(Geometry.distanceBetweenTwoLatLng(lastResourceLoadLocation, currentLatLng) > maxDistanceForUser){
+                        currentMarkers = new ArrayList<>();
                         lastResourceLoadLocation = currentLatLng;
                         generateResources(initialResourcesToGenerate, maxDistanceForUser, currentLatLng);
                     } else {
-                        //check amount of resources still available and maybe generate new ones
+                        //check amount of resources still available and generate new ones if necessary
+                        if(currentMarkers.size() < 0.25 * initialResourcesToGenerate){
+                            generateResources(initialResourcesToGenerate, maxDistanceForUser, currentLatLng);
+                        }
                     }
                 } else {
                     lastResourceLoadLocation = currentLatLng;
@@ -141,9 +147,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Prepare existing resource list
         this.preLoadedResources = new ArrayList<>();
 
-
-        //load currently present resources
         Intent intent = getIntent();
+
+        placeLures = intent.getBooleanExtra("placeLures", false);
+
+        //load resources if present
         String jsonResources = intent.getStringExtra("savedResources");
 
         if(jsonResources != null && jsonResources.length() > 0){
@@ -243,6 +251,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .snippet("{\"resourceType\": " + resource.getType().getValue() + "}")
                         .icon(BitmapDescriptorFactory.fromBitmap(generateBitmap(resource.getType().getIcon(), 64,64)))));
             }
+        }
+
+        if(placeLures){
+            placeLures(20);
         }
     }
 
@@ -406,15 +418,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 selectedResourceMarker.remove();
                 this.currentMarkers.remove(selectedResourceMarker);
                 selectedResourceMarker = null;
-
-
-                //Folowing coce just generates one new random location
-                /*LatLng newLatLng = generateLatLngFromPosition(maxDistanceForUser, currentLatLng);
-                ResourceType type = ResourceType.getRandomResourceType();
-                this.currentMarkers.add(mMap.addMarker(new MarkerOptions()
-                        .position(newLatLng)
-                        .icon(BitmapDescriptorFactory.fromBitmap(generateBitmap(type.getIcon(), 64,64)))));*/
             }
         }
+    }
+
+    private void placeLures(int amount){
+        generateResources(amount, this.lureDistance, this.currentLatLng);
     }
 }
