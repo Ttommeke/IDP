@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                             Application.getServerConnection().setTokenHeader(
                                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxNTkyZjhjLTNkYmUtNDc4NS1hZWE5LTE2NjA3MTQ3NjA1NiIsImZpcnN0TmFtZSI6IlRvbSIsImxhc3ROYW1lIjoiVmFsa2VuZWVycyIsImVtYWlsIjoidG9tdmFsa2VuZWVyc0Bob3RtYWlsLmNvbSIsImlhdCI6MTUyNDM5NzU1OX0.kyTDamyxl9x6cJ_xE1_ONqs9uTJh8euMvHyMky9JoIg"
                             );
+                            //FirebaseMessaging.getInstance().subscribeToTopic("allMonitoringDevices");
                             /*
                             Application.getServerConnection().updateDeviceId(FirebaseInstanceId.getInstance().getToken(), new Callback() {
                                 @Override

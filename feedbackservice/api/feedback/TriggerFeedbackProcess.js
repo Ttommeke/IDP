@@ -25,19 +25,19 @@ let triggerFeedbackProcess = function (req, res) {
         let happy = false;
         let objectifWhat = false;
         //subjectief what: "hoeveel heb je bewogen de laatste twee uur?"
-        if (parseInt(getAnswerWithQuestionId(questions, "11e121bb-46b6-4f8f-acec-5280c4f1e4ac").PossibleAnswerOnQuestion.answer) > 3)) {
+        if (parseInt(getAnswerWithQuestionId(questions, "11e121bb-46b6-4f8f-acec-5280c4f1e4ac").PossibleAnswerOnQuestion.answer) > 3) {
             subjectifWhat = true;
         }
         //objectifWhatFactor: "Waar ben je op dit moment?"
-        if (getAnswerWithQuestionId(questions, "76fdc098-dda6-4e20-b392-7cd793995359").PossibleAnswerOnQuestion.answer != "Thuis")) {
+        if (getAnswerWithQuestionId(questions, "76fdc098-dda6-4e20-b392-7cd793995359").PossibleAnswerOnQuestion.answer != "Thuis") {
             objWhatFactor = 1.2;
         }
         //hoe moe voelt hij/zij zich: "Hoe moe ben je, op een schaal van 1 tot 5?"
-        if (parseInt(getAnswerWithQuestionId(questions, "42d264f9-a6d1-4b6f-b21f-6389cc264879").PossibleAnswerOnQuestion.answer) > 3)) {
+        if (parseInt(getAnswerWithQuestionId(questions, "42d264f9-a6d1-4b6f-b21f-6389cc264879").PossibleAnswerOnQuestion.answer) > 3) {
             feeling = false;
         }
         //are they happy: "Hoe gelukkig ben je, op een schaal van 1 tot 5?"
-        if (parseInt(getAnswerWithQuestionId(questions, "4e782b0e-132d-4999-9420-d6470601aabb").PossibleAnswerOnQuestion.answer) > 3)) {
+        if (parseInt(getAnswerWithQuestionId(questions, "4e782b0e-132d-4999-9420-d6470601aabb").PossibleAnswerOnQuestion.answer) > 3) {
             happy = true;
         }
 
@@ -241,8 +241,7 @@ let triggerFeedbackProcess = function (req, res) {
 
 let sendNotification = function( data) {
     return new Promise(function(resolve, reject) {
-        http://localhost/api/notificationservice/sendnotificationto/
-        const postData = querystring.stringify(data);
+        const postData = JSON.stringify(data);
 
         const options = {
             hostname: 'localhost',

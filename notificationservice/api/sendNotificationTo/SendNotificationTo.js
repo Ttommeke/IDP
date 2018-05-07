@@ -4,9 +4,9 @@ const https = require('https');
 
 let sendNotificationTo = function (req, res) {
 
-    getDeviceId(req.body.accountId, req.body.app).then(function(couple) {
+    if (req.body.accountId == "ALL") {
         sendHttpRequestToFirebase({
-            "to": couple.deviceId,
+            "to": "/topics/allMonitoringDevices",
             "notification": {
                 "title": req.body.title,
                 "body": req.body.body,
@@ -16,10 +16,25 @@ let sendNotificationTo = function (req, res) {
         });
 
         res.send("Ok!");
-    }).catch(function(err) {
-        console.log(err);
-        res.status(404).send({ reason: "This is fucked up?!" });
-    });
+    } else {
+        getDeviceId(req.body.accountId, req.body.app).then(function(couple) {
+            sendHttpRequestToFirebase({
+                "to": couple.deviceId,
+                "notification": {
+                    "title": req.body.title,
+                    "body": req.body.body,
+                    "sound": req.body.sound
+                },
+                data: req.body.data
+            });
+
+            res.send("Ok!");
+        }).catch(function(err) {
+            console.log(err);
+            res.status(404).send({ reason: "This is fucked up?!" });
+        });
+    }
+
 
 };
 
