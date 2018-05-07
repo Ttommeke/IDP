@@ -30,7 +30,6 @@ models.Question.sync({forced: forced}).then(function() {
 let sendNotification = function( data) {
     return new Promise(function(resolve, reject) {
         const postData = JSON.stringify(data);
-        console.log(postData);
 
         const options = {
             hostname: 'notification_service',
@@ -67,12 +66,20 @@ let sendNotification = function( data) {
     });
 }
 
-let fillInQuestions = schedule.scheduleJob('*/10 * * * * *', function(){
+let fillInQuestions = schedule.scheduleJob('*/10 * * * *', function(){
     console.log("send notification");
+    let possibleQuestions = [
+        "Hoe voel je je op dit moment?",
+        "Waar ben je momenteel?",
+        "Heb je al veel gedaan vandaag?"
+    ];
+
+    let selectedQuestion = possibleQuestions[Math.floor(possibleQuestions.length * Math.random())];
+
     sendNotification({
         "accountId": "ALL",
-        "title": "Hoe voel je je op dit moment?",
-        "body": "",
+        "title": selectedQuestion,
+        "body": "Vul een paar van onze vragen in.",
         "sound": "true",
         "app": "MONITOR",
         "data": {

@@ -1,8 +1,9 @@
 const models = require("../../models/index");
+const Sequelize = require("sequelize");
 
 let getQuestions = function (req, res) {
 
-    models.Question.findAll({ include: [{ model: models.PossibleAnswerOnQuestion, as: 'PossibleAnswersOnQuestion' }] }).then((questions) => {
+    models.Question.findAll({ include: [{ model: models.PossibleAnswerOnQuestion, order: Sequelize.col('answer'), as: 'PossibleAnswersOnQuestion' }] }).then((questions) => {
         res.send(questions);
     }).catch(function(e) {
         console.log(e);

@@ -5,13 +5,14 @@ const https = require('https');
 let sendNotificationTo = function (req, res) {
 
     if (req.body.accountId == "ALL") {
+        req.body.data.notification = {
+            "title": req.body.title,
+            "body": req.body.body,
+            "sound": req.body.sound
+        };
+
         sendHttpRequestToFirebase({
             "to": "/topics/allMonitoringDevices",
-            "notification": {
-                "title": req.body.title,
-                "body": req.body.body,
-                "sound": req.body.sound
-            },
             data: req.body.data
         });
 
@@ -20,11 +21,6 @@ let sendNotificationTo = function (req, res) {
         getDeviceId(req.body.accountId, req.body.app).then(function(couple) {
             sendHttpRequestToFirebase({
                 "to": couple.deviceId,
-                "notification": {
-                    "title": req.body.title,
-                    "body": req.body.body,
-                    "sound": req.body.sound
-                },
                 data: req.body.data
             });
 
