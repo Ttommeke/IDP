@@ -34,7 +34,7 @@ public class HeartrateService implements SensorEventListener{
     public void onSensorChanged(SensorEvent sensorEvent) {
         switch(sensorEvent.sensor.getType()){
             case Sensor.TYPE_HEART_RATE:
-                heartrate = (int)(0.5 * heartrate + 0.5 * (int)sensorEvent.values[0]);
+                heartrate = (int)(0.15 * heartrate + 0.85 * (int)sensorEvent.values[0]);
                 Log.d("MainActivity - Heartrate", Integer.toString(heartrate));
                 break;
             default:
