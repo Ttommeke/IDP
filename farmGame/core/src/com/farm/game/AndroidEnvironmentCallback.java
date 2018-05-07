@@ -1,10 +1,8 @@
 package com.farm.game;
 
-import com.farm.game.states.GameStateManager;
-
 public interface AndroidEnvironmentCallback {
     void startMapsActivity();
-    void login(String username, String password, final GameStateManager gsm);
+    void login(String username, String password);
     void setToken(String token);
     void saveState();
     void loadState();

@@ -8,6 +8,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
 import com.google.android.gms.maps.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -24,7 +25,7 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class HTTPConnection {
     private static final String GOOGLE_BASE_URL = "https://roads.googleapis.com/v1/";
     private static final String GOOGLE_API_KEY = "AIzaSyAu5tIl8fgC0nEAE4Da38DRw831Xxxeuls";
-    private static final String BASE_URL = "http://192.168.16.128";
+    private static final String BASE_URL = "http://192.168.0.213";
     private AsyncHttpClient client;
     private Context context;
 
@@ -64,7 +65,6 @@ public class HTTPConnection {
     }
 
     public void login(String email, String password, Callback callback){
-        Looper.prepare();
         JSONObject json_params = new JSONObject();
         StringEntity entity = null;
         try{
@@ -81,7 +81,6 @@ public class HTTPConnection {
     }
 
     public void saveState(final Callback callback) {
-        Looper.prepare();
         JSONObject json_params = new JSONObject();
         StringEntity entity = null;
         try{
@@ -90,8 +89,10 @@ public class HTTPConnection {
 
             // Save farmLandscape & inventory
             JSONArray jsons = new JSONArray();
-            jsons.put(0, json.prettyPrint(FarmGameMain.landscape.getGrid()));
-            jsons.put(1, json.prettyPrint(FarmGameMain.inventory));
+            jsons.put(0, FarmGameMain.landscape.getGrid());
+            jsons.put(1, FarmGameMain.inventory);
+            /*jsons.put(0, json.prettyPrint(FarmGameMain.landscape.getGrid()));
+            jsons.put(1, json.prettyPrint(FarmGameMain.inventory));*/
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
             jsons.put(2, prefs.getString("savedResources"));
 
@@ -106,7 +107,6 @@ public class HTTPConnection {
     }
 
     public void loadState(final Callback callback) {
-        Looper.prepare();
         String id = FarmGameMain.settings.getUserId();
         get(BASE_URL + "/api/savegameservice/getsavegame/ownerId" + id, callback);
     }
@@ -115,32 +115,7 @@ public class HTTPConnection {
         client.post(this.context, url, entity, "application/json", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                System.out.println("qmlhefi");
                 callback.taskCompleted(statusCode, response);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                System.out.println("qmlhefi");
-                super.onSuccess(statusCode, headers, response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                System.out.println("qmlhefi");
-                super.onFailure(statusCode, headers, responseString, throwable);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                System.out.println("qmlhefi");
-                super.onSuccess(statusCode, headers, responseString);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                System.out.println("qmlhefi");
-                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
@@ -151,20 +126,20 @@ public class HTTPConnection {
                 else
                     callback.taskCompleted(statusCode, null);
             }
-
-
         });
     }
 
-    public void get(String url, final Callback callback) {
+    private void get(String url, final Callback callback) {
         client.get(this.context,url, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                System.out.println("whoopydiewhoop");
                 callback.taskCompleted(statusCode, response);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println("eaf");
                 if(errorResponse != null)
                     callback.taskCompleted(statusCode, errorResponse);
                 else

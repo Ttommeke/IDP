@@ -218,8 +218,8 @@ public class FarmTree extends FarmObject {
         if($type == FarmTreeTypeEnum.Bush) {
             info2Label.setText("struik wilt verwijderen?");
         }
-        infoLabel.setFontScale(2);
-        info2Label.setFontScale(2);
+        infoLabel.setFontScale(1.5f);
+        info2Label.setFontScale(1.5f);
 
         // Accept
         Image acceptImage = new Image(Assets.acceptTexture);

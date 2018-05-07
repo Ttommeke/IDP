@@ -24,6 +24,7 @@ public class AndroidLauncher extends AndroidApplication implements AndroidEnviro
     @Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        httpConnection = new HTTPConnection(null);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new FarmGameMain(this), config);
 	}
@@ -38,50 +39,12 @@ public class AndroidLauncher extends AndroidApplication implements AndroidEnviro
     }
 
     @Override
-    public void login(String username, String password, final GameStateManager gsm) {
-        httpConnection = new HTTPConnection(getContext());
-        httpConnection.login(username, password, new Callback(){
-            @Override
-            public void taskCompleted(int status_code, JSONObject json) {
-                System.out.println(status_code);
-                switch(status_code){
-                    case 0:
-                        Toast.makeText(getApplicationContext(), "Fout bij het maken van verbinding met de server.", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 401: //Unauthorized
-                        Toast.makeText(getApplicationContext(), "Onjuiste gebruikersnaam of wachtwoord.", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 200:
-                        System.out.println("login successfull");
-                        User user = new User();
-                        try{
-                            String token = json.getString("jwt");
-                            JWT jwt = new JWT(token);
-
-                            Claim claim = jwt.getClaim("id");
-                            user.setId(claim.asString());
-                            claim = jwt.getClaim("firstName");
-                            user.setFirstName(claim.asString());
-                            claim = jwt.getClaim("lastName");
-                            user.setLastName(claim.asString());
-                            claim = jwt.getClaim("email");
-                            user.setEmail(claim.asString());
-
-                            FarmGameMain.settings.setUser(user, token);
-                            FarmGameMain.settings.load();
-                            httpConnection.setTokenHeader(token);
-
-                            gsm.set(new FarmState(gsm));
-                        }catch(Exception ex){
-                            //Fout bij decoderen van user jwt token
-                            System.out.print(ex.getMessage());
-                        }
-                        break;
-                    default:
-                        Toast.makeText(getApplicationContext(), "Onbekende fout.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    public void login(String username, String password) {
+        Intent intent = new Intent(this, RequestHandlingActivity.class);
+        intent.putExtra("action", "login");
+        intent.putExtra("username", username);
+        intent.putExtra("password", password);
+        this.startActivity(intent);
     }
 
     @Override
@@ -91,74 +54,16 @@ public class AndroidLauncher extends AndroidApplication implements AndroidEnviro
 
     @Override
     public void saveState() {
-        httpConnection.saveState(new Callback(){
-            @Override
-            public void taskCompleted(int status_code, JSONObject json) {
-                switch(status_code){
-                    case 0:
-                        System.out.println("Connection to the server refused");
-                        break;
-                    case 401: //Unauthorized
-                        System.out.println("Unauthorized");
-                        break;
-                    case 200:
-                        System.out.println("Successfully saved state");
-                        break;
-                    default:
-                        System.out.println("An error occurred");
-                }
-            }
-        });
+        Intent intent = new Intent(this, RequestHandlingActivity.class);
+        intent.putExtra("action", "saveState");
+        this.startActivity(intent);
     }
 
     @Override
     public void loadState() {
-        httpConnection.loadState(new Callback(){
-            @Override
-            public void taskCompleted(int status_code, JSONObject json) {
-                switch(status_code){
-                    case 0:
-                        System.out.println("Connection to the server refused");
-                        break;
-                    case 401: //Unauthorized
-                        System.out.println("Unauthorized");
-                        break;
-                    case 200:
-                        System.out.println("Successfully loaded state");
-                        try{
-                            Json js = new Json();
-                            JSONObject result = json.getJSONObject("result");
-                            JSONArray saveGame = result.getJSONArray("savegame");
-
-                            // Load Landscape
-                            String jsonFarmLandscapeString = saveGame.getString(0);
-                            if(jsonFarmLandscapeString  == null || jsonFarmLandscapeString .equals("") || jsonFarmLandscapeString .equals("null")) {
-                                FarmGameMain.landscape.defaultGrid();
-                            } else {
-                                Grid grid = js.fromJson(Grid.class, jsonFarmLandscapeString );
-                                FarmGameMain.landscape.setGrid(grid);
-                            }
-
-                            // Load inventory
-                            String jsonInventoryString = saveGame.getString(1);
-                            if(jsonInventoryString  == null || jsonInventoryString .equals("") || jsonInventoryString .equals("null")) {
-                                FarmGameMain.inventory.defaultInventory();
-                            } else {
-                                FarmGameMain.inventory = js.fromJson(Inventory.class, jsonInventoryString );
-                            }
-
-                            // Load savedResources
-                            Preferences prefs = Gdx.app.getPreferences("My Preferences");
-                            prefs.putString("savedResources", saveGame.getString(2));
-                        }catch(Exception ex){
-                            System.out.print(ex.getMessage());
-                        }
-                        break;
-                    default:
-                        System.out.println("An error occurred");
-                }
-            }
-        });
+        Intent intent = new Intent(this, RequestHandlingActivity.class);
+        intent.putExtra("action", "loadState");
+        this.startActivity(intent);
     }
 
 

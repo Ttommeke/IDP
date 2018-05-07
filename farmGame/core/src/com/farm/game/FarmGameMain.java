@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.farm.game.states.FarmState;
 import com.farm.game.states.GameStateManager;
 import com.farm.game.states.LoginState;
 
@@ -21,8 +22,9 @@ public class FarmGameMain extends ApplicationAdapter {
 	public static BitmapFont font;
 	public static BitmapFont redFont;
 	public static BitmapFont blueFont;
+    private static GameStateManager $gsm;
 
-	private GameStateManager $gsm;
+    //private GameStateManager $gsm;
 	private SpriteBatch $batch;
 
     public static AndroidEnvironmentCallback androidEnvironmentCallback;
@@ -57,12 +59,17 @@ public class FarmGameMain extends ApplicationAdapter {
         landscape = new FarmLandscape();
         inventory = new Inventory();
         settings = new Settings();
-        settings.load();
 
         $batch = new SpriteBatch();
         $gsm = new GameStateManager();
         Gdx.gl.glClearColor(1f, 1f, 1f, 1);
-        $gsm.push(new LoginState($gsm));
+
+        if(settings.isLoggedIn()) {
+            settings.load();
+            $gsm.push(new FarmState($gsm));
+        } else {
+            $gsm.push(new LoginState($gsm));
+        }
 	}
 
 	@Override
@@ -78,4 +85,8 @@ public class FarmGameMain extends ApplicationAdapter {
         Assets.dispose();
         $batch.dispose();
 	}
+
+	public static void justLoggedIn() {
+        $gsm.set(new FarmState($gsm));
+    }
 }

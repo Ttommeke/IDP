@@ -174,8 +174,8 @@ public class FarmField extends FarmObject {
 
         Label infoLabel = new Label("Ben je zeker dat je dit", skin);
         Label info2Label = new Label("veld wilt verwijderen?", skin);
-        infoLabel.setFontScale(2);
-        info2Label.setFontScale(2);
+        infoLabel.setFontScale(1.5f);
+        info2Label.setFontScale(1.5f);
 
         // Accept
         Image acceptImage = new Image(Assets.acceptTexture);

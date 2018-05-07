@@ -48,8 +48,8 @@ public class LoginState extends State {
             public void changed(ChangeEvent event, Actor actor) {
                 $userName = usernameField.getText();
                 $password = passwordField.getText();
-                //FarmGameMain.settings.login($userName, $password, $gsm);
-                $gsm.set(new FarmState($gsm));
+                FarmGameMain.settings.login($userName, $password, $gsm);
+                //$gsm.set(new FarmState($gsm));
             }
         });
 
