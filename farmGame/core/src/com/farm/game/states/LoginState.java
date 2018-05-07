@@ -18,7 +18,7 @@ public class LoginState extends State {
     private String $userName, $password;
     private Stage $stage;
 
-    public LoginState(GameStateManager gsm) {
+    public LoginState(final GameStateManager gsm) {
         super(gsm);
         $userName = "";
         $password = "";
@@ -48,12 +48,8 @@ public class LoginState extends State {
             public void changed(ChangeEvent event, Actor actor) {
                 $userName = usernameField.getText();
                 $password = passwordField.getText();
-                System.out.println("username:" + $userName + "\npassword:" + $password);
-                if(FarmGameMain.settings.login($userName, $password)) {
-                    $gsm.set(new FarmState($gsm));
-                } else {
-                    passwordField.setText("Verkeerd wachtwoord");
-                }
+                //FarmGameMain.settings.login($userName, $password, $gsm);
+                $gsm.set(new FarmState($gsm));
             }
         });
 

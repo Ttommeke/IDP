@@ -409,6 +409,29 @@ public class FieldMenuState extends State {
         scrollTable.add(useEggplantImage);
         scrollTable.row();
 
+        // superGrain
+        Image superGrainImage = new Image(Assets.superGrainTexture);
+        superGrainImage.setScaling(Scaling.fit);
+        final Label superGrain = new Label(String.valueOf(FarmGameMain.inventory.getAmountOfSuperGrain()), skin);
+        superGrain.setFontScale(2);
+        Image useSuperGrainImage = new Image(Assets.feedTexture);
+        useSuperGrainImage.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(FarmGameMain.inventory.useSuperGrain()){
+                    superGrain.setText(String.valueOf(FarmGameMain.inventory.getAmountOfSuperGrain()));
+                    $field.addFoodToStorage(5);
+                    FarmGameMain.settings.saveToJSON();
+                }
+                return true; //the input multiplexer will stop trying to handle this touch
+            }
+        });
+
+        scrollTable.add(superGrainImage);
+        scrollTable.add(superGrain).center();
+        scrollTable.add(useSuperGrainImage);
+        scrollTable.row();
+
         return scrollTable;
     }
 }

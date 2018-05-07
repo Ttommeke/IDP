@@ -163,7 +163,7 @@ public class FarmField extends FarmObject {
 
     @Override
     public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
-        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen veld", null));
+        gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Confirmatie", null));
     }
 
     private Table confirmTable(final GameStateManager gsm, final int rowIndex, final int columnIndex) {
@@ -174,8 +174,8 @@ public class FarmField extends FarmObject {
 
         Label infoLabel = new Label("Ben je zeker dat je dit", skin);
         Label info2Label = new Label("veld wilt verwijderen?", skin);
-        infoLabel.setFontScale(5);
-        info2Label.setFontScale(5);
+        infoLabel.setFontScale(2);
+        info2Label.setFontScale(2);
 
         // Accept
         Image acceptImage = new Image(Assets.acceptTexture);

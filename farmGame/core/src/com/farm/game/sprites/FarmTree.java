@@ -201,9 +201,9 @@ public class FarmTree extends FarmObject {
     @Override
     public void confirmDelete(GameStateManager gsm, int rowIndex, int columnIndex) {
         if($type == FarmTreeTypeEnum.Tree) {
-            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen boom", null));
+            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Confirmatie", null));
         } else {
-            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Verwijderen struik", null));
+            gsm.push(new MenuState(gsm, confirmTable(gsm, rowIndex, columnIndex), "Confirmatie", null));
         }
     }
 
@@ -218,8 +218,8 @@ public class FarmTree extends FarmObject {
         if($type == FarmTreeTypeEnum.Bush) {
             info2Label.setText("struik wilt verwijderen?");
         }
-        infoLabel.setFontScale(5);
-        info2Label.setFontScale(5);
+        infoLabel.setFontScale(2);
+        info2Label.setFontScale(2);
 
         // Accept
         Image acceptImage = new Image(Assets.acceptTexture);

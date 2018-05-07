@@ -838,11 +838,10 @@ public class Inventory {
     }
 
     public boolean useFertilizer() {
-        this.amountOfFertilizer--;
-        if(this.amountOfFertilizer >= 0) {
+        if(this.amountOfFertilizer >= 1) {
+            this.amountOfFertilizer--;
             return true;
         } else {
-            this.amountOfFertilizer = 0;
             return false;
         }
     }
@@ -856,11 +855,10 @@ public class Inventory {
     }
 
     public boolean useSuperGrain() {
-        this.amountOfSuperGrain--;
-        if(this.amountOfSuperGrain >= 0) {
+        if(this.amountOfSuperGrain >= 1) {
+            this.amountOfSuperGrain--;
             return true;
         } else {
-            this.amountOfSuperGrain = 0;
             return false;
         }
     }

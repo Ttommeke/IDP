@@ -3,20 +3,21 @@ package com.farm.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
+import com.farm.game.DataClasses.User;
 import com.farm.game.sprites.FarmObject;
+import com.farm.game.states.FarmState;
+import com.farm.game.states.GameStateManager;
 
 public class Settings {
     private static boolean $soundEnabled = true;
-    private static RestService $restService;
     private static Json $json = new Json();
+    private static User $user;
+    private static String $token;
 
-    public Settings() {
-        load();
-    }
+    public Settings() {}
 
     public void load() {
         try {
-            $restService = new RestService();
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
             $soundEnabled = prefs.getBoolean("soundEnabled");
@@ -44,6 +45,8 @@ public class Settings {
     public void loadFromJSON() {
         System.out.println("test load");
         try {
+            //FarmGameMain.androidEnvironmentCallback.loadState();
+
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
             // Load farmLandscape
@@ -74,6 +77,8 @@ public class Settings {
     public void saveToJSON() {
         System.out.println("test save");
         try {
+            //FarmGameMain.androidEnvironmentCallback.saveState();
+
             Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
             // Save farmLandscape
@@ -97,7 +102,7 @@ public class Settings {
 
     public void flipSound() {
         $soundEnabled = !$soundEnabled;
-        if($soundEnabled) {
+        if ($soundEnabled) {
             // play general music if any
             // Assets.whelp.play();
         } else {
@@ -107,16 +112,49 @@ public class Settings {
         save();
     }
 
-    public boolean login(String username, String password) {
-        /*String input = "{\"email\":\"" + username + "\",\"password\":\""+ password +"\"}";
-        String output = $restService.postRequest("plogin", input);
-        if(output == null || output.equals("Invalid Credentials")) {
-            return false;
-        } else {
-            User user = $json.fromJson(User.class, output);
+    public void login(String username, String password, GameStateManager gsm) {
+        System.out.println("login in progress");
+        try {
+            Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
-            return true;
-        }*/
-        return true;
+            // Load user & token
+            String jsonUserString = prefs.getString("user");
+            String token = prefs.getString("token");
+
+            if((jsonUserString == null || jsonUserString.equals("") || jsonUserString.equals("null")) &&
+                    token == null || token.equals("") || token.equals("null")) {
+                FarmGameMain.androidEnvironmentCallback.login(username, password, gsm);
+            } else {
+                $user = $json.fromJson(User.class, jsonUserString);
+                $token = token;
+                FarmGameMain.androidEnvironmentCallback.setToken($token);
+                gsm.set(new FarmState(gsm));
+            }
+        } catch (Throwable e) {
+            Gdx.app.log("error loading file", e.getMessage());
+        }
+    }
+
+    public void setUser(User user, String token) {
+        $user = user;
+        $token = token;
+        try {
+            Preferences prefs = Gdx.app.getPreferences("My Preferences");
+
+            // Save user
+            String jsonUserString = $json.prettyPrint(user);
+            prefs.putString("user", jsonUserString );
+
+            // Save token
+            prefs.putString("token", token);
+
+            prefs.flush();
+        } catch (Throwable e) {
+            Gdx.app.log("error saving file", e.getMessage());
+        }
+    }
+
+    public String getUserId() {
+        return $user.getId();
     }
 }

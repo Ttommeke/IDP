@@ -57,6 +57,7 @@ public class FarmGameMain extends ApplicationAdapter {
         landscape = new FarmLandscape();
         inventory = new Inventory();
         settings = new Settings();
+        settings.load();
 
         $batch = new SpriteBatch();
         $gsm = new GameStateManager();
