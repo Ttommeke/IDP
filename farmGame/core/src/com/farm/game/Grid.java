@@ -1,6 +1,7 @@
 package com.farm.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.sprites.FarmLand;
 import com.farm.game.sprites.FarmObject;
@@ -63,7 +64,7 @@ public class Grid {
         return new GridSquare();
     }
 
-    public void insertIntoPosition(FarmObject farmObject, int row, int column, boolean def) {
+    public boolean insertIntoPosition(FarmObject farmObject, int row, int column, boolean def) {
         int amountOfCells = farmObject.getAmountOfCells();
         boolean clear = true;
 
@@ -95,16 +96,19 @@ public class Grid {
             previousRowIndex = row;
             previousColumnIndex = column;
         }
+
+        return clear;
     }
 
-    public void moveIntoPosition(float x, float y, FarmObject farmObject, boolean bought) {
+    public boolean moveIntoPosition(float x, float y, FarmObject farmObject, boolean bought) {
         for(int i=0; i<$gridRectangle.length; i++) {
             for(int j=0; j<$gridRectangle[i].length; j++) {
                 if($gridRectangle[i][j].contains(x, y)) {
-                    insertIntoPosition(farmObject, i, j, bought);
+                    return insertIntoPosition(farmObject, i, j, bought);
                 }
             }
         }
+        return false;
     }
 
     public void updateGrid() {
@@ -134,6 +138,31 @@ public class Grid {
                             sb.draw(Assets.cancelTexture, j*$cellSize + 85, i*$cellSize + 85,40, 40);
                             break;
                     }
+                }
+            }
+        }
+    }
+
+    public void drawPlacebleRect(int cells, ShapeRenderer shapeRenderer) {
+        for(int i=0; i<$grid.length; i++) {
+            for(int j=0; j<$grid[i].length; j++) {
+
+                boolean clear = true;
+                if(i+cells > $grid.length || j+cells > $grid[0].length) {
+                    clear = false;
+                } else {
+                    for (int row = 0; row < cells; row++) {
+                        for (int column = 0; column < cells; column++) {
+                            if ($grid[row + i][column + j].getClass() != GridSquare.class) {
+                                clear = false;
+                            }
+                        }
+                    }
+                }
+
+                if(!clear) {
+                    shapeRenderer.setColor(125/255f,0,0,0.3f);
+                    shapeRenderer.rect(j*$cellSize, i*$cellSize, $cellSize, $cellSize);
                 }
             }
         }

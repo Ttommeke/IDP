@@ -1,8 +1,10 @@
 package com.farm.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.farm.game.Assets;
 import com.farm.game.FarmGameMain;
@@ -102,6 +104,16 @@ public class MoveState extends State {
         FarmGameMain.blueFont.draw(sb, text, textWidth, FarmGameMain.HEIGHT - 5);
 
         sb.end();
+
+        if(moving) {
+            ShapeRenderer shapeRenderer = new ShapeRenderer();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            FarmGameMain.landscape.drawPlacebleRect(farmObject.getAmountOfCells(), shapeRenderer);
+            shapeRenderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
     }
 
     @Override

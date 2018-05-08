@@ -28,6 +28,7 @@ public class FarmTree extends FarmObject {
     private FarmTreeFruitTypeEnum $fruitType;
     private FarmTreeTypeEnum $type;
     private long $timer;
+    private boolean $usedFertilizer;
 
     private final int treeGrowTime = 15; //In minutes
     private final int bushGrowTime = 15; //In minutes
@@ -98,28 +99,42 @@ public class FarmTree extends FarmObject {
             case Growing:
                 switch ($type){
                     case Tree:
-                        additionTime = (treeGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (treeGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (treeGrowTime*60*1000);
                         break;
                     case Bush:
-                        additionTime = (bushGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (bushGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (bushGrowTime*60*1000);
                         break;
                 }
                 if($timer + additionTime - System.currentTimeMillis() <= 0) {
                     $status = FarmTreeStatusEnum.GrowingFruit;
+                    $usedFertilizer = false;
                     // don't change timer otherwise -> day goes by -> app starts -> timer = when app starts
                 }
                 break;
             case GrowingFruit:
                 switch ($fruitType){
                     case Apple:
-                        additionTime = (treeGrowTime*60*1000) + (appleGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = ((treeGrowTime*60*1000) + (appleGrowTime*60*1000)) / 2;
+                        else
+                            additionTime = (treeGrowTime*60*1000) + (appleGrowTime*60*1000);
                         break;
                     case Raspberry:
-                        additionTime = (bushGrowTime*60*1000) + (raspberryGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = ((bushGrowTime*60*1000) + (raspberryGrowTime*60*1000)) / 2;
+                        else
+                            additionTime = (bushGrowTime*60*1000) + (raspberryGrowTime*60*1000);
                         break;
                 }
                 if($timer + additionTime - System.currentTimeMillis() <= 0) {
                     $status = FarmTreeStatusEnum.Ready;
+                    $usedFertilizer = false;
                 }
                 break;
         }
@@ -133,11 +148,17 @@ public class FarmTree extends FarmObject {
                 switch ($type){
                     case Tree:
                         texture = Assets.farmTreeGrown;
-                        additionTime = (treeGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (treeGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (treeGrowTime*60*1000);
                         break;
                     case Bush:
                         texture = Assets.farmBushGrown;
-                        additionTime = (bushGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (bushGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (bushGrowTime*60*1000);
                         break;
                 }
                 break;
@@ -145,17 +166,23 @@ public class FarmTree extends FarmObject {
                 switch ($fruitType){
                     case Apple:
                         texture = Assets.appleTexture;
-                        additionTime = (treeGrowTime*60*1000) + (appleGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = ((treeGrowTime*60*1000) + (appleGrowTime*60*1000)) / 2;
+                        else
+                            additionTime = (treeGrowTime*60*1000) + (appleGrowTime*60*1000);
                         break;
                     case Raspberry:
                         texture = Assets.raspberryTexture;
-                        additionTime = (bushGrowTime*60*1000) + (raspberryGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = ((bushGrowTime*60*1000) + (raspberryGrowTime*60*1000)) / 2;
+                        else
+                            additionTime = (bushGrowTime*60*1000) + (raspberryGrowTime*60*1000);
                         break;
                 }
                 break;
         }
 
-        gsm.push(new TimeLeftMenuState(gsm, texture, $timer, additionTime , title));
+        gsm.push(new TimeLeftMenuState(gsm, texture, $timer, additionTime , title, this));
     }
 
     /**
@@ -260,6 +287,14 @@ public class FarmTree extends FarmObject {
         return scrollTable;
     }
 
+    public boolean isFertilized() {
+        return $usedFertilizer;
+    }
+
+    public void useFertilizer() {
+        $usedFertilizer = true;
+    }
+
     @Override
     public void update() {
         changeTexture();
@@ -271,6 +306,7 @@ public class FarmTree extends FarmObject {
         json.writeValue("type", $type);
         json.writeValue("fruitType", $fruitType);
         json.writeValue("time", $timer);
+        json.writeValue("fertilizer", $usedFertilizer);
     }
 
     @Override
@@ -279,6 +315,7 @@ public class FarmTree extends FarmObject {
         $type = FarmTreeTypeEnum.valueOf(jsonData.getString("type"));
         $fruitType = FarmTreeFruitTypeEnum.valueOf(jsonData.getString("fruitType"));
         $timer = jsonData.getLong("time");
+        $usedFertilizer = jsonData.getBoolean("fertilizer");
         changeTexture();
     }
 }

@@ -51,11 +51,12 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".RequestHandlingActivity"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:screenOrientation="landscape"
+            android:name=".RequestHandlingActivity" />
         <activity android:name=".CollectResourceDialog"
-            android:theme="@style/DialogTheme"
-            />
+            android:theme="@style/DialogTheme" />
 
     </application>
 

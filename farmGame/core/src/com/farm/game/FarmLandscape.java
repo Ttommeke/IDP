@@ -3,6 +3,7 @@ package com.farm.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Json;
 import com.farm.game.spriteData.FarmAnimal;
 import com.farm.game.spriteData.FarmAnimalChicken;
@@ -30,6 +31,10 @@ public class FarmLandscape {
         $grid.drawObjects(sb);
     }
 
+    public void drawPlacebleRect(int cells, ShapeRenderer shapeRenderer) {
+        $grid.drawPlacebleRect(cells, shapeRenderer);
+    }
+
     public void handleTouch(float x, float y, GameStateManager gsm) {
         $grid.handleTouch(x, y, gsm);
     }
@@ -46,8 +51,8 @@ public class FarmLandscape {
         $grid.moveIntoPosition(x, y, farmObject, false);
     }
 
-    public void moveNewIntoPosition(float x, float y, FarmObject farmObject) {
-        $grid.moveIntoPosition(x, y, farmObject, true);
+    public boolean moveNewIntoPosition(float x, float y, FarmObject farmObject) {
+        return $grid.moveIntoPosition(x, y, farmObject, true);
     }
 
     public void gridIndexesTouched(int rowIndex, int columnIndex, GameStateManager gsm) {

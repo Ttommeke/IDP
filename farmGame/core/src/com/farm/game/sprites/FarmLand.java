@@ -30,6 +30,7 @@ public class FarmLand extends FarmObject{
     private FarmLandStatusEnum $status;
     private FarmLandTypeEnum $type;
     private long $plantTime;
+    private boolean $usedFertilizer;
 
     private final int grainGrowTime = 18; //In minutes
     private final int carrotGrowTime = 22; //In minutes
@@ -124,23 +125,39 @@ public class FarmLand extends FarmObject{
             case Growing:
                 switch ($type){
                     case Grain:
-                        additionTime = (grainGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (grainGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (grainGrowTime*60*1000);
                         break;
                     case Carrot:
-                        additionTime = (carrotGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (carrotGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (carrotGrowTime*60*1000);
                         break;
                     case Potato:
-                        additionTime = (potatoGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (potatoGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (potatoGrowTime*60*1000);
                         break;
                     case Eggplant:
-                        additionTime = (eggplantGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (eggplantGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (eggplantGrowTime*60*1000);
                         break;
                     case Strawberry:
-                        additionTime = (strawberryGrowTime*60*1000);
+                        if($usedFertilizer)
+                            additionTime = (strawberryGrowTime*60*1000) / 2;
+                        else
+                            additionTime = (strawberryGrowTime*60*1000);
                         break;
                 }
                 if($plantTime + additionTime - System.currentTimeMillis() <= 0) {
                     $status = FarmLandStatusEnum.FullyGrown;
+                    $usedFertilizer = false;
                 }
                 break;
             case FullyGrown:
@@ -266,27 +283,42 @@ public class FarmLand extends FarmObject{
         switch ($type){
             case Grain:
                 texture = Assets.grainTexture;
-                additionTime = (grainGrowTime*60*1000);
+                if($usedFertilizer)
+                    additionTime = (grainGrowTime*60*1000) / 2;
+                else
+                    additionTime = (grainGrowTime*60*1000);
                 break;
             case Carrot:
                 texture = Assets.carrotTexture;
-                additionTime = (carrotGrowTime*60*1000);
+                if($usedFertilizer)
+                    additionTime = (carrotGrowTime*60*1000) / 2;
+                else
+                    additionTime = (carrotGrowTime*60*1000);
                 break;
             case Potato:
                 texture = Assets.potatoTexture;
-                additionTime = (potatoGrowTime*60*1000);
+                if($usedFertilizer)
+                    additionTime = (potatoGrowTime*60*1000) / 2;
+                else
+                    additionTime = (potatoGrowTime*60*1000);
                 break;
             case Eggplant:
                 texture = Assets.eggplantTexture;
-                additionTime = (eggplantGrowTime*60*1000);
+                if($usedFertilizer)
+                    additionTime = (eggplantGrowTime*60*1000) / 2;
+                else
+                    additionTime = (eggplantGrowTime*60*1000);
                 break;
             case Strawberry:
                 texture = Assets.strawberryTexture;
-                additionTime = (strawberryGrowTime*60*1000);
+                if($usedFertilizer)
+                    additionTime = (strawberryGrowTime*60*1000) / 2;
+                else
+                    additionTime = (strawberryGrowTime*60*1000);
                 break;
         }
 
-        gsm.push(new TimeLeftMenuState(gsm, texture, $plantTime, additionTime , title));
+        gsm.push(new TimeLeftMenuState(gsm, texture, $plantTime, additionTime , title, this));
     }
 
     @Override
@@ -414,6 +446,14 @@ public class FarmLand extends FarmObject{
         }
     }
 
+    public boolean isFertilized() {
+        return $usedFertilizer;
+    }
+
+    public void useFertilizer() {
+        $usedFertilizer = true;
+    }
+
     @Override
     public void update() {
         changeTexture();
@@ -424,6 +464,7 @@ public class FarmLand extends FarmObject{
         json.writeValue("status", $status);
         json.writeValue("type", $type);
         json.writeValue("time", $plantTime);
+        json.writeValue("fertilizer", $usedFertilizer);
     }
 
     @Override
@@ -431,6 +472,7 @@ public class FarmLand extends FarmObject{
         $status = FarmLandStatusEnum.valueOf(jsonData.getString("status"));
         $type = FarmLandTypeEnum.valueOf(jsonData.getString("type"));
         $plantTime = jsonData.getLong("time");
+        $usedFertilizer = jsonData.getBoolean("fertilizer");
         changeTexture();
     }
 }

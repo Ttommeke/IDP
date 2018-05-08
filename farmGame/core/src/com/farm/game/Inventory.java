@@ -56,6 +56,9 @@ public class Inventory {
     }
 
     public Table getScrollTable() {
+        amountOfFertilizer = 5;
+        amountOfSuperGrain = 5;
+
         Skin skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
 
         Image coinsImage = new Image(Assets.coinsTexture);

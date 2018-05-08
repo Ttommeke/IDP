@@ -1,14 +1,12 @@
 package com.farm.game;
 
 import android.content.Context;
-import android.os.Looper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
 import com.google.android.gms.maps.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -25,7 +23,8 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class HTTPConnection {
     private static final String GOOGLE_BASE_URL = "https://roads.googleapis.com/v1/";
     private static final String GOOGLE_API_KEY = "AIzaSyAu5tIl8fgC0nEAE4Da38DRw831Xxxeuls";
-    private static final String BASE_URL = "http://192.168.0.213";
+    //private static final String BASE_URL = "http://192.168.0.213"; //HOME
+    private static final String BASE_URL = "http://192.168.16.117"; //EDM
     private AsyncHttpClient client;
     private Context context;
 
@@ -120,7 +119,6 @@ public class HTTPConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                System.out.println("qmlhefi");
                 if(errorResponse != null)
                     callback.taskCompleted(statusCode, errorResponse);
                 else
@@ -139,7 +137,6 @@ public class HTTPConnection {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                System.out.println("eaf");
                 if(errorResponse != null)
                     callback.taskCompleted(statusCode, errorResponse);
                 else
