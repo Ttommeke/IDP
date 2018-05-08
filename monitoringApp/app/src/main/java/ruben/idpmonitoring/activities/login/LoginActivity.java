@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.auth0.android.jwt.Claim;
 import com.auth0.android.jwt.JWT;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
@@ -58,29 +59,26 @@ public class LoginActivity extends AppCompatActivity {
                                 user.setLastName(json_object.getString("lastName"));
                                 user.setEmail(json_object.getString("email"));
                                 user.setId(user_id);
+                                user.setToken(json_object.getString("jwt"));
                                 Application.setUser(user);
+
+                                Application.getServerConnection().setTokenHeader(
+                                        user.getToken()
+                                );
                             }catch(Exception ex){
                                 //Fout bij decoderen van user jwt token
                                 System.out.print(ex.getMessage());
                             }
 
-                            Application.getServerConnection().setTokenHeader(
-                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxNTkyZjhjLTNkYmUtNDc4NS1hZWE5LTE2NjA3MTQ3NjA1NiIsImZpcnN0TmFtZSI6IlRvbSIsImxhc3ROYW1lIjoiVmFsa2VuZWVycyIsImVtYWlsIjoidG9tdmFsa2VuZWVyc0Bob3RtYWlsLmNvbSIsImlhdCI6MTUyNDM5NzU1OX0.kyTDamyxl9x6cJ_xE1_ONqs9uTJh8euMvHyMky9JoIg"
-                            );
-                            //FirebaseMessaging.getInstance().subscribeToTopic("allMonitoringDevices");
-                            /*
+                            FirebaseMessaging.getInstance().subscribeToTopic("allMonitoringDevices");
                             Application.getServerConnection().updateDeviceId(FirebaseInstanceId.getInstance().getToken(), new Callback() {
                                 @Override
                                 public void taskCompleted(int status_code, String results) {
-                                    Log.d("[LAAT INS ZIEN]", "taskCompleted: " + results);
-                                    Intent intent = new Intent(this_context, MainActivity.class);
-                                    this_context.startActivity(intent);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
                                 }
                             });
-                            */
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
                             break;
                         default:
                             Toast.makeText(getApplicationContext(), "Onbekende fout.", Toast.LENGTH_SHORT).show();
@@ -146,18 +144,18 @@ public class LoginActivity extends AppCompatActivity {
                                         user.setLastName(claim.asString());
                                         claim = jwt.getClaim("email");
                                         user.setEmail(claim.asString());
+                                        user.setToken(token);
 
                                         Application.setUser(user);
                                         Application.getSettings().getSharedPreferencesEditor().putBoolean("user_logged_out", false).commit();
+
+                                        Application.getServerConnection().setTokenHeader(token);
                                     }catch(Exception ex){
                                         //Fout bij decoderen van user jwt token
                                         System.out.print(ex.getMessage());
                                     }
 
-                                    Application.getServerConnection().setTokenHeader(
-                                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxNTkyZjhjLTNkYmUtNDc4NS1hZWE5LTE2NjA3MTQ3NjA1NiIsImZpcnN0TmFtZSI6IlRvbSIsImxhc3ROYW1lIjoiVmFsa2VuZWVycyIsImVtYWlsIjoidG9tdmFsa2VuZWVyc0Bob3RtYWlsLmNvbSIsImlhdCI6MTUyNDM5NzU1OX0.kyTDamyxl9x6cJ_xE1_ONqs9uTJh8euMvHyMky9JoIg"
-                                    );
-
+                                    FirebaseMessaging.getInstance().subscribeToTopic("allMonitoringDevices");
                                     Application.getServerConnection().updateDeviceId(FirebaseInstanceId.getInstance().getToken(), new Callback() {
                                         @Override
                                         public void taskCompleted(int status_code, String results) {

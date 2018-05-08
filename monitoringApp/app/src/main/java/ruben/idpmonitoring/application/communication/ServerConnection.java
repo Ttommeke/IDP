@@ -20,8 +20,8 @@ import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.application.history.ObjectiveMeasurement;
 
 public class ServerConnection {
-    private static final String BASE_URL = "http://192.168.0.142:80"; //Thuis
-    //private static final String BASE_URL = "http://192.168.16.115"; //EDM
+    //private static final String BASE_URL = "http://192.168.0.142:80"; //Thuis
+    private static final String BASE_URL = "http://192.168.16.117"; //EDM
     private AsyncHttpClient client;
     private Context context;
 
@@ -152,28 +152,32 @@ public class ServerConnection {
         client.post(this.context, BASE_URL + url, entity, "application/json", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                callback.taskCompleted(statusCode, response.toString());
+                if(callback != null)callback.taskCompleted(statusCode, response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                if(errorResponse != null)
-                    callback.taskCompleted(statusCode, errorResponse.toString());
-                else
-                    callback.taskCompleted(statusCode, null);
+                if(callback != null){
+                    if(errorResponse != null)
+                        callback.taskCompleted(statusCode, errorResponse.toString());
+                    else
+                        callback.taskCompleted(statusCode, null);
+                }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                callback.taskCompleted(statusCode, response.toString());
+                if(callback != null)callback.taskCompleted(statusCode, response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                if(errorResponse != null)
-                    callback.taskCompleted(statusCode, errorResponse.toString());
-                else
-                    callback.taskCompleted(statusCode, null);
+                if(callback != null){
+                    if(errorResponse != null)
+                        callback.taskCompleted(statusCode, errorResponse.toString());
+                    else
+                        callback.taskCompleted(statusCode, null);
+                }
             }
         });
     }
@@ -182,28 +186,32 @@ public class ServerConnection {
         client.get(this.context,BASE_URL + url, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                callback.taskCompleted(statusCode, response.toString());
+                if(callback != null)callback.taskCompleted(statusCode, response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                if(errorResponse != null)
-                    callback.taskCompleted(statusCode, errorResponse.toString());
-                else
-                    callback.taskCompleted(statusCode, null);
+                if(callback != null){
+                    if(errorResponse != null)
+                        callback.taskCompleted(statusCode, errorResponse.toString());
+                    else
+                        callback.taskCompleted(statusCode, null);
+                }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                callback.taskCompleted(statusCode, response.toString());
+                if(callback != null)callback.taskCompleted(statusCode, response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                if(errorResponse != null)
-                    callback.taskCompleted(statusCode, errorResponse.toString());
-                else
-                    callback.taskCompleted(statusCode, null);
+                if(callback != null){
+                    if(errorResponse != null)
+                        callback.taskCompleted(statusCode, errorResponse.toString());
+                    else
+                        callback.taskCompleted(statusCode, null);
+                }
             }
         });
     }
@@ -212,28 +220,32 @@ public class ServerConnection {
         client.put(this.context,BASE_URL + url, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                callback.taskCompleted(statusCode, response.toString());
+                if(callback != null)callback.taskCompleted(statusCode, response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                if(errorResponse != null)
-                    callback.taskCompleted(statusCode, errorResponse.toString());
-                else
-                    callback.taskCompleted(statusCode, null);
+                if(callback != null){
+                    if(errorResponse != null)
+                        callback.taskCompleted(statusCode, errorResponse.toString());
+                    else
+                        callback.taskCompleted(statusCode, null);
+                }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                callback.taskCompleted(statusCode, response.toString());
+                if(callback != null)callback.taskCompleted(statusCode, response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                if(errorResponse != null)
-                    callback.taskCompleted(statusCode, errorResponse.toString());
-                else
-                    callback.taskCompleted(statusCode, null);
+                if(callback != null){
+                    if(errorResponse != null)
+                        callback.taskCompleted(statusCode, errorResponse.toString());
+                    else
+                        callback.taskCompleted(statusCode, null);
+                }
             }
         });
     }

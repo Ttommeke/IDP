@@ -1,10 +1,8 @@
 package ruben.idpmonitoring.activities.questions;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -13,8 +11,6 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import ruben.idpmonitoring.Application;
 import ruben.idpmonitoring.R;
@@ -46,58 +42,29 @@ public class QuestionActivity extends AppCompatActivity {
 
         this.session = new Session();
 
-        Application.getServerConnection().getQuestions(new Callback() {
-            @Override
-            public void taskCompleted(int status_code, String json) {
-                switch(status_code){
-                    case 0:
-                        Toast.makeText(getApplicationContext(), "Fout bij het maken van verbinding.", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 200:
-                        session.convertQuestionsFromJson(json);
-                        loadElements();
-                        startSession();
-                        break;
-                    default:
-                        Toast.makeText(getApplicationContext(), "Onbekende fout.", Toast.LENGTH_SHORT).show();
-                        finish();
+        if(Application.getServerConnection() != null){
+            Application.getServerConnection().getQuestions(new Callback() {
+                @Override
+                public void taskCompleted(int status_code, String json) {
+                    switch(status_code){
+                        case 0:
+                            Toast.makeText(getApplicationContext(), "Fout bij het maken van verbinding.", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 200:
+                            session.convertQuestionsFromJson(json);
+                            loadElements();
+                            startSession();
+                            break;
+                        default:
+                            Toast.makeText(getApplicationContext(), "Onbekende fout.", Toast.LENGTH_SHORT).show();
+                            finish();
+                    }
                 }
-            }
-        });
+            });
+        } else {
 
-        //this.session.convertFromJson("[{\"id\":\"11e121bb-46b6-4f8f-acec-5280c4f1e4ac\",\"questionType\":\"MULTIPLECHOICE\",\"question\":\"whoopwhoop!\",\"createdAt\":\"2018-04-09T22:23:40.921Z\",\"updatedAt\":\"2018-04-09T22:23:40.921Z\",\"PossibleAnswersOnQuestion\":[{\"id\":\"d873b204-3a06-48b6-9fd6-f8afa3427806\",\"answer\":\"1\",\"createdAt\":\"2018-04-09T22:23:40.960Z\",\"updatedAt\":\"2018-04-09T22:23:40.960Z\",\"questionId\":\"11e121bb-46b6-4f8f-acec-5280c4f1e4ac\"},{\"id\":\"b26931e2-4519-402b-966c-fc5f3770845b\",\"answer\":\"2\",\"createdAt\":\"2018-04-09T22:23:40.962Z\",\"updatedAt\":\"2018-04-09T22:23:40.962Z\",\"questionId\":\"11e121bb-46b6-4f8f-acec-5280c4f1e4ac\"},{\"id\":\"1a7ac5d1-1928-44ca-90a7-d2bb4f49eb93\",\"answer\":\"4\",\"createdAt\":\"2018-04-09T22:23:40.963Z\",\"updatedAt\":\"2018-04-09T22:23:40.963Z\",\"questionId\":\"11e121bb-46b6-4f8f-acec-5280c4f1e4ac\"},{\"id\":\"a7df01a3-b94a-475a-918a-db998a0284c0\",\"answer\":\"3\",\"createdAt\":\"2018-04-09T22:23:40.962Z\",\"updatedAt\":\"2018-04-09T22:23:40.962Z\",\"questionId\":\"11e121bb-46b6-4f8f-acec-5280c4f1e4ac\"},{\"id\":\"7142af5d-0c82-4ffe-89ed-01e3f0b7a04a\",\"answer\":\"5\",\"createdAt\":\"2018-04-09T22:23:40.964Z\",\"updatedAt\":\"2018-04-09T22:23:40.964Z\",\"questionId\":\"11e121bb-46b6-4f8f-acec-5280c4f1e4ac\"}]}]");
-
-        /*ArrayList<String> q1Answers = new ArrayList<String>();
-        q1Answers.add("Thuis");
-        q1Answers.add("Werk/School");
-        q1Answers.add("Onderweg");
-        q1Answers.add("Ergens anders");
-        Question q1 = new Question("1",QuestionType.Radio, "Waar ben ik?", q1Answers);
-        ArrayList<String> q2Answers = new ArrayList<String>();
-        q2Answers.add("Weinig");
-        q2Answers.add("Veel");
-        Question q2 = new Question("2", QuestionType.Rating, "Hoe actief was ik?", q2Answers);
-        ArrayList<String> q3Answers = new ArrayList<String>();
-        q3Answers.add("Partner");
-        q3Answers.add("Familie");
-        q3Answers.add("Vrienden");
-        q3Answers.add("Collega's");
-        q3Answers.add("Bekenden");
-        Question q3 = new Question("3", QuestionType.Radio, "Met wie ben ik?", q3Answers);
-        ArrayList<String> q4Answers = new ArrayList<String>();
-        q4Answers.add("Weinig");
-        q4Answers.add("Veel");
-        Question q4 = new Question("4", QuestionType.Rating, "Hoe vermoeid ben ik?", q4Answers);
-        ArrayList<String> q5Answers = new ArrayList<String>();
-        q5Answers.add("Slecht");
-        q5Answers.add("Goed");
-        Question q5 = new Question("5", QuestionType.Rating, "Hoe voel ik me?", q5Answers);
-
-        this.session.addQuestion(q1);
-        this.session.addQuestion(q2);
-        this.session.addQuestion(q3);
-        this.session.addQuestion(q4);
-        this.session.addQuestion(q5);*/
+            Toast.makeText(this, "Fout bij het maken van verbinding", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadElements(){
@@ -136,8 +103,10 @@ public class QuestionActivity extends AppCompatActivity {
             this.view_rating_options.setVisibility(View.GONE);
             this.view_radio_options.setVisibility(View.VISIBLE);
         } else {
-            this.txt_scale_low.setText(q.getPossibleAnswers().get(0).getContent());
-            this.txt_scale_high.setText(q.getPossibleAnswers().get(1).getContent());
+            this.txt_scale_low.setText("1");
+
+            this.txt_scale_high.setText("5");
+
             this.rating_options.setRating(0);
 
             this.view_radio_options.setVisibility(View.GONE);
@@ -180,7 +149,7 @@ public class QuestionActivity extends AppCompatActivity {
                             Intent intent = new Intent(QuestionActivity.this, OpenGameDialog.class);
                             intent.putExtra("information","Open nu het spel om van voordelen te genieten.");
                             startActivityForResult(intent, OPEN_GAME_DIALOG_REQUEST);
-                            //postObjectiveMeasurement();
+                            postObjectiveMeasurement();
                         } else {
                             setActiveQuestion();
                         }
@@ -201,19 +170,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void taskCompleted(int status_code, String json) {
                 Application.getServerConnection().postObjectiveMeasurement(Application.getUser().getId(),
-                        ObjectiveMeasurement.fromJson(json), new Callback() {
-                            @Override
-                            public void taskCompleted(int status_code, String json) {
-                                switch(status_code){
-                                    case 200:
-                                        //OK
-                                        break;
-                                    default:
-                                        Toast.makeText(QuestionActivity.this, "Fout bij verbinden met server.", Toast.LENGTH_SHORT);
-                                        break;
-                                }
-                            }
-                        });
+                        ObjectiveMeasurement.fromJson(json), null);
             }
         });
     }
@@ -233,13 +190,7 @@ public class QuestionActivity extends AppCompatActivity {
                     finish();
                     break;
             }
-
-            Application.getServerConnection().triggerFeedbackProcess(new Callback() {
-                @Override
-                public void taskCompleted(int status_code, String json) {
-                    //OK...
-                }
-            });
         }
+        Application.getServerConnection().triggerFeedbackProcess(null);
     }
 }
