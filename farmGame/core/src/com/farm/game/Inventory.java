@@ -656,8 +656,8 @@ public class Inventory {
     }
 
     public boolean usePotato() {
-        if(this.amountOfCarrot >= 1) {
-            this.amountOfCarrot--;
+        if(this.amountOfPotato >= 1) {
+            this.amountOfPotato--;
             return true;
         } else {
             return false;
